@@ -6,10 +6,7 @@ public class TestDB {
     public static void main(String[] args) {
 
         try {
-            ResultSet resultSet = DBController.executeQuery("select * from users;");
-            while(resultSet.next()) {
-                System.out.println(resultSet.getString("id"));
-            }
+            new TableUser().getAll();
         } catch (Exception exception) {
             exception.printStackTrace();
         }

@@ -1,4 +1,4 @@
-package net.golbarg.kankor.kankor.db;
+package net.golbarg.kankor.db;
 
 import java.io.File;
 import java.sql.Connection;

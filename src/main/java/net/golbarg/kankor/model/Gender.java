@@ -1,4 +1,4 @@
-package net.golbarg.kankor.kankor.model;
+package net.golbarg.kankor.model;
 
 import java.util.HashMap;
 import java.util.Map;

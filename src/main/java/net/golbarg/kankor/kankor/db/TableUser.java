@@ -18,8 +18,9 @@ public class TableUser implements CRUDHandler<User> {
     public ArrayList<User> getAll() {
         String query = String.format("SELECT %s FROM %s;", COLUMNS_STR, TABLE_NAME);
         ArrayList<User> userList = new ArrayList<>();
+
         try {
-            Connection connection = DBController.getLocalConnection();
+            
             ResultSet result = DBController.executeQuery(query);
             while (result.next()) {
                 User user = mapColumn(result);

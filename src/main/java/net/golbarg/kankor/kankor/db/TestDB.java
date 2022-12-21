@@ -6,7 +6,7 @@ public class TestDB {
     public static void main(String[] args) {
 
         try {
-            new TableUser().getAll();
+            new TableUser(DBController.getLocalConnection()).getAll();
         } catch (Exception exception) {
             exception.printStackTrace();
         }

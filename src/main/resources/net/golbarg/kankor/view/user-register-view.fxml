@@ -88,7 +88,7 @@
                               <Image url="@user_profile.png" />
                            </image>
                         </ImageView>
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" text="انتخاب عکس" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                        <Button fx:id="btnSelectImage" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" text="انتخاب عکس" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                            <graphic>
                               <FontIcon iconLiteral="fas-image" iconSize="14" />
                            </graphic>

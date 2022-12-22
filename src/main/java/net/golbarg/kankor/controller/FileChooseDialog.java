@@ -1,4 +1,4 @@
-package net.golbarg.kankor.util;
+package net.golbarg.kankor.controller;
 
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;

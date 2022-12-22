@@ -1,32 +1,43 @@
 package net.golbarg.kankor.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Gender {
-    Male("M"),
-    Female("F"),
-    UNKNOWN("U");
+public class Gender {
+    public static final Gender MALE    = new Gender("M", "مرد");
+    public static final Gender FEMALE  = new Gender("F", "زن");
+    public static final Gender UNKNOWN = new Gender("U", "نامشخص");
+    private String key;
+    private String label;
 
-    private String value;
-    Gender(String value){
-        this.value = value;
+    public Gender(String key, String label) {
+        this.key = key;
+        this.label = label;
     }
 
-    public String getValue() {
-        return value;
+    public String getKey() {
+        return key;
     }
 
-    public static Map<String, Gender> genderMap = new HashMap<>();
-    static {
-        genderMap.put(Male.value, Male);
-        genderMap.put(Female.value, Female);
-        genderMap.put(UNKNOWN.value, UNKNOWN);
+    public String getLabel() {
+        return label;
     }
-    public static Gender getGender(String gender) {
-        if (genderMap.get(gender) == null) {
-            throw new RuntimeException(String.format("There is no gender mapping with name (%s)"));
+
+    public static ArrayList<Gender> getAll() {
+        ArrayList<Gender> list =  new ArrayList<Gender>();
+        list.add(MALE);
+        list.add(FEMALE);
+        list.add(UNKNOWN);
+        return list;
+    }
+
+    public static Gender getGender(String key) {
+        for(Gender gender: getAll()) {
+            if (gender.key.equals(key))
+                    return gender;
         }
-        return genderMap.get(gender);
+        return Gender.UNKNOWN;
     }
 }
+

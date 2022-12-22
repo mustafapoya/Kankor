@@ -1,0 +1,11 @@
+
+.input-error {
+    -fx-border-color: red;
+}
+
+.txt-error-message {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+    -fx-fill: red;
+}

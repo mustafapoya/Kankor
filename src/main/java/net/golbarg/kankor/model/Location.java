@@ -1,4 +1,4 @@
-package net.golbarg.kankor.kankor.model;
+package net.golbarg.kankor.model;
 
 public class Location {
     private int id;

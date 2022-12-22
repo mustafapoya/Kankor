@@ -1,10 +1,9 @@
-package net.golbarg.kankor.kankor.db;
+package net.golbarg.kankor.db;
 
-import net.golbarg.kankor.kankor.model.Gender;
-import net.golbarg.kankor.kankor.model.Location;
-import net.golbarg.kankor.kankor.model.User;
+import net.golbarg.kankor.model.Gender;
+import net.golbarg.kankor.model.Location;
+import net.golbarg.kankor.model.User;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

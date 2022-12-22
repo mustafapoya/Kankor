@@ -1,4 +1,4 @@
-package net.golbarg.kankor.kankor.controller;
+package net.golbarg.kankor.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

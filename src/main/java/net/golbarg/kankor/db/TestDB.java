@@ -1,12 +1,10 @@
-package net.golbarg.kankor.kankor.db;
-
-import java.sql.ResultSet;
+package net.golbarg.kankor.db;
 
 public class TestDB {
     public static void main(String[] args) {
 
         try {
-            new TableUser(DBController.getLocalConnection()).getAll();
+            new TableUser().getAll();
         } catch (Exception exception) {
             exception.printStackTrace();
         }

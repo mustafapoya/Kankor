@@ -1,4 +1,4 @@
-package net.golbarg.kankor.kankor.model;
+package net.golbarg.kankor.model;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,16 +17,16 @@ public enum Gender {
         return value;
     }
 
-    public static Map<String, Gender> typeMapping = new HashMap<>();
+    public static Map<String, Gender> genderMap = new HashMap<>();
     static {
-        typeMapping.put(Male.value, Male);
-        typeMapping.put(Female.value, Female);
-        typeMapping.put(UNKNOWN.value, UNKNOWN);
+        genderMap.put(Male.value, Male);
+        genderMap.put(Female.value, Female);
+        genderMap.put(UNKNOWN.value, UNKNOWN);
     }
     public static Gender getGender(String gender) {
-        if (typeMapping.get(gender) == null) {
+        if (genderMap.get(gender) == null) {
             throw new RuntimeException(String.format("There is no gender mapping with name (%s)"));
         }
-        return typeMapping.get(gender);
+        return genderMap.get(gender);
     }
 }

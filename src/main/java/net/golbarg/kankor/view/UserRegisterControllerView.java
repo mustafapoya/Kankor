@@ -68,6 +68,7 @@ public class UserRegisterControllerView implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         user = new User();
+        txtStatusMessage.setText("");
 
         btnSelectImage.setOnAction(event -> {
             handleSelectImage(null);
@@ -216,11 +217,15 @@ public class UserRegisterControllerView implements Initializable {
             if(errors.size() < 1) {
                 User user = new User(0, name, lastName, fatherName, username, password, province, schoolName, phoneNumber, selectedGender, userImage);
                 new TableUser().create(user);
-                txtStatusMessage.setText("");
+                txtStatusMessage.getStyleClass().remove("txt-error-message");
+                txtStatusMessage.getStyleClass().add("txt-success-message");
+                txtStatusMessage.setText("معلومات موفقانه ذخیره شده.");
+
             } else {
+                txtStatusMessage.getStyleClass().remove("txt-success-message");
+                txtStatusMessage.getStyleClass().add("txt-error-message");
                 txtStatusMessage.setText("برای ذخیره سازی معلومات را کامل درج نمائید.");
             }
-
         });
     }
 

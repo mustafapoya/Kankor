@@ -19,6 +19,7 @@ import net.golbarg.kankor.model.Gender;
 import net.golbarg.kankor.model.Location;
 import net.golbarg.kankor.model.User;
 import net.golbarg.kankor.controller.FileChooseDialog;
+import org.h2.util.json.JSONItemType;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
@@ -160,73 +161,41 @@ public class UserRegisterControllerView implements Initializable {
                 userImage = selectedUserImage.getName();
             }
 
-            if(username.length() < 1) {
-                errors.add(new ErrorMessage("", "یوزرنیم باید درج گردد"));
-                txtUsername.getStyleClass().add("input-error");
-            } else {
-                txtUsername.getStyleClass().remove("input-error");
-            }
+            validateInput(txtUsername, errors, 1, "یوزرنیم باید درج گردد");
 
             if(password.length() < 1) {
-                errors.add(new ErrorMessage("", "پسورد باید درج گردد"));
-                txtPassword.getStyleClass().add("input-error");
+                validateInput(txtPassword, errors, 1, "پسورد باید درج گردد");
             } else if(!password.equals(passwordConfirm)) {
                 errors.add(new ErrorMessage("", "پسورد ها یکسان نمیباشد"));
                 txtPassword.getStyleClass().add("input-error");
                 txtPasswordConfirm.getStyleClass().add("input-error");
             } else {
-                 txtPassword.getStyleClass().remove("input-error");
-                 txtPasswordConfirm.getStyleClass().remove("input-error");
+                 txtPassword.getStyleClass().removeIf(style -> style.equals("input-error"));
+                 txtPasswordConfirm.getStyleClass().removeIf(style -> style.equals("input-error"));
             }
 
-            if(name.length() < 1) {
-                errors.add(new ErrorMessage("", "یوزرنیم باید درج گردد"));
-                txtName.getStyleClass().add("input-error");
-            } else {
-                txtName.getStyleClass().remove("input-error");
-            }
-
-            if(lastName.length() < 1) {
-                errors.add(new ErrorMessage("", "یوزرنیم باید درج گردد"));
-                txtLastName.getStyleClass().add("input-error");
-            } else {
-                txtLastName.getStyleClass().remove("input-error");
-            }
-
-            if(fatherName.length() < 1) {
-                errors.add(new ErrorMessage("", "یوزرنیم باید درج گردد"));
-                txtFatherName.getStyleClass().add("input-error");
-            } else {
-                txtFatherName.getStyleClass().remove("input-error");
-            }
-
-            if(phoneNumber.length() < 1) {
-                errors.add(new ErrorMessage("", "یوزرنیم باید درج گردد"));
-                txtPhoneNumber.getStyleClass().add("input-error");
-            } else {
-                txtPhoneNumber.getStyleClass().remove("input-error");
-            }
-
-            if(schoolName.length() < 1) {
-                errors.add(new ErrorMessage("", "یوزرنیم باید درج گردد"));
-                txtSchoolName.getStyleClass().add("input-error");
-            } else {
-                txtSchoolName.getStyleClass().remove("input-error");
-            }
+            validateInput(txtName, errors, 1, "نام باید درج گردد");
+            validateInput(txtLastName, errors, 1, "تخلص باید درج گردد");
+            validateInput(txtFatherName, errors, 1, "نام پدر باید درج گردد");
+            validateInput(txtPhoneNumber, errors, 1, "شماره تلفن باید درج گردد");
+            validateInput(txtSchoolName, errors, 1, "مکتب باید درج گردد");
 
             if(errors.size() < 1) {
                 User user = new User(0, name, lastName, fatherName, username, password, province, schoolName, phoneNumber, selectedGender, userImage);
                 new TableUser().create(user);
-                txtStatusMessage.getStyleClass().remove("txt-error-message");
+
+                txtStatusMessage.getStyleClass().removeIf(style -> style.equals("txt-error-message"));
                 txtStatusMessage.getStyleClass().add("txt-success-message");
                 txtStatusMessage.setText("معلومات موفقانه ذخیره شده.");
-
+//                btnSave.setDisable(true);
             } else {
-                txtStatusMessage.getStyleClass().remove("txt-success-message");
+                txtStatusMessage.getStyleClass().removeIf(style -> style.equals("txt-success-message"));
                 txtStatusMessage.getStyleClass().add("txt-error-message");
                 txtStatusMessage.setText("برای ذخیره سازی معلومات را کامل درج نمائید.");
             }
         });
+
+
     }
 
     public void handleSelectImage(Stage stage) {
@@ -241,4 +210,12 @@ public class UserRegisterControllerView implements Initializable {
         }
     }
 
+    private void validateInput(TextField input, ArrayList<ErrorMessage> errorList, int min_length, String errorMessage) {
+        if(input.getText().length() < min_length) {
+            errorList.add(new ErrorMessage("", errorMessage));
+            input.getStyleClass().add("input-error");
+        } else {
+            input.getStyleClass().removeIf(style -> style.equals("input-error"));
+        }
+    }
 }

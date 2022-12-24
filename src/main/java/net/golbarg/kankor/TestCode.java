@@ -1,6 +1,6 @@
 package net.golbarg.kankor;
 
-import net.golbarg.kankor.util.Util;
+import net.golbarg.kankor.controller.Util;
 
 import java.io.File;
 import java.util.Arrays;

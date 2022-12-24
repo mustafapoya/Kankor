@@ -14,6 +14,6 @@ module net.golbarg.kankor.kankor {
 
     opens net.golbarg.kankor to javafx.fxml;
     exports net.golbarg.kankor;
-    exports net.golbarg.kankor.controller;
-    opens net.golbarg.kankor.controller to javafx.fxml;
+    exports net.golbarg.kankor.view;
+    opens net.golbarg.kankor.view to javafx.fxml;
 }

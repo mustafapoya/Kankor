@@ -1,12 +1,14 @@
-package net.golbarg.kankor.util;
+package net.golbarg.kankor.controller;
 
 import javafx.scene.image.Image;
+import net.golbarg.kankor.model.Gender;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 
 public class Util {
     public static File projectLocationFolder = new File("");
@@ -33,4 +35,5 @@ public class Util {
             return false;
         }
     }
+
 }

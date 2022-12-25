@@ -218,4 +218,8 @@ public class UserRegisterControllerView implements Initializable {
             input.getStyleClass().removeIf(style -> style.equals("input-error"));
         }
     }
+
+    public Button getBtnCancel() {
+        return btnCancel;
+    }
 }

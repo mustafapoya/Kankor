@@ -16,3 +16,7 @@
     -fx-text-fill: red;
     -fx-fill: red;
 }
+
+.titlebar {
+    -fx-background-color: #fe9003;
+}

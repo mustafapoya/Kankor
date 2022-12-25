@@ -17,7 +17,6 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        
         this.stage = stage;
         this.hostServices = getHostServices();
         loadMainView();
@@ -31,10 +30,14 @@ public class MainApp extends Application {
         return stage;
     }
 
-    private static void loadMainView() throws IOException {
+    private void loadMainView() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("view/main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+        BorderPane root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setTitle("Kankor");
+        stage.setScene(scene);
+        stage.show();
     }
     
     private void displayLoginPage() throws IOException {
@@ -44,7 +47,7 @@ public class MainApp extends Application {
         controller.setStage(stage);
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-        stage.setTitle("Hello!");
+        stage.setTitle("Kankor");
         stage.setScene(scene);
         stage.show();
     }

@@ -1,0 +1,22 @@
+
+.input-error {
+    -fx-border-color: red;
+}
+
+.txt-success-message {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: green;
+    -fx-fill: green;
+}
+
+.txt-error-message {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+    -fx-fill: red;
+}
+
+.titlebar {
+    -fx-background-color: #fe9003;
+}

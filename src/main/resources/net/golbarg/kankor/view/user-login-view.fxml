@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -13,17 +14,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="400.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.kankor.controller.UserLoginViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="420.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.UserLoginViewController">
    <top>
-      <VBox prefHeight="50.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+      <VBox alignment="CENTER" prefHeight="50.0" prefWidth="100.0" styleClass="titlebar" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="ورود">
+               <graphic>
+                  <FontIcon iconLiteral="bi-unlock-fill" />
+               </graphic>
+            </Label>
+         </children></VBox>
    </top>
    <bottom>
       <VBox prefHeight="40.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
    </bottom>
    <center>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="imgUserImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgUserImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@user_profile.png" />
+               </image></ImageView>
             <GridPane>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="294.0" />
@@ -48,7 +59,7 @@
                      </graphic>
                   </Label>
                    <ComboBox fx:id="comboUsername" maxWidth="1.7976931348623157E308" prefHeight="35.0" GridPane.rowIndex="1" />
-                   <TextField fx:id="txtPassword" maxWidth="1.7976931348623157E308" prefHeight="35.0" GridPane.rowIndex="3" />
+                   <TextField fx:id="txtPassword" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" GridPane.rowIndex="3" />
                   <Button fx:id="btnLogin" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" text="ورود" GridPane.rowIndex="4">
                      <graphic>
                         <FontIcon iconLiteral="bi-unlock-fill" iconSize="20" />
@@ -63,7 +74,7 @@
             </GridPane>
          </children>
          <padding>
-            <Insets left="5.0" right="5.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </VBox>
    </center>

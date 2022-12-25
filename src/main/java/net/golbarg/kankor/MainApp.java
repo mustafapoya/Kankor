@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import net.golbarg.kankor.view.UserLoginViewController;
@@ -16,10 +17,10 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        
         this.stage = stage;
         this.hostServices = getHostServices();
-
-        displayLoginPage();
+        loadMainView();
     }
 
     public static void main(String[] args) {
@@ -30,6 +31,12 @@ public class MainApp extends Application {
         return stage;
     }
 
+    private static void loadMainView() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("view/main-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Kankor");
+    }
+    
     private void displayLoginPage() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("view/user-login-view.fxml"));
         BorderPane root = fxmlLoader.load();

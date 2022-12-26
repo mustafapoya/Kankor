@@ -1,8 +1,11 @@
 package net.golbarg.kankor;
 
+import net.golbarg.kankor.controller.DirectoryController;
 import net.golbarg.kankor.controller.Util;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TestCode {
@@ -14,6 +17,13 @@ public class TestCode {
         System.out.println(file.getName());
         String [] parts = file.getName().split("\\.");
         System.out.println(Arrays.toString(parts));
+
+        try {
+            ArrayList<String> files = new DirectoryController("assets/db").getFiles();
+            System.out.println(files);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
 

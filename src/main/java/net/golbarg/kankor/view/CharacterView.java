@@ -3,9 +3,11 @@ package net.golbarg.kankor.view;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
+/** TODO: Refactor The CharacterView class for better use */
 public class CharacterView extends HBox {
     ObservableList<TextField> cells = FXCollections.observableArrayList();
     public SimpleStringProperty text = new SimpleStringProperty();
@@ -35,6 +37,8 @@ public class CharacterView extends HBox {
         for (int i = 0; i < numberOfColumns; i++) {
             TextField textField = new TextField();
             textField.setPrefColumnCount(1);
+            textField.setPrefHeight(29);
+            textField.setAlignment(Pos.CENTER_LEFT);
             cells.add(textField);
             this.getChildren().add(cells.get(i));
         }
@@ -64,9 +68,9 @@ public class CharacterView extends HBox {
         }
     }
 
-    public String cleanText(String text){
+    public static String cleanText(String text){
         String temp = "";
-        for (int i = 0;  i < text.length() && i < numberOfColumns; i++) {
+        for (int i = 0;  i < text.length(); i++) {
             if(Character.isLetter(text.charAt(i))){
                 temp += text.charAt(i);
             }

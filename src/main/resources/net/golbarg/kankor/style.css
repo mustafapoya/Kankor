@@ -20,3 +20,13 @@
 .titlebar {
     -fx-background-color: #fe9003;
 }
+
+.footer {
+    -fx-background-color: #c0c0c0;
+}
+
+.input-cell {
+    -fx-background-radius: 0;
+    -fx-background-color: #c0c0c0;
+    -fx-font-weight: bold;
+}

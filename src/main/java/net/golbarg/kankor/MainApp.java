@@ -19,7 +19,8 @@ public class MainApp extends Application {
     public void start(Stage stage) throws IOException {
         this.stage = stage;
         this.hostServices = getHostServices();
-        loadMainView();
+//        loadMainView();
+        loadView("view/kankor-form-view.fxml");
     }
 
     public static void main(String[] args) {
@@ -45,6 +46,16 @@ public class MainApp extends Application {
         BorderPane root = fxmlLoader.load();
         UserLoginViewController controller = fxmlLoader.getController();
         controller.setStage(stage);
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        stage.setTitle("Kankor");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void loadView(String viewPath) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource(viewPath));
+        BorderPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setTitle("Kankor");

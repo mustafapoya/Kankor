@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import net.golbarg.kankor.controller.Util;
+import net.golbarg.kankor.custom.CellFactorySample;
 import net.golbarg.kankor.db.TableLocation;
 import net.golbarg.kankor.db.TableUser;
 import net.golbarg.kankor.model.ErrorMessage;
@@ -81,63 +82,13 @@ public class UserRegisterControllerView implements Initializable {
         genderList.addAll(Gender.getAll());
         comboGender.setItems(genderList);
 
-        Callback<ListView<Location>, ListCell<Location>> cellFactory = new Callback<ListView<Location>, ListCell<Location>>() {
-            @Override
-            public ListCell call(ListView<Location> param) {
-                final Label lblLead = new Label();
-                FontIcon iconLocation = new FontIcon("fas-map-marker-alt");
-                iconLocation.setIconSize(14);
-
-                final ListCell<Location> cell = new ListCell<Location>(){
-                    @Override
-                    protected void updateItem(Location item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if(item != null) {
-                            lblLead.setText(item.getPersianName());
-                            setText(item.getPersianName());
-                            setGraphic(iconLocation);
-                        } else {
-                            lblLead.setText("");
-                            setText("");
-                            setGraphic(null);
-                        }
-                    }
-                };
-
-                return cell;
-            }
-        };
+        Callback<ListView<Location>, ListCell<Location>> cellFactory = CellFactorySample.getComboBoxLocation(null, 0);
 
         comboProvince.setButtonCell(cellFactory.call(null));
         comboProvince.setCellFactory(cellFactory);
         comboProvince.getSelectionModel().selectFirst();
 
-        Callback<ListView<Gender>, ListCell<Gender>> cellFactoryGender = new Callback<ListView<Gender>, ListCell<Gender>>() {
-            @Override
-            public ListCell call(ListView<Gender> param) {
-                final Label lblLead = new Label();
-                FontIcon icon = new FontIcon("fab-odnoklassniki");
-                icon.setIconSize(14);
-
-                final ListCell<Gender> cell = new ListCell<Gender>(){
-                    @Override
-                    protected void updateItem(Gender item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if(item != null) {
-                            lblLead.setText(item.getLabel());
-                            setText(item.getLabel());
-                            setGraphic(icon);
-                        } else {
-                            lblLead.setText("");
-                            setText("");
-                            setGraphic(null);
-                        }
-                    }
-                };
-
-                return cell;
-            }
-        };
+        Callback<ListView<Gender>, ListCell<Gender>> cellFactoryGender = CellFactorySample.getComboBoxGender(null, 0);
 
         comboGender.setButtonCell(cellFactoryGender.call(null));
         comboGender.setCellFactory(cellFactoryGender);

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+
+
+<HBox nodeOrientation="RIGHT_TO_LEFT" spacing="1.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.CharacterCellViewController">
+   <children>
+      <TextField alignment="CENTER" prefHeight="29.0" prefWidth="35.0" styleClass="input-cell" HBox.hgrow="NEVER" />
+      <TextField alignment="CENTER" prefHeight="29.0" prefWidth="35.0" styleClass="input-cell" HBox.hgrow="NEVER" />
+   </children>
+   <padding>
+      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+   </padding>
+</HBox>

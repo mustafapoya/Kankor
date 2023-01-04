@@ -3,7 +3,6 @@ package net.golbarg.kankor.db;
 import net.golbarg.kankor.model.Gender;
 import net.golbarg.kankor.model.Location;
 import net.golbarg.kankor.model.User;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 public class TableUser implements CRUDHandler<User> {
     public static final String TABLE_NAME = "users";
     public static final String [] COLUMNS = {"ID", "NAME", "LAST_NAME", "FATHER_NAME", "USER_NAME", "PASSWORD",
-                                             "LOCATION_ID", "SCHOOL_NAME", "PHONE_NUMBER", "GENDER", "PHOTO"};
+            "LOCATION_ID", "SCHOOL_NAME", "PHONE_NUMBER", "GENDER", "PHOTO"};
     public static final String COLUMNS_STR = "ID, NAME, LAST_NAME, FATHER_NAME, USER_NAME, PASSWORD, LOCATION_ID, SCHOOL_NAME, PHONE_NUMBER, GENDER, PHOTO";
 
     public ArrayList<User> getAll() {
@@ -33,7 +32,26 @@ public class TableUser implements CRUDHandler<User> {
     }
 
     public User findById(int id) {
-        return null;
+        String query = String.format("SELECT %s FROM %s where id = ?;", COLUMNS_STR, TABLE_NAME);
+
+        User user = null;
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                user = mapColumn(resultSet);
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return user;
     }
 
     public boolean create(User user) {
@@ -53,21 +71,77 @@ public class TableUser implements CRUDHandler<User> {
         return false;
     }
 
-    public boolean update(User user) {
+    public boolean update(User object) {
+        String query = "update users set NAME = ?, LAST_NAME = ?, FATHER_NAME = ?, USER_NAME = ?, PASSWORD = ?, LOCATION_ID = ?, SCHOOL_NAME = ?, PHONE_NUMBER = ?, GENDER = ?, PHOTO = ? where id = ?";
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement = putValues(statement, object);
+            statement.setInt(11, object.getId());
+            statement.executeUpdate();
+
+            return true;
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
         return false;
     }
 
-    public boolean delete(User user) {
+    public boolean delete(User object) {
+        String query = "DELETE from users where id = ?";
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, object.getId());
+            statement.executeUpdate();
+
+            return true;
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
         return false;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        String query = String.format("SELECT count(*) as record_count FROM %s", COLUMNS_STR, TABLE_NAME);
+
+        int count = 0;
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                count = resultSet.getInt("record_count");
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return count;
     }
 
     @Override
     public boolean emptyTable() {
+        String query = "truncate table " + TABLE_NAME;
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.executeUpdate();
+
+            return true;
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
         return false;
     }
 
@@ -87,6 +161,7 @@ public class TableUser implements CRUDHandler<User> {
                 result.getString("PHOTO")
         );
     }
+
     public PreparedStatement putValues(PreparedStatement statement, User object) throws SQLException {
         statement.setString(1, object.getName());
         statement.setString(2, object.getLastName());

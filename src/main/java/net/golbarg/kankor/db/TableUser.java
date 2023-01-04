@@ -87,17 +87,17 @@ public class TableUser implements CRUDHandler<User> {
                 result.getString("PHOTO")
         );
     }
-    public PreparedStatement putValues(PreparedStatement statement, User user) throws SQLException {
-        statement.setString(1, user.getName());
-        statement.setString(2, user.getLastName());
-        statement.setString(3, user.getFatherName());
-        statement.setString(4, user.getUserName());
-        statement.setString(5, user.getPassword());
-        statement.setInt(6, user.getLocation().getId());
-        statement.setString(7, user.getSchoolName());
-        statement.setString(8, user.getPhoneNumber());
-        statement.setString(9, user.getGender().getKey());
-        statement.setString(10, user.getPhoto());
+    public PreparedStatement putValues(PreparedStatement statement, User object) throws SQLException {
+        statement.setString(1, object.getName());
+        statement.setString(2, object.getLastName());
+        statement.setString(3, object.getFatherName());
+        statement.setString(4, object.getUserName());
+        statement.setString(5, object.getPassword());
+        statement.setInt(6, object.getLocation().getId());
+        statement.setString(7, object.getSchoolName());
+        statement.setString(8, object.getPhoneNumber());
+        statement.setString(9, object.getGender().getKey());
+        statement.setString(10, object.getPhoto());
         return statement;
     }
 }

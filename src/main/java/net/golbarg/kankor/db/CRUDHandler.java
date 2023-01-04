@@ -14,8 +14,7 @@ public interface CRUDHandler<ModelClass> {
     public boolean update(ModelClass object);
     public boolean delete(ModelClass object);
     public int getCount();
+    public boolean emptyTable();
     public ModelClass mapColumn(ResultSet result) throws SQLException;
     public PreparedStatement putValues(PreparedStatement statement, ModelClass object) throws SQLException;
-    public boolean emptyTable();
-
 }

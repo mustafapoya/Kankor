@@ -14,6 +14,46 @@ public class TableLocation implements CRUDHandler<Location> {
     public static final String COLUMNS_STR = "ID, TYPE, ZONE, PARENT_ID, NAME, NAME_DA";
 
     @Override
+    public boolean create(Location object) {
+        String query = "insert into locations (TYPE, ZONE, PARENT_ID, NAME, NAME_DA) values (?, ?, ?, ?, ?)";
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement = putValues(statement, object);
+            statement.executeUpdate();
+
+            return true;
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public Location findById(int id) {
+        String query = String.format("SELECT %s FROM %s where id = ?;", COLUMNS_STR, TABLE_NAME);
+
+        Location location = null;
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                location = mapColumn(resultSet);
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return location;
+    }
+    @Override
     public ArrayList<Location> getAll() {
         String query = String.format("SELECT %s FROM %s;", COLUMNS_STR, TABLE_NAME);
         ArrayList<Location> locationList = new ArrayList<>();
@@ -44,47 +84,6 @@ public class TableLocation implements CRUDHandler<Location> {
             exception.printStackTrace();
         }
         return locationList;
-    }
-
-    public Location findById(int id) {
-        String query = String.format("SELECT %s FROM %s where id = ?;", COLUMNS_STR, TABLE_NAME);
-
-        Location location = null;
-
-        try {
-            Connection connection = DBController.getLocalConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, id);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            if(resultSet.next()) {
-                location = mapColumn(resultSet);
-            }
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-
-        return location;
-    }
-
-    @Override
-    public boolean create(Location object) {
-        String query = "insert into locations (TYPE, ZONE, PARENT_ID, NAME, NAME_DA) values (?, ?, ?, ?, ?)";
-
-        try {
-            Connection connection = DBController.getLocalConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement = putValues(statement, object);
-            statement.executeUpdate();
-
-            return true;
-        } catch(Exception exception) {
-            exception.printStackTrace();
-        }
-
-        return false;
     }
 
     @Override
@@ -126,7 +125,7 @@ public class TableLocation implements CRUDHandler<Location> {
 
     @Override
     public int getCount() {
-        String query = String.format("SELECT count(*) as record_count FROM %s", COLUMNS_STR, TABLE_NAME);
+        String query = String.format("SELECT count(*) as record_count FROM %s", TABLE_NAME);
 
         int count = 0;
 

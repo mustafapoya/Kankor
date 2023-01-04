@@ -1,5 +1,8 @@
 package net.golbarg.kankor.db;
 
+import net.golbarg.kankor.model.User;
+
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,5 +15,7 @@ public interface CRUDHandler<ModelClass> {
     public boolean delete(ModelClass object);
     public int getCount();
     public ModelClass mapColumn(ResultSet result) throws SQLException;
+    public PreparedStatement putValues(PreparedStatement statement, ModelClass object) throws SQLException;
     public boolean emptyTable();
+
 }

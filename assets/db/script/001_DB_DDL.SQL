@@ -14,14 +14,17 @@ create table `users` (
     `phone_number` varchar(16),
     `gender` ENUM('M', 'F', 'U'),
     `photo` varchar(256),
-    constraint PRIMARY_KEY_ID primary key (`id`)
+    primary key (`id`)
 );
 
 create unique index UNIQUE_NAME on users (user_name);
 
-INSERT INTO PUBLIC.users (NAME, LAST_NAME, FATHER_NAME, USER_NAME, `PASSWORD`, LOCATION_ID,
-                          SCHOOL_NAME, PHONE_NUMBER, GENDER, PHOTO)
-VALUES ('Mustafa', 'Poya', 'Karim', 'Mustafa', '123456', 1, 'Qazanchi Baba', '0782552663', 'M', null);
+INSERT INTO PUBLIC.USERS (NAME, LAST_NAME, FATHER_NAME, USER_NAME, PASSWORD, LOCATION_ID, SCHOOL_NAME, PHONE_NUMBER, GENDER, PHOTO)
+    VALUES ('Mustafa', 'Poya', 'Karim', 'Mustafa', '123456', 1, 'Qazanchi Baba', '0782552663', 'M', null);
+
+INSERT INTO PUBLIC.USERS (NAME, LAST_NAME, FATHER_NAME, USER_NAME, PASSWORD, LOCATION_ID, SCHOOL_NAME, PHONE_NUMBER, GENDER, PHOTO)
+    VALUES ('علی', 'احمدی', 'محمد', 'ali', '123', 2, 'مزار شریف', '0782552663', 'M', '');
+
 
 /* Configs Table Related Query */
 drop table if exists `configs`;
@@ -33,6 +36,30 @@ create table `configs` (
      `created_at` timestamp,
      `updated_at` timestamp,
      primary key (`id`)
+);
+
+/* Kankor Form Table Related Query */
+drop table if exists `kankor_forms`;
+
+create table `kankor_forms`(
+    `id` INTEGER not null auto_increment,
+    `user_id` INTEGER not null,
+    `name` varchar(256) not null,
+    `last_name` varchar(256),
+    `father_name` varchar(256) not null,
+    `grand_father_name` varchar(256) not null,
+    `current_province` INTEGER,
+    `current_district` varchar(256),
+    `current_village` varchar(256),
+    `original_province` INTEGER,
+    `original_district` varchar(256),
+    `original_village` varchar(256),
+    `graduate_year` INTEGER,
+    `school_name` varchar(256),
+    `tazkira_id` varchar(256),
+    `gender` ENUM('M', 'F', 'U'),
+    `language` varchar(256),
+    primary key (`id`)
 );
 
 /* Locations Table Related Query */

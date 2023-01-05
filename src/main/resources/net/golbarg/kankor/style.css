@@ -30,3 +30,8 @@
     -fx-background-color: #c0c0c0;
     -fx-font-weight: bold;
 }
+
+.lblClockTime {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+}

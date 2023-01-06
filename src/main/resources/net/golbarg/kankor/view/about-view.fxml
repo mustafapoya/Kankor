@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.AboutViewController">
+    <center>
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+    </center>
+   <top>
+        <HBox alignment="CENTER_LEFT" prefWidth="200.0" styleClass="about-header" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER_LEFT" HBox.hgrow="SOMETIMES">
+                    <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@golbarg.png" />
+                            </image>
+                        </ImageView>
+                        <VBox alignment="CENTER_LEFT">
+                            <children>
+                                <Label styleClass="lblGolbarg" text="گلبرگ">
+                                </Label>
+                                <Label styleClass="lblGolbargDesc" text="شرکت توسعه نرم افزاری">
+                                </Label>
+                            </children>
+                        </VBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="TOP_RIGHT" prefWidth="200.0" spacing="2.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Button fx:id="btnWebsite" contentDisplay="TOP" mnemonicParsing="false" prefHeight="60.0" prefWidth="70.0" style="-fx-background-radius: 0px 0px 10px 10px;" text="Golbarg">
+                            <graphic>
+                                <FontIcon iconColor="#fe9003" iconLiteral="bi-globe" iconSize="30" />
+                            </graphic>
+                        </Button>
+                        <Button fx:id="btnYoutube" contentDisplay="TOP" mnemonicParsing="false" prefHeight="60.0" prefWidth="70.0" style="-fx-background-radius: 0px 0px 10px 10px;" text="YouTube">
+                            <graphic>
+                                <FontIcon iconColor="#d11111" iconLiteral="bi-youtube" iconSize="30" />
+                            </graphic>
+                        </Button>
+                        <Button fx:id="btnGithub" contentDisplay="TOP" mnemonicParsing="false" prefHeight="60.0" prefWidth="70.0" style="-fx-background-radius: 0px 0px 10px 10px;" text="GitHub">
+                            <graphic>
+                                <FontIcon iconLiteral="bi-github" iconSize="30" />
+                            </graphic>
+                        </Button>
+                        <Button fx:id="btnLinkedin" contentDisplay="TOP" mnemonicParsing="false" prefHeight="60.0" prefWidth="70.0" style="-fx-background-radius: 0px 0px 10px 10px;" text="Linkedin">
+                            <graphic>
+                                <FontIcon iconColor="#0075bf" iconLiteral="bi-linkedin" iconSize="30" />
+                            </graphic>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </HBox>
+   </top>
+</BorderPane>

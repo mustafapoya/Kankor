@@ -7,6 +7,7 @@ import javafx.util.Callback;
 import net.golbarg.kankor.model.Gender;
 import net.golbarg.kankor.model.Language;
 import net.golbarg.kankor.model.Location;
+import net.golbarg.kankor.model.Tutorial;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class CellFactorySample {
@@ -87,6 +88,37 @@ public class CellFactorySample {
                         if(item != null) {
                             lblLead.setText(item.getLabel());
                             setText(item.getLabel());
+                            setGraphic(iconLanguage);
+                        } else {
+                            lblLead.setText("");
+                            setText("");
+                            setGraphic(null);
+                        }
+                    }
+                };
+
+                return cell;
+            }
+        };
+
+        return cellFactory;
+    }
+
+    public static Callback<ListView<Tutorial>, ListCell<Tutorial>> getComboBoxTutorial(String icon, int iconSize) {
+        Callback<ListView<Tutorial>, ListCell<Tutorial>> cellFactory = new Callback<ListView<Tutorial>, ListCell<Tutorial>>() {
+            @Override
+            public ListCell call(ListView<Tutorial> param) {
+                final Label lblLead = new Label();
+                FontIcon iconLanguage = new FontIcon((icon == null || icon.isEmpty()) ? "bi-kanban" : icon);
+                iconLanguage.setIconSize(iconSize < 1 ? 14 : iconSize);
+
+                final ListCell<Tutorial> cell = new ListCell<Tutorial>(){
+                    @Override
+                    protected void updateItem(Tutorial item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(item != null) {
+                            lblLead.setText(item.getTitle());
+                            setText(item.getTitle());
                             setGraphic(iconLanguage);
                         } else {
                             lblLead.setText("");

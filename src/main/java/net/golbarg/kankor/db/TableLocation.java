@@ -34,7 +34,7 @@ public class TableLocation implements CRUDHandler<Location> {
     public Location findById(int id) {
         String query = String.format("SELECT %s FROM %s where id = ?;", COLUMNS_STR, TABLE_NAME);
 
-        Location location = null;
+        Location object = null;
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -44,46 +44,46 @@ public class TableLocation implements CRUDHandler<Location> {
             ResultSet resultSet = statement.executeQuery();
 
             if(resultSet.next()) {
-                location = mapColumn(resultSet);
+                object = mapColumn(resultSet);
             }
 
         } catch (Exception exception) {
             exception.printStackTrace();
         }
 
-        return location;
+        return object;
     }
     @Override
     public ArrayList<Location> getAll() {
         String query = String.format("SELECT %s FROM %s;", COLUMNS_STR, TABLE_NAME);
-        ArrayList<Location> locationList = new ArrayList<>();
+        ArrayList<Location> resultList = new ArrayList<>();
         try {
             ResultSet result = DBController.executeQuery(query);
             while (result.next()) {
-                Location location = mapColumn(result);
-                locationList.add(location);
+                Location object = mapColumn(result);
+                resultList.add(object);
             }
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        return locationList;
+        return resultList;
     }
 
     public ArrayList<Location> getAllProvince() {
         String query = String.format("SELECT %s FROM %s WHERE type = 1 and ID > 1 ORDER BY NAME ASC;", COLUMNS_STR, TABLE_NAME);
 
-        ArrayList<Location> locationList = new ArrayList<>();
+        ArrayList<Location> resultList = new ArrayList<>();
 
         try {
             ResultSet result = DBController.executeQuery(query);
             while (result.next()) {
-                Location location = mapColumn(result);
-                locationList.add(location);
+                Location object = mapColumn(result);
+                resultList.add(object);
             }
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        return locationList;
+        return resultList;
     }
 
     @Override

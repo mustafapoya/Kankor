@@ -12,6 +12,7 @@ module net.golbarg.kankor.kankor {
     requires eu.hansolo.tilesfx;
     requires com.h2database;
     requires PDFViewerFX;
+    requires com.google.gson;
 
 
     opens net.golbarg.kankor to javafx.fxml;

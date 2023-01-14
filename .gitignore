@@ -39,3 +39,4 @@ build/
 
 ### DB ###
 /assets/db/*.db
+/assets/resource/

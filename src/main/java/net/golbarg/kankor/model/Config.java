@@ -1,16 +1,15 @@
 package net.golbarg.kankor.model;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Config {
     private int id;
     private String key;
     private String value;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Date createdAt;
+    private Date updatedAt;
 
-    public Config(int id, String key, String value, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Config(int id, String key, String value, Date createdAt, Date updatedAt) {
         this.id = id;
         this.key = key;
         this.value = value;
@@ -42,19 +41,19 @@ public class Config {
         this.value = value;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 

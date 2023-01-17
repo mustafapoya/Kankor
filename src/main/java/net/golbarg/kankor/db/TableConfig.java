@@ -1,22 +1,21 @@
 package net.golbarg.kankor.db;
 
+import net.golbarg.kankor.model.Config;
 import net.golbarg.kankor.model.Gender;
 import net.golbarg.kankor.model.Location;
 import net.golbarg.kankor.model.User;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 
-public class TableUser implements CRUDHandler<User> {
-    public static final String TABLE_NAME = "users";
-    public static final String [] COLUMNS = {"ID", "NAME", "LAST_NAME", "FATHER_NAME", "USER_NAME", "PASSWORD",
-            "LOCATION_ID", "SCHOOL_NAME", "PHONE_NUMBER", "GENDER", "PHOTO"};
-    public static final String COLUMNS_STR = "ID, NAME, LAST_NAME, FATHER_NAME, USER_NAME, PASSWORD, LOCATION_ID, SCHOOL_NAME, PHONE_NUMBER, GENDER, PHOTO";
+public class TableConfig implements CRUDHandler<Config> {
+    public static final String TABLE_NAME = "CONFIGS";
+    public static final String [] COLUMNS = {"ID", "CONF_KEY", "CONF_VALUE", "CREATED_AT", "UPDATED_AT"};
+    public static final String COLUMNS_STR = "ID, CONF_KEY, CONF_VALUE, CREATED_AT, UPDATED_AT";
 
-    public boolean create(User object) {
-        String query = String.format("insert into %s NAME, LAST_NAME, FATHER_NAME, USER_NAME, PASSWORD, LOCATION_ID, SCHOOL_NAME, PHONE_NUMBER, GENDER, PHOTO) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
+    @Override
+    public boolean create(Config object) {
+        String query = String.format("insert into %s (CONF_KEY, CONF_VALUE, CREATED_AT, UPDATED_AT) values (?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -32,12 +31,14 @@ public class TableUser implements CRUDHandler<User> {
         return false;
     }
 
-    public User findById(int id) {
+    @Override
+    public Config findById(int id) {
         String query = String.format("SELECT %s FROM %s where id = ?;", COLUMNS_STR, TABLE_NAME);
 
-        User object = null;
+        Config object = null;
 
         try {
+
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
@@ -55,14 +56,16 @@ public class TableUser implements CRUDHandler<User> {
         return object;
     }
 
-    public ArrayList<User> getAll() {
+    @Override
+    public ArrayList<Config> getAll() {
         String query = String.format("SELECT %s FROM %s;", COLUMNS_STR, TABLE_NAME);
-        ArrayList<User> resultList = new ArrayList<>();
+
+        ArrayList<Config> resultList = new ArrayList<>();
 
         try {
             ResultSet result = DBController.executeQuery(query);
             while (result.next()) {
-                User object = mapColumn(result);
+                Config object = mapColumn(result);
                 resultList.add(object);
             }
         } catch (Exception exception) {
@@ -71,14 +74,15 @@ public class TableUser implements CRUDHandler<User> {
         return resultList;
     }
 
-    public boolean update(User object) {
-        String query = "update " + TABLE_NAME + " set NAME = ?, LAST_NAME = ?, FATHER_NAME = ?, USER_NAME = ?, PASSWORD = ?, LOCATION_ID = ?, SCHOOL_NAME = ?, PHONE_NUMBER = ?, GENDER = ?, PHOTO = ? where id = ?";
+    @Override
+    public boolean update(Config object) {
+        String query = String.format("update %s set CONF_KEY = ?, CONF_VALUE = ?, CREATED_AT = ?, UPDATED_AT = ? where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement = putValues(statement, object);
-            statement.setInt(11, object.getId());
+            statement.setInt(5, object.getId());
             statement.executeUpdate();
 
             return true;
@@ -89,8 +93,9 @@ public class TableUser implements CRUDHandler<User> {
         return false;
     }
 
-    public boolean delete(User object) {
-        String query = "DELETE from " + TABLE_NAME + " where id = ?";
+    @Override
+    public boolean delete(Config object) {
+        String query = String.format("DELETE from %s where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -146,33 +151,22 @@ public class TableUser implements CRUDHandler<User> {
     }
 
     @Override
-    public User mapColumn(ResultSet result) throws SQLException {
-        return new User(
+    public Config mapColumn(ResultSet result) throws SQLException {
+        return new Config(
                 result.getInt("ID"),
-                result.getString("NAME"),
-                result.getString("LAST_NAME"),
-                result.getString("FATHER_NAME"),
-                result.getString("USER_NAME"),
-                result.getString("PASSWORD"),
-                new Location(result.getInt("LOCATION_ID"), 0, "", 0, "", ""),
-                result.getString("SCHOOL_NAME"),
-                result.getString("PHONE_NUMBER"),
-                Gender.getGender(result.getString("GENDER")),
-                result.getString("PHOTO")
+                result.getString("CONF_KEY"),
+                result.getString("CONF_VALUE"),
+                result.getDate("CREATED_AT"),
+                result.getDate("UPDATED_AT")
         );
     }
 
-    public PreparedStatement putValues(PreparedStatement statement, User object) throws SQLException {
-        statement.setString(1, object.getName());
-        statement.setString(2, object.getLastName());
-        statement.setString(3, object.getFatherName());
-        statement.setString(4, object.getUserName());
-        statement.setString(5, object.getPassword());
-        statement.setInt(6, object.getLocation().getId());
-        statement.setString(7, object.getSchoolName());
-        statement.setString(8, object.getPhoneNumber());
-        statement.setString(9, object.getGender().getKey());
-        statement.setString(10, object.getPhoto());
+    @Override
+    public PreparedStatement putValues(PreparedStatement statement, Config object) throws SQLException {
+        statement.setString(1, object.getKey());
+        statement.setString(2, object.getValue());
+        statement.setDate(3, Date.valueOf(object.getCreatedAt().toString()));
+        statement.setDate(4, Date.valueOf(object.getUpdatedAt().toString()));
         return statement;
     }
 }

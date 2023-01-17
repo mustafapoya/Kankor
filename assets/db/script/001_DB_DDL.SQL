@@ -432,6 +432,26 @@ create table tutorial_details (
     primary key (`ID`)
 );
 
+/* Questions Table Related Query */
+drop table if exists `QUESTIONS`;
+
+create table QUESTIONS (
+    ID          INTEGER AUTO_INCREMENT,
+    QUESTION    CLOB    not null,
+    CHOICE1     CLOB    not null,
+    CHOICE2     CLOB    not null,
+    CHOICE3     CLOB    not null,
+    CHOICE4     CLOB    not null,
+    CORRECT_CHOICE       INTEGER not null,
+    RELATED_CLASS        VARCHAR,
+    SUBJECT_NAME         VARCHAR,
+    QUESTION_TYPE        VARCHAR,
+    QUESTION_UPDATE      INTEGER,
+
+    primary key (`ID`)
+);
+
+
 /* Tutorials Table Related Query */
 drop table if exists `RESOURCE_CATEGORIES`;
 
@@ -511,4 +531,45 @@ values  (3, 1, 'کتاب دری صنف دوازدهم', '12/G12_dr_Dari Language
         (48, 4, 'کتاب حرفه صنف نهم', '9/G9_dr_Profession.pdf', null, 4.52),
         (49, 4, 'کتاب تعلیم قرآن کریم صنف نهم', '9/G9_dr_Tajweed.pdf', null, 22.12),
         (1, 1, 'کتاب بیولوژی صنف دوازدهم', '12/G12_dr_Biology.pdf', 'null', 6.80);
+
+
+/* Reviews Table Related Query */
+drop table if exists `REVIEWS`;
+
+create table REVIEWS (
+    ID                INTEGER AUTO_INCREMENT,
+    QUESTION_ID       INTEGER,
+    SUBJECT_NAME      VARCHAR(256),
+
+    primary key (`ID`)
+);
+
+insert into PUBLIC.REVIEWS (ID, QUESTION_ID, SUBJECT_NAME)
+values  (1, 21, 'history'),
+        (2, 1, 'history'),
+        (3, 1, 'history'),
+        (4, 1, 'history');
+
+
+/* Updates Table Related Query */
+drop table if exists `UPDATES`;
+
+create table `UPDATES` (
+    ID          INTEGER AUTO_INCREMENT,
+    CONTENT     VARCHAR(256),
+    DESCRIPTION CLOB,
+    primary key (`ID`)
+);
+
+insert into PUBLIC.UPDATES (ID, CONTENT, DESCRIPTION)
+values  (0, 'سوالات اولیه', 'این گزینه شامل سوالاتی است که از قبل در داخل برنامه وجود داشته است'),
+        (1, 'سوالات تاریخ', '<html>
+	<body dir = "rtl">
+		<p>
+		این بخش دانلود شامل 150 سوال از بخش کیمیا میباشد که شامل
+		</p>
+	</body>
+</html>'),
+        (2, 'سوالات کیمیا', 'این بخش شامل سوالاتی کیمیا است');
+
 

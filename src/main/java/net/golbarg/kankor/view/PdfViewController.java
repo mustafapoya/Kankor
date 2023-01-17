@@ -1,6 +1,7 @@
 package net.golbarg.kankor.view;
 
 import com.dansoftware.pdfdisplayer.PDFDisplayer;
+import com.dansoftware.pdfdisplayer.PdfJSVersion;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -34,7 +35,7 @@ public class PdfViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            PDFDisplayer displayer = new PDFDisplayer();
+            PDFDisplayer displayer = new PDFDisplayer(PdfJSVersion._2_2_228);
             root.setCenter(displayer.toNode());
             displayer.loadPDF(new File("C:\\Users\\mine\\Downloads\\Documents\\Mustafa new CV.pdf"));
         } catch (IOException e) {

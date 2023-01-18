@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TableResource implements CRUDHandler<Resource> {
-    public static final String TABLE_NAME = "EMAILS";
+    public static final String TABLE_NAME = "RESOURCES";
     public static final String [] COLUMNS = {"ID", "CATEGORY_ID", "NAME", "FILE_NAME", "DESCRIPTION", "SIZE"};
     public static final String COLUMNS_STR = "ID, CATEGORY_ID, NAME, FILE_NAME, DESCRIPTION, `SIZE`";
 

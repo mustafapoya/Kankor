@@ -15,6 +15,19 @@ public class TableTutorial implements CRUDHandler<Tutorial> {
 
     @Override
     public boolean create(Tutorial object) {
+        String query = String.format("insert into %s (TITLE) values (?)", TABLE_NAME);
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement = putValues(statement, object);
+            statement.executeUpdate();
+
+            return true;
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
         return false;
     }
 
@@ -60,11 +73,38 @@ public class TableTutorial implements CRUDHandler<Tutorial> {
 
     @Override
     public boolean update(Tutorial object) {
+        String query = String.format("update %s set TITLE = ? where id = ?", TABLE_NAME);
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement = putValues(statement, object);
+            statement.setInt(2, object.getId());
+            statement.executeUpdate();
+
+            return true;
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
         return false;
     }
 
     @Override
     public boolean delete(Tutorial object) {
+        String query = String.format("DELETE from %s where id = ?", TABLE_NAME);
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, object.getId());
+            statement.executeUpdate();
+
+            return true;
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
         return false;
     }
 

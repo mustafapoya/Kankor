@@ -17,7 +17,7 @@ public class TableKankorForm implements CRUDHandler<KankorForm> {
 
     @Override
     public boolean create(KankorForm object) {
-        String query = "insert into KANKOR_FORMS (USER_ID, NAME, LAST_NAME, FATHER_NAME, GRAND_FATHER_NAME, CURRENT_PROVINCE, CURRENT_DISTRICT, CURRENT_VILLAGE, ORIGINAL_PROVINCE, ORIGINAL_DISTRICT, ORIGINAL_VILLAGE, GRADUATE_YEAR, SCHOOL_NAME, TAZKIRA_ID, GENDER, LANGUAGE) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String query = String.format("insert into %s (USER_ID, NAME, LAST_NAME, FATHER_NAME, GRAND_FATHER_NAME, CURRENT_PROVINCE, CURRENT_DISTRICT, CURRENT_VILLAGE, ORIGINAL_PROVINCE, ORIGINAL_DISTRICT, ORIGINAL_VILLAGE, GRADUATE_YEAR, SCHOOL_NAME, TAZKIRA_ID, GENDER, LANGUAGE) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -75,13 +75,13 @@ public class TableKankorForm implements CRUDHandler<KankorForm> {
 
     @Override
     public boolean update(KankorForm object) {
-        String query = "update kankor_forms set USER_ID = ?, NAME = ?, LAST_NAME = ?, FATHER_NAME = ?, GRAND_FATHER_NAME = ?, CURRENT_PROVINCE = ?, CURRENT_DISTRICT = ?, CURRENT_VILLAGE = ?, ORIGINAL_PROVINCE = ?, ORIGINAL_DISTRICT = ?, ORIGINAL_VILLAGE = ?, GRADUATE_YEAR = ?, SCHOOL_NAME = ?, TAZKIRA_ID = ?, GENDER = ?, LANGUAGE = ? where id = ?";
+        String query = String.format("update %s set USER_ID = ?, NAME = ?, LAST_NAME = ?, FATHER_NAME = ?, GRAND_FATHER_NAME = ?, CURRENT_PROVINCE = ?, CURRENT_DISTRICT = ?, CURRENT_VILLAGE = ?, ORIGINAL_PROVINCE = ?, ORIGINAL_DISTRICT = ?, ORIGINAL_VILLAGE = ?, GRADUATE_YEAR = ?, SCHOOL_NAME = ?, TAZKIRA_ID = ?, GENDER = ?, LANGUAGE = ? where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement = putValues(statement, object);
-            statement.setInt(6, object.getId());
+            statement.setInt(17, object.getId());
             statement.executeUpdate();
 
             return true;
@@ -94,7 +94,7 @@ public class TableKankorForm implements CRUDHandler<KankorForm> {
 
     @Override
     public boolean delete(KankorForm object) {
-        String query = "DELETE from kankor_forms where id = ?";
+        String query = String.format("DELETE from %s where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();

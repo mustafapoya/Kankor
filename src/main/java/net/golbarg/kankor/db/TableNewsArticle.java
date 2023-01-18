@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class TableNewsArticle implements CRUDHandler<NewsArticle> {
-    public static final String TABLE_NAME = "EMAILS";
+    public static final String TABLE_NAME = "NEWS_ARTICLE";
     public static final String [] COLUMNS = {"ID", "TITLE", "CONTENT", "URL_LINK", "DATE", "DESCRIPTION", "CATEGORY"};
     public static final String COLUMNS_STR = "ID, TITLE, CONTENT, URL_LINK, DATE, DESCRIPTION, CATEGORY";
 

@@ -15,7 +15,7 @@ public class TableLocation implements CRUDHandler<Location> {
 
     @Override
     public boolean create(Location object) {
-        String query = "insert into locations (TYPE, ZONE, PARENT_ID, NAME, NAME_DA) values (?, ?, ?, ?, ?)";
+        String query = String.format("insert into %s (TYPE, ZONE, PARENT_ID, NAME, NAME_DA) values (?, ?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -88,7 +88,7 @@ public class TableLocation implements CRUDHandler<Location> {
 
     @Override
     public boolean update(Location object) {
-        String query = "update locations set TYPE = ?, ZONE = ?, PARENT_ID = ?, NAME = ?, NAME_DA = ? where id = ?";
+        String query = String.format("update %s set TYPE = ?, ZONE = ?, PARENT_ID = ?, NAME = ?, NAME_DA = ? where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -107,7 +107,7 @@ public class TableLocation implements CRUDHandler<Location> {
 
     @Override
     public boolean delete(Location object) {
-        String query = "DELETE from locations where id = ?";
+        String query = String.format("DELETE from %s where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();

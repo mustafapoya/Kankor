@@ -60,11 +60,38 @@ public class TableTutorialDetail implements CRUDHandler<TutorialDetail> {
 
     @Override
     public boolean update(TutorialDetail object) {
+        String query = String.format("update %s set TUTORIAL_ID = ?, TITLE = ?, SHORT_DESC = ?, FULL_DESC = ?, SHORT_DESC_ICON = ?, ICON_NAME = ? where id = ?", TABLE_NAME);
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement = putValues(statement, object);
+            statement.setInt(7, object.getId());
+            statement.executeUpdate();
+
+            return true;
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
         return false;
     }
 
     @Override
     public boolean delete(TutorialDetail object) {
+        String query = String.format("DELETE from %s where id = ?", TABLE_NAME);
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, object.getId());
+            statement.executeUpdate();
+
+            return true;
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
         return false;
     }
 

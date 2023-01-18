@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class TableUser implements CRUDHandler<User> {
     public static final String TABLE_NAME = "users";
     public static final String [] COLUMNS = {"ID", "NAME", "LAST_NAME", "FATHER_NAME", "USER_NAME", "PASSWORD",
-            "LOCATION_ID", "SCHOOL_NAME", "PHONE_NUMBER", "GENDER", "PHOTO"};
+                                             "LOCATION_ID", "SCHOOL_NAME", "PHONE_NUMBER", "GENDER", "PHOTO"};
     public static final String COLUMNS_STR = "ID, NAME, LAST_NAME, FATHER_NAME, USER_NAME, PASSWORD, LOCATION_ID, SCHOOL_NAME, PHONE_NUMBER, GENDER, PHOTO";
 
     public boolean create(User object) {
@@ -72,7 +72,7 @@ public class TableUser implements CRUDHandler<User> {
     }
 
     public boolean update(User object) {
-        String query = "update " + TABLE_NAME + " set NAME = ?, LAST_NAME = ?, FATHER_NAME = ?, USER_NAME = ?, PASSWORD = ?, LOCATION_ID = ?, SCHOOL_NAME = ?, PHONE_NUMBER = ?, GENDER = ?, PHOTO = ? where id = ?";
+        String query = String.format("update %s set NAME = ?, LAST_NAME = ?, FATHER_NAME = ?, USER_NAME = ?, PASSWORD = ?, LOCATION_ID = ?, SCHOOL_NAME = ?, PHONE_NUMBER = ?, GENDER = ?, PHOTO = ? where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -90,7 +90,7 @@ public class TableUser implements CRUDHandler<User> {
     }
 
     public boolean delete(User object) {
-        String query = "DELETE from " + TABLE_NAME + " where id = ?";
+        String query = String.format("DELETE from %s where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();

@@ -15,7 +15,7 @@ public class TableKankorResult implements CRUDHandler<KankorResult> {
 
     @Override
     public boolean create(KankorResult object) {
-        String query = "insert into KANKOR_RESULTS (KANKOR_ID, NAME, FATHER_NAME, GRAND_FATHER_NAME, SCHOOL, PROVINCE, SCORE, RESULT) values (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = String.format("insert into %s (KANKOR_ID, NAME, FATHER_NAME, GRAND_FATHER_NAME, SCHOOL, PROVINCE, SCORE, RESULT) values (?, ?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -73,12 +73,26 @@ public class TableKankorResult implements CRUDHandler<KankorResult> {
 
     @Override
     public boolean update(KankorResult object) {
+        String query = String.format("update %s set KANKOR_ID = ?, NAME = ?, FATHER_NAME = ?, GRAND_FATHER_NAME = ?, SCHOOL = ?, PROVINCE = ?, SCORE = ?, RESULT = ? where id = ?", TABLE_NAME);
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement = putValues(statement, object);
+            statement.setInt(9, object.getId());
+            statement.executeUpdate();
+
+            return true;
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
         return false;
     }
 
     @Override
     public boolean delete(KankorResult object) {
-        String query = "DELETE from KANKOR_RESULTS where id = ?";
+        String query = String.format("DELETE from %s where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TableFaculty implements CRUDHandler<Faculty>{
-    public static final String TABLE_NAME = "EMAILS";
+    public static final String TABLE_NAME = "FACULTIES";
     public static final String [] COLUMNS = {"ID", "NAME", "DEPARTMENT", "CODE", "MINIMUM_GRADE", "UNI_ID", "ADMISSION"};
     public static final String COLUMNS_STR = "ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, ADMISSION";
 

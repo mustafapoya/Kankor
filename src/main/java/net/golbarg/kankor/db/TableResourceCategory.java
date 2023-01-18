@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TableResourceCategory implements CRUDHandler<ResourceCategory> {
-    public static final String TABLE_NAME = "EMAILS";
+    public static final String TABLE_NAME = "RESOURCE_CATEGORIES";
     public static final String [] COLUMNS = {"ID", "TITLE"};
     public static final String COLUMNS_STR = "ID, TITLE";
 

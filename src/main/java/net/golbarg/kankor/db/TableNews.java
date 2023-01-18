@@ -12,7 +12,7 @@ public class TableNews implements CRUDHandler<News> {
 
     @Override
     public boolean create(News object) {
-        String query = "insert into locations (TITLE, CONTENT, `DATE`, URL_LINK, DESCRIPTION) values (?, ?, ?, ?, ?)";
+        String query = String.format("insert into %s (TITLE, CONTENT, `DATE`, URL_LINK, DESCRIPTION) values (?, ?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -70,7 +70,7 @@ public class TableNews implements CRUDHandler<News> {
 
     @Override
     public boolean update(News object) {
-        String query = "update news set TITLE = ?, CONTENT = ?, `DATE` = ?, URL_LINK = ?, DESCRIPTION = ? where id = ?";
+        String query = String.format("update %s set TITLE = ?, CONTENT = ?, `DATE` = ?, URL_LINK = ?, DESCRIPTION = ? where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -89,7 +89,7 @@ public class TableNews implements CRUDHandler<News> {
 
     @Override
     public boolean delete(News object) {
-        String query = "DELETE from news where id = ?";
+        String query = String.format("DELETE from %s where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();

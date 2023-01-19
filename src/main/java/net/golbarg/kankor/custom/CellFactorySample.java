@@ -4,10 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
-import net.golbarg.kankor.model.Gender;
-import net.golbarg.kankor.model.Language;
-import net.golbarg.kankor.model.Location;
-import net.golbarg.kankor.model.Tutorial;
+import net.golbarg.kankor.model.*;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class CellFactorySample {
@@ -115,6 +112,37 @@ public class CellFactorySample {
                 final ListCell<Tutorial> cell = new ListCell<Tutorial>(){
                     @Override
                     protected void updateItem(Tutorial item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(item != null) {
+                            lblLead.setText(item.getTitle());
+                            setText(item.getTitle());
+                            setGraphic(iconLanguage);
+                        } else {
+                            lblLead.setText("");
+                            setText("");
+                            setGraphic(null);
+                        }
+                    }
+                };
+
+                return cell;
+            }
+        };
+
+        return cellFactory;
+    }
+
+    public static Callback<ListView<ResourceCategory>, ListCell<ResourceCategory>> getComboBoxResourceCategory(String icon, int iconSize) {
+        Callback<ListView<ResourceCategory>, ListCell<ResourceCategory>> cellFactory = new Callback<ListView<ResourceCategory>, ListCell<ResourceCategory>>() {
+            @Override
+            public ListCell call(ListView<ResourceCategory> param) {
+                final Label lblLead = new Label();
+                FontIcon iconLanguage = new FontIcon((icon == null || icon.isEmpty()) ? "bi-justify" : icon);
+                iconLanguage.setIconSize(iconSize < 1 ? 14 : iconSize);
+
+                final ListCell<ResourceCategory> cell = new ListCell<ResourceCategory>(){
+                    @Override
+                    protected void updateItem(ResourceCategory item, boolean empty) {
                         super.updateItem(item, empty);
                         if(item != null) {
                             lblLead.setText(item.getTitle());

@@ -3,10 +3,13 @@ package net.golbarg.kankor.controller;
 import javafx.scene.image.Image;
 import net.golbarg.kankor.model.Gender;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
@@ -57,6 +60,18 @@ public class Util {
         sb.append(s);
 
         return sb.toString();
+    }
+
+    public static void sendEmail() throws URISyntaxException, IOException {
+        Desktop desktop;
+        if (Desktop.isDesktopSupported()
+                && (desktop = Desktop.getDesktop()).isSupported(Desktop.Action.MAIL)) {
+            URI mailto = new URI("mailto:contact@golbarg.net?subject=Kankor%20App");
+            desktop.mail(mailto);
+        } else {
+            // TODO fallback to some Runtime.exec(..) voodoo?
+            throw new RuntimeException("desktop doesn't support mailto; mail is dead anyway ;)");
+        }
     }
     
 }

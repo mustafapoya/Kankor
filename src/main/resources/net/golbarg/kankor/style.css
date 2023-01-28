@@ -39,3 +39,22 @@
 .about-header {
     -fx-background-color: #ccc;
 }
+
+.lbl-answer-item {
+    -fx-border-color: green;
+    -fx-border-radius: 20px;
+    -fx-border-width: 2px;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.lbl-answer-item-selected {
+    -fx-border-color: green;
+    -fx-border-radius: 20px;
+    -fx-background-color: green;
+    -fx-background-radius: 20px;
+    -fx-text-fill: white;
+    -fx-border-width: 2px;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}

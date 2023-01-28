@@ -60,7 +60,7 @@ public class AnswerItemViewController implements Initializable {
             }
         }
 
-        // System.out.println(getSelectedAnswer() + " selected cell : " + getSelectedCell());
+         System.out.println(getItemNumber() + " : " + getSelectedAnswer() + " selected cell : " + getSelectedCell());
     }
 
     public int getSelectedAnswer() {
@@ -73,6 +73,9 @@ public class AnswerItemViewController implements Initializable {
 
     public void setItemNumber(int number) {
         lblItemNumber.setText(String.valueOf(number));
+    }
+    public int getItemNumber() {
+        return Integer.valueOf(lblItemNumber.getText());
     }
 
     public boolean isCellSelected() {

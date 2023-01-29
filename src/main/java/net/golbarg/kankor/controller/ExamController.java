@@ -2,8 +2,12 @@ package net.golbarg.kankor.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import net.golbarg.kankor.custom.FieldSelection;
+import net.golbarg.kankor.db.TableFaculty;
+import net.golbarg.kankor.model.Faculty;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.model.University;
+import net.golbarg.kankor.view.AnswerSheetViewController;
 
 import java.util.ArrayList;
 
@@ -15,7 +19,7 @@ public class ExamController {
     private int math, natural, social, alsana, totalCorrect;
     ObservableList<Question> questions = FXCollections.observableArrayList();
 
-    AnswerSheet answerSheet;
+    AnswerSheetViewController answerSheet;
     QuestionGenerator generator;
 
     public ExamController() {
@@ -45,7 +49,7 @@ public class ExamController {
         return alsanaList;
     }
 
-    public void compare(AnswerSheet answers, ObservableList<Question> questions) {
+    public void compare(AnswerSheetViewController answers, ObservableList<Question> questions) {
         this.answerSheet = answers;
         this.questions = questions;
         math = 0;
@@ -54,8 +58,9 @@ public class ExamController {
         alsana = 0;
         totalCorrect = 0;
         for (int i = 0; i < questions.size(); i++) {
-            int selectedAnswer = answers.getRows().get(i).getSelectedCellValue() + 1;
-            int correctAnswer = questions.get(i).getCorrect();
+            int selectedAnswer = answers.getRowList().get(i).getSelectedAnswer();
+            int correctAnswer = questions.get(i).getCorrectChoice();
+
             if (selectedAnswer == correctAnswer) {
                 totalCorrect++;
                 System.out.println("correct");
@@ -69,33 +74,86 @@ public class ExamController {
         }
     }
 
-    public ObservableList<University> getUniversity(ObservableList<FieldSelection> fields) {
-        ArrayList<String> codes = new ArrayList<>();
-        ObservableList<University> universityList = FXCollections.observableArrayList();
-        for (int i = 0; i < fields.size(); i++) {
-            codes.add(fields.get(i).getSelectedFieldValue());
+    public ObservableList<Faculty> getUniversity(ObservableList<FieldSelection> fields) {
+        String [] codes = new String[5];
+
+        for (int i = 0; i < 5; i++) {
+            codes[i] = fields.get(i).getSelectedFieldValue();
         }
-        String query = "SELECT UNIVERSITIES.UNI_NAME,FACULTY.FAC_NAME,FACULTY.FAC_DEPARTMENT, FACULTY.FAC_CODE, FACULTY.FAC_MINIMUM_GRADE  FROM FACULTY JOIN UNIVERSITIES ON UNIVERSITIES.UNI_ID = FACULTY.FAC_UNI_ID WHERE FACULTY.FAC_CODE IN (?, ?, ?, ?, ?) ORDER BY FAC_MINIMUM_GRADE DESC;";
-        try {
-            PreparedStatement statement = DatabaseConnection.getLocalConnection().prepareStatement(query);
-            statement.setString(1, codes.get(0));
-            statement.setString(2, codes.get(1));
-            statement.setString(3, codes.get(2));
-            statement.setString(4, codes.get(3));
-            statement.setString(5, codes.get(4));
 
-            ResultSet result = statement.executeQuery();
+        TableFaculty tableFaculty = new TableFaculty();
 
-            while (result.next()) {
-                UniversityFaculty u = new UniversityFaculty(result.getString("UNI_NAME"), result.getString("FAC_NAME"),
-                        result.getString("FAC_DEPARTMENT"), result.getString("FAC_CODE"),
-                        result.getString("FAC_MINIMUM_GRADE"));
-                universityList.add(u);
-            }
-        } catch (Exception e) {
+        ObservableList<Faculty> universityList = FXCollections.observableArrayList();
 
-        }
+        universityList.addAll(tableFaculty.getFacultiesByCode(codes));
+
         return universityList;
     }
 
+    public Faculty getPassedField(ObservableList<Faculty> list, double score) {
+        for (int i = 0; i < list.size(); i++) {
+            if (score > list.get(i).getAdmission()) {
+                return list.get(i);
+            }
+        }
+        return null;
+    }
+    public int getMath() {
+        return math;
+    }
+    public int getAlsana() {
+        return alsana;
+    }
+    public int getNatural() {
+        return natural;
+    }
+    public int getSocial() {
+        return social;
+    }
+    public int getTotalCorrect() {
+        return totalCorrect;
+    }
+
+    private void checkSubjectType(String value) {
+        switch (value) {
+            // Mathematic
+            case "math":
+            case "triangles":
+            case "geometry":
+                math++;
+                break;
+            // Natural
+            case "chemistry":
+            case "physic":
+            case "biology":
+                natural++;
+                break;
+            // Social
+            case "islamic":
+            case "history":
+            case "geography":
+                social++;
+                break;
+            // Alsana
+            case "dari":
+            case "pashto":
+            case "general":
+                alsana++;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public AnswerSheetViewController getAnswerSheet() {
+        return answerSheet;
+    }
+
+    public double getKankorScore() {
+        return totalCorrect * 2;
+    }
+
+    public ObservableList<Question> getQuestions() {
+        return questions;
+    }
 }

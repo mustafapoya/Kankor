@@ -76,6 +76,38 @@ public class TableFaculty implements CRUDHandler<Faculty>{
         return resultList;
     }
 
+    public ArrayList<Faculty> getFacultiesByCode(String [] codes) {
+        String query = String.format(" SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION " +
+                                     " FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID; " +
+                                     " WHERE FACULTIES.CODE IN (?, ?, ?, ?, ?) ORDER BY FACULTIES.MINIMUM_GRADE DESC; ", TABLE_NAME);
+
+        ArrayList<Faculty> resultList = new ArrayList<>();
+
+        try {
+
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            for(int i = 1; i <= codes.length; i++) {
+                if(i > 6) {
+                    break;
+                }
+                statement.setString(i + 1, codes[i]);
+            }
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                resultList.add(mapColumn(resultSet));
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return resultList;
+    }
+
     @Override
     public boolean update(Faculty object) {
         String query = String.format("update %s set NAME = ?, DEPARTMENT = ?, CODE = ?, MINIMUM_GRADE = ?, UNI_ID = ?, ADMISSION = ? where id = ?", TABLE_NAME);

@@ -6,16 +6,16 @@ public class Faculty {
     private String department;
     private String code;
     private int minimumGrade;
-    private int universityId;
+    private University university;
     private int admission;
 
-    public Faculty(int id, String name, String department, String code, int minimumGrade, int universityId, int admission) {
+    public Faculty(int id, String name, String department, String code, int minimumGrade, University university, int admission) {
         this.id = id;
         this.name = name;
         this.department = department;
         this.code = code;
         this.minimumGrade = minimumGrade;
-        this.universityId = universityId;
+        this.university = university;
         this.admission = admission;
     }
 
@@ -59,12 +59,12 @@ public class Faculty {
         this.minimumGrade = minimumGrade;
     }
 
-    public int getUniversityId() {
-        return universityId;
+    public University getUniversity() {
+        return university;
     }
 
-    public void setUniversityId(int universityId) {
-        this.universityId = universityId;
+    public void setUniversity(University university) {
+        this.university = university;
     }
 
     public int getAdmission() {
@@ -83,7 +83,7 @@ public class Faculty {
                 ", department='" + department + '\'' +
                 ", code='" + code + '\'' +
                 ", minimumGrade=" + minimumGrade +
-                ", universityId=" + universityId +
+                ", university=" + university +
                 ", admission=" + admission +
                 '}';
     }

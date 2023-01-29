@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox fx:id="root" alignment="CENTER_LEFT" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.AnswerItemViewController">
+   <children>
+      <Label fx:id="lblItemNumber" alignment="CENTER" prefHeight="40.0" prefWidth="40.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="160" />
+      <HBox alignment="CENTER_LEFT" spacing="5.0">
+         <children>
+            <Label fx:id="lblAnswer1" alignment="CENTER" prefHeight="35.0" prefWidth="35.0" styleClass="lbl-answer-item" text="1" />
+            <Label fx:id="lblAnswer2" alignment="CENTER" prefHeight="35.0" prefWidth="35.0" styleClass="lbl-answer-item" text="2" />
+            <Label fx:id="lblAnswer3" alignment="CENTER" prefHeight="35.0" prefWidth="35.0" styleClass="lbl-answer-item" text="3" />
+            <Label fx:id="lblAnswer4" alignment="CENTER" prefHeight="35.0" prefWidth="35.0" styleClass="lbl-answer-item" text="4" />
+         </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <padding>
+            <Insets left="2.0" right="2.0" />
+         </padding>
+      </HBox>
+   </children>
+   <padding>
+      <Insets left="5.0" right="5.0" />
+   </padding>
+</HBox>

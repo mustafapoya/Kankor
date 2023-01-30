@@ -2,14 +2,11 @@ package net.golbarg.kankor.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import net.golbarg.kankor.custom.FieldSelection;
 import net.golbarg.kankor.db.TableFaculty;
 import net.golbarg.kankor.model.Faculty;
 import net.golbarg.kankor.model.Question;
-import net.golbarg.kankor.model.University;
 import net.golbarg.kankor.view.AnswerSheetViewController;
-
-import java.util.ArrayList;
+import net.golbarg.kankor.view.FieldSelectionViewController;
 
 public class ExamController {
     private ObservableList<Question> mathList = FXCollections.observableArrayList();
@@ -74,7 +71,7 @@ public class ExamController {
         }
     }
 
-    public ObservableList<Faculty> getUniversity(ObservableList<FieldSelection> fields) {
+    public ObservableList<Faculty> getUniversity(ObservableList<FieldSelectionViewController> fields) {
         String [] codes = new String[5];
 
         for (int i = 0; i < 5; i++) {

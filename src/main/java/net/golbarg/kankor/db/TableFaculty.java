@@ -58,6 +58,61 @@ public class TableFaculty implements CRUDHandler<Faculty>{
         return object;
     }
 
+    public ArrayList<Faculty> findByName(String facultyName) {
+        String query = String.format("SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION " +
+                                     "FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID " +
+                                     "where FACULTIES.NAME like ?;", TABLE_NAME);
+
+        ArrayList<Faculty> resultList = new ArrayList<>();
+
+        try {
+
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, facultyName + "%");
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                Faculty object = mapColumn(result);
+                resultList.add(object);
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return resultList;
+    }
+
+    public ArrayList<Faculty> getFacultiesOf(int universityId) {
+        String query = String.format("SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION " +
+                "FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID " +
+                "where FACULTIES.UNI_ID = ?;", TABLE_NAME);
+
+        ArrayList<Faculty> resultList = new ArrayList<>();
+
+        try {
+
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, universityId);
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                Faculty object = mapColumn(result);
+                resultList.add(object);
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return resultList;
+    }
+
+
     @Override
     public ArrayList<Faculty> getAll() {
         String query = String.format("SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID;", TABLE_NAME);
@@ -73,6 +128,23 @@ public class TableFaculty implements CRUDHandler<Faculty>{
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+        return resultList;
+    }
+
+    public ArrayList<String> getDistinctFaculties() {
+        String query = String.format("SELECT DISTINCT NAME FROM %s;", TABLE_NAME);
+
+        ArrayList<String> resultList = new ArrayList<>();
+
+        try {
+            ResultSet result = DBController.executeQuery(query);
+            while (result.next()) {
+                resultList.add(result.getString("NAME"));
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
         return resultList;
     }
 

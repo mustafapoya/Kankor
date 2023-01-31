@@ -20,7 +20,7 @@ public class MainApp extends Application {
         this.stage = stage;
         this.hostServices = getHostServices();
 //        loadMainView();
-        loadView("view/resource-view.fxml");
+        loadView("view/university-form-view.fxml");
     }
 
     public static void main(String[] args) {
@@ -55,8 +55,7 @@ public class MainApp extends Application {
 
     private void loadView(String viewPath) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource(viewPath));
-        BorderPane root = fxmlLoader.load();
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setTitle("Kankor");
         stage.setScene(scene);

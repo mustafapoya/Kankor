@@ -12,7 +12,6 @@ import java.io.File;
 
 public class QuestionTextController extends TextFlow {
     public static final String QuestionSplitter = "#&#";
-
     public static File questionImageFolder = new File("assets/question/");
     public static final String questionImagePath = "file:///" + questionImageFolder.getAbsolutePath() + "/";
 
@@ -30,8 +29,13 @@ public class QuestionTextController extends TextFlow {
     }
 
     private void convertQuestion() {
-        questionNumber = new Text("سوال (" + number + ")");
-        getChildren().add(questionNumber);
+        if(number != -1) {
+            questionNumber = new Text("سوال (" + number + ")");
+            getChildren().add(questionNumber);
+        } else {
+            questionNumber = new Text("");
+            getChildren().add(questionNumber);
+        }
 
         // split question text parts
         questionParts = questionText.split(QuestionSplitter);
@@ -63,7 +67,9 @@ public class QuestionTextController extends TextFlow {
 
         // center text
         centerText();
-        centerText(questionNumber);
+        if(number != -1) {
+            centerText(questionNumber);
+        }
     }
 
     private boolean isImage(String text) {

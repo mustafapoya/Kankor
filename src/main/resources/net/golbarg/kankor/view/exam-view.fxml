@@ -15,150 +15,100 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefHeight="480.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.ExamViewController">
+    <right>
+        <ScrollPane fx:id="spAnswerSheet" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+            <content>
+                <HBox fx:id="hboxAnswers" alignment="TOP_CENTER" prefWidth="210.0" />
+            </content>
+        </ScrollPane>
+    </right>
+    <top>
+        <VBox BorderPane.alignment="CENTER_LEFT">
+            <children>
+                <HBox prefHeight="30.0" styleClass="hb-subject-header-container">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label fx:id="lblMathQuestion" maxWidth="1.7976931348623157E308" prefHeight="30.0" styleClass="lbl-subject-section" text="ریاضیات" HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                    <padding>
+                                        <Insets left="5.0" right="5.0" />
+                                    </padding>
+                                </Label>
+                                <Label fx:id="lblNaturalQuestion" maxWidth="1.7976931348623157E308" prefHeight="30.0" styleClass="lbl-subject-section" text="علوم طبیعی" HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                    <padding>
+                                        <Insets left="5.0" right="5.0" />
+                                    </padding>
+                                </Label>
+                                <Label fx:id="lblSocialQuestion" maxWidth="1.7976931348623157E308" prefHeight="30.0" styleClass="lbl-subject-section" text="علوم اجتماعی و دینی" HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                    <padding>
+                                        <Insets left="5.0" right="5.0" />
+                                    </padding>
+                                </Label>
+                                <Label fx:id="lblAlsanaQuestion" maxWidth="1.7976931348623157E308" prefHeight="30.0" styleClass="lbl-subject-section" text="السنه و معلومات عمومی" HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                    <padding>
+                                        <Insets left="5.0" right="5.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefWidth="200.0">
+                            <children>
+                                <Label prefHeight="20.0" styleClass="lbl-subject-answer" text="ورقه جوابات" />
+                            </children>
+                        </HBox>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="40.0">
+                    <children>
+                        <GridPane>
+                            <columnConstraints>
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <Label fx:id="lblDownTimer" text="12:59:59" GridPane.columnIndex="2" />
+                                <Label fx:id="lblUpTimer" text="00:00:00" />
+                                <Label fx:id="lblClock" text="00" GridPane.columnIndex="1" />
+                            </children>
+                        </GridPane>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </top>
     <center>
-        <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" tabMinHeight="25.0" tabMinWidth="80.0" BorderPane.alignment="CENTER">
-            <tabs>
-                <Tab fx:id="tabExam" text="امتحان">
-                    <graphic>
-                        <FontIcon iconLiteral="bi-alarm" iconSize="16" />
-                    </graphic>
-                    <content>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0">
-                            <right>
-                                  <ScrollPane fx:id="spAnswerSheet" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
-                           <content>
-                              <HBox fx:id="hboxAnswers" alignment="TOP_CENTER" prefWidth="210.0" />
-                           </content>
-                        </ScrollPane>
-                            </right>
-                            <top>
-                                <VBox BorderPane.alignment="CENTER_LEFT">
-                                    <children>
-                                        <HBox prefHeight="30.0" styleClass="hb-subject-header-container">
-                                            <children>
-                                                <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
-                                                    <children>
-                                                        <Label fx:id="lblMathQuestion" maxWidth="1.7976931348623157E308" prefHeight="30.0" styleClass="lbl-subject-section" text="ریاضیات" HBox.hgrow="ALWAYS">
-                                                            <HBox.margin>
-                                                                <Insets />
-                                                            </HBox.margin>
-                                             <padding>
-                                                <Insets left="5.0" right="5.0" />
-                                             </padding>
-                                                        </Label>
-                                                        <Label fx:id="lblNaturalQuestion" maxWidth="1.7976931348623157E308" prefHeight="30.0" styleClass="lbl-subject-section" text="علوم طبیعی" HBox.hgrow="ALWAYS">
-                                                            <HBox.margin>
-                                                                <Insets />
-                                                            </HBox.margin>
-                                             <padding>
-                                                <Insets left="5.0" right="5.0" />
-                                             </padding>
-                                                        </Label>
-                                                        <Label fx:id="lblSocialQuestion" maxWidth="1.7976931348623157E308" prefHeight="30.0" styleClass="lbl-subject-section" text="علوم اجتماعی و دینی" HBox.hgrow="ALWAYS">
-                                                            <HBox.margin>
-                                                                <Insets />
-                                                            </HBox.margin>
-                                             <padding>
-                                                <Insets left="5.0" right="5.0" />
-                                             </padding>
-                                                        </Label>
-                                                        <Label fx:id="lblAlsanaQuestion" maxWidth="1.7976931348623157E308" prefHeight="30.0" styleClass="lbl-subject-section" text="السنه و معلومات عمومی" HBox.hgrow="ALWAYS">
-                                                            <HBox.margin>
-                                                                <Insets />
-                                                            </HBox.margin>
-                                             <padding>
-                                                <Insets left="5.0" right="5.0" />
-                                             </padding>
-                                                        </Label>
-                                                    </children>
-                                                </HBox>
-                                                <HBox alignment="CENTER" prefWidth="200.0">
-                                                    <children>
-                                                        <Label prefHeight="20.0" styleClass="lbl-subject-answer" text="ورقه جوابات" />
-                                                    </children>
-                                                </HBox>
-                                            </children>
-                                        </HBox>
-                                        <HBox alignment="CENTER" prefHeight="40.0">
-                                            <children>
-                                                <GridPane>
-                                                    <columnConstraints>
-                                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                    </columnConstraints>
-                                                    <rowConstraints>
-                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    </rowConstraints>
-                                                    <children>
-                                                        <Label fx:id="lblDownTimer" text="12:59:59" GridPane.columnIndex="2" />
-                                                        <Label fx:id="lblUpTimer" text="00:00:00" />
-                                                        <Label fx:id="lblClock" text="00" GridPane.columnIndex="1" />
-                                                    </children>
-                                                </GridPane>
-                                            </children>
-                                        </HBox>
-                                    </children>
-                                </VBox>
-                            </top>
-                            <center>
-                                <ScrollPane fx:id="spQuestion" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
-                           <content>
-                              <VBox fx:id="vbQuestion" prefHeight="200.0" prefWidth="100.0" />
-                           </content></ScrollPane>
-                            </center>
-                            <bottom>
-                                <VBox alignment="CENTER" BorderPane.alignment="CENTER">
-                                    <children>
-                                        <HBox alignment="CENTER">
-                                            <children>
-                                                <Button fx:id="btnUniversity" mnemonicParsing="false" text="تعیین رشته" />
-                                            </children>
-                                            <padding>
-                                                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-                                            </padding>
-                                        </HBox>
-                                    </children>
-                                </VBox>
-                            </bottom></BorderPane>
-                    </content>
-                </Tab>
-                <Tab fx:id="tabUniversity" text="تعیین رشته">
-                    <graphic>
-                        <FontIcon iconLiteral="bi-alarm" iconSize="16" />
-                    </graphic>
-                    <content>
-                        <BorderPane fx:id="borderPaneUniversity" prefHeight="200.0" prefWidth="200.0">
-                            <bottom>
-                                <VBox alignment="CENTER" BorderPane.alignment="CENTER">
-                                    <children>
-                                        <HBox alignment="CENTER">
-                                            <children>
-                                                <Button mnemonicParsing="false" text="نتیجه" />
-                                            </children>
-                                        </HBox>
-                                    </children>
-                                </VBox>
-                            </bottom></BorderPane>
-                    </content>
-                </Tab>
-                <Tab fx:id="tabResult" text="نتیجه امتحان">
-                    <graphic>
-                        <FontIcon iconLiteral="bi-alarm" iconSize="16" />
-                    </graphic>
-                    <content>
-                        <BorderPane fx:id="borderPaneExamResult" prefHeight="200.0" prefWidth="200.0" />
-                    </content>
-                </Tab>
-                <Tab fx:id="tabReview" text="بررسی سوالات">
-                    <graphic>
-                        <FontIcon iconLiteral="bi-alarm" iconSize="16" />
-                    </graphic>
-                    <content>
-                        <BorderPane fx:id="borderPaneExamReview" prefHeight="200.0" prefWidth="200.0" />
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
+        <ScrollPane fx:id="spQuestion" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+            <content>
+                <VBox fx:id="vbQuestion" prefHeight="200.0" prefWidth="100.0" />
+            </content></ScrollPane>
     </center>
-</BorderPane>
+    <bottom>
+        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER">
+                    <children>
+                        <Button fx:id="btnUniversity" mnemonicParsing="false" text="تعیین رشته" />
+                    </children>
+                    <padding>
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+    </bottom></BorderPane>

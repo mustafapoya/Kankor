@@ -24,10 +24,11 @@ public class AnswerSheetViewController implements Initializable {
         root.setSpacing(5);
         root.setAlignment(Pos.CENTER);
 
-        initAnswerSheet(100);
+        // test purpose
+        //initAnswerSheet(100);
     }
 
-    private void initAnswerSheet(int numberOfRows) {
+    public void initAnswerSheet(int numberOfRows) {
         this.numberOfRows = numberOfRows;
 
         try {

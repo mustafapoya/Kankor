@@ -57,10 +57,11 @@ public class QuestionItemViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //initialization
         answers.addAll(Arrays.asList(lblAnswer1, lblAnswer2, lblAnswer3, lblAnswer4));
-        tableQuestion = new TableQuestion();
-        tmpQuestion = tableQuestion.getQuestionsOf(QuestionGenerator.MATHEMATICS, 10).get(0);
 
-        initData(tmpQuestion);
+        // test purpose
+//        tableQuestion = new TableQuestion();
+//        tmpQuestion = tableQuestion.getQuestionsOf(QuestionGenerator.MATHEMATICS, 10).get(0);
+//        initData(tmpQuestion);
     }
 
     public void initData(Question question) {
@@ -142,5 +143,4 @@ public class QuestionItemViewController implements Initializable {
         }
     }
 
-    
 }

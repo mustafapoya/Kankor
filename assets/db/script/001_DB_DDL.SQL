@@ -402,7 +402,7 @@ create table `locations` (
     primary key (`id`)
 );
 
-DELETE FROM `locations` where "id" is not null;
+DELETE FROM `locations` where `id` is not null;
 
 /* Tutorials Table Related Query */
 drop table if exists `tutorials`;

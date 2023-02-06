@@ -20,7 +20,7 @@ public class MainApp extends Application {
         this.stage = stage;
         this.hostServices = getHostServices();
 //        loadMainView();
-        loadView("view/university-form-view.fxml");
+        loadView("view/exam-view.fxml");
     }
 
     public static void main(String[] args) {

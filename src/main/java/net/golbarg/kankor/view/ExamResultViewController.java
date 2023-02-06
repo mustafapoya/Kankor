@@ -73,4 +73,23 @@ public class ExamResultViewController implements Initializable {
         return btnShareResult;
     }
 
+    public void setUserDetails(User User) {
+        lblFullName.setText(user.getName() + ", " + user.getLastName());
+    }
+
+    public void setDuration(String duration) {
+        lblTime.setText(duration);
+    }
+
+    public void setKankorResult(String value) {
+        lblExamResult.setText(value);
+    }
+
+    public String getKankorResult() {
+        return lblExamResult.getText();
+    }
+    public Button getBtnShare() {
+        return btnShareResult;
+    }
+
 }

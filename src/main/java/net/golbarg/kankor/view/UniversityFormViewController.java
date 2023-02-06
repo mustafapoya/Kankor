@@ -25,6 +25,7 @@ import net.golbarg.kankor.model.University;
 
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class UniversityFormViewController implements Initializable {
@@ -206,4 +207,29 @@ public class UniversityFormViewController implements Initializable {
             }
         });
     }
+
+    public ArrayList<String> getFieldsValue() {
+        ArrayList<String> codes = new ArrayList<>();
+        for (int i = 0; i < fieldSelectionList.size(); i++) {
+            codes.add(fieldSelectionList.get(i).getSelectedFieldValue());
+        }
+        return codes;
+    }
+
+    public ObservableList<FieldSelectionViewController> getFields() {
+        return fieldSelectionList;
+    }
+
+    public boolean hasDuplicate() {
+        for (int i = 0; i < fieldSelectionList.size(); i++) {
+            for (int j = i + 1; j < fieldSelectionList.size(); j++) {
+                if (j != i && fieldSelectionList.get(i).equals(fieldSelectionList.get(j))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
 }

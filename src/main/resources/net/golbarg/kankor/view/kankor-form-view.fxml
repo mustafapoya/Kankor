@@ -40,12 +40,12 @@
             </VBox>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                <image>
-                  <Image url="@moe_header.png" />
+                  <Image url="@../images/moe_header.png" />
                </image>
             </ImageView>
             <ImageView fx:id="imgUserImage" fitHeight="110.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                <image>
-                  <Image url="@user_profile.png" />
+                  <Image url="@../images/user_profile.png" />
                </image>
             </ImageView>
          </children>

@@ -55,6 +55,33 @@ public class TableUser implements CRUDHandler<User> {
         return object;
     }
 
+    public User authUser(String username, String password) {
+        String query = String.format("SELECT %s FROM %s where USER_NAME = ?;", COLUMNS_STR, TABLE_NAME);
+
+        User object = null;
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                object = mapColumn(resultSet);
+                if(!password.equals(object.getPassword())) {
+                    object = null;
+                }
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return object;
+
+    }
+
     public ArrayList<User> getAll() {
         String query = String.format("SELECT %s FROM %s;", COLUMNS_STR, TABLE_NAME);
         ArrayList<User> resultList = new ArrayList<>();

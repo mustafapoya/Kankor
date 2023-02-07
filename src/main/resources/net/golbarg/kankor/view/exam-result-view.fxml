@@ -24,7 +24,7 @@
                <children>
                   <ImageView fx:id="imgUserImage" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@user_profile.png" />
+                        <Image url="@../images/user_profile.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="2.0" />
@@ -45,7 +45,7 @@
                   </GridPane>
                   <ImageView fx:id="imgClock" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@clock.png" />
+                        <Image url="@../images/clock.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="lblTime" text="00:00:00">

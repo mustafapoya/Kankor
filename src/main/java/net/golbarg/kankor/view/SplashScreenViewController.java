@@ -59,12 +59,12 @@ public class SplashScreenViewController implements Initializable {
         try {
             Stage stage = new Stage();
 //            stage.getIcons().add(new Image(getClass().getResourceAsStream("app_icon.png")));
-            FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("main-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("view/main-view.fxml"));
             BorderPane root = fxmlLoader.load();
             MainViewController controller = fxmlLoader.getController();
 //            controller.setParentStage(stage);
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+            scene.getStylesheets().add(MainApp.class.getResource("style.css").toExternalForm());
             stage.setMinWidth(740);
 //            stage.setTitle(Persian.APP_NAME);
             stage.setScene(scene);

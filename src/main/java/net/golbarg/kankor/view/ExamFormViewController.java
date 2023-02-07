@@ -13,9 +13,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -26,21 +23,31 @@ import net.golbarg.kankor.controller.CountDownWorker;
 import net.golbarg.kankor.controller.ExamController;
 import net.golbarg.kankor.controller.StopWatchWorker;
 import net.golbarg.kankor.db.TableExam;
-import net.golbarg.kankor.model.Exam;
 import net.golbarg.kankor.model.Faculty;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.model.User;
 
-import java.awt.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-public class ExamViewController implements Initializable {
+public class ExamFormViewController implements Initializable {
+
     @FXML
     private BorderPane root;
+
+    @FXML
+    private TabPane tabPane;
+    @FXML
+    private Tab tabExam;
+    @FXML
+    private Tab tabUniversity;
+    @FXML
+    private Tab tabResult;
+    @FXML
+    private Tab tabReview;
 
     // Exam Tab Section
     @FXML
@@ -65,8 +72,22 @@ public class ExamViewController implements Initializable {
     private ScrollPane spQuestion;
     @FXML
     private VBox vbQuestion;
+
+    // University tab
+    @FXML
+    private BorderPane borderPaneUniversity;
     @FXML
     private Button btnUniversity;
+    UniversityFormViewController universityViewController;
+
+    //
+    @FXML
+    private BorderPane borderPaneExamResult;
+    ExamResultViewController examResultViewController;
+
+    //
+    @FXML
+    private BorderPane borderPaneExamReview;
 
     // Up Timer
     static StopWatchWorker stopWatchWorker;
@@ -87,19 +108,28 @@ public class ExamViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         subjectSections.addAll(Arrays.asList(lblMathQuestion, lblNaturalQuestion, lblSocialQuestion, lblAlsanaQuestion));
+
+        disableTabs();
+
 //        setStartExamAction();
 
         try {
-            Exam e = new Exam();
+            ExamFormViewController.Exam e = new ExamFormViewController.Exam();
             e.run();
 
-//            SelectUniversity selectUniversity = new SelectUniversity();
-//            selectUniversity.run();
+            ExamFormViewController.SelectUniversity selectUniversity = new ExamFormViewController.SelectUniversity();
+            selectUniversity.run();
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         }
 
+    }
+
+    private void disableTabs() {
+//        tabUniversity.setDisable(true);
+//        tabResult.setDisable(true);
+//        tabReview.setDisable(true);
     }
 
     class Exam extends Thread {
@@ -159,25 +189,25 @@ public class ExamViewController implements Initializable {
         }
 
         public void changeColor(Label lbl) {
-//            if (countDownWorker.getDuration().toMillis() >= 10000) {
-//                lbl.setStyle("-fx-text-fill : green;");
-//            } else if (countDownWorker.getDuration().toMillis() >= 1000) {
-//                lbl.setStyle("-fx-text-fill : yellow;");
-//                lbl.setEffect(new DropShadow(5, Color.RED));
-//            } else {
-//                lbl.setStyle("-fx-text-fill : red;");
-//                tabPane.getTabs().get(0).setDisable(true);
-//                tabPane.getTabs().get(1).setDisable(false);
-//                tabPane.getSelectionModel().select(1);
-//                try {
-//                    // TODO: load university
+            if (countDownWorker.getDuration().toMillis() >= 10000) {
+                lbl.setStyle("-fx-text-fill : green;");
+            } else if (countDownWorker.getDuration().toMillis() >= 1000) {
+                lbl.setStyle("-fx-text-fill : yellow;");
+                lbl.setEffect(new DropShadow(5, Color.RED));
+            } else {
+                lbl.setStyle("-fx-text-fill : red;");
+                tabPane.getTabs().get(0).setDisable(true);
+                tabPane.getTabs().get(1).setDisable(false);
+                tabPane.getSelectionModel().select(1);
+                try {
+                    // TODO: load university
 //                    universitySelection = new SelectUniversity();
 //                    universitySelection.run();
-//                } catch (Exception e) {
-//                    System.err.println(e.getMessage());
-//                    e.printStackTrace();
-//                }
-//            }
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                    e.printStackTrace();
+                }
+            }
         }
 
         public void initializeQuestions() {
@@ -249,8 +279,98 @@ public class ExamViewController implements Initializable {
         }
     }
 
-    public Button getBtnUniversity() {
-        return btnUniversity;
+    class SelectUniversity extends Thread {
+        @Override
+        public void run() {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(ExamViewController.class.getResource("university-form-view.fxml"));
+                BorderPane universityFormView = fxmlLoader.load();
+                universityViewController = fxmlLoader.getController();
+                borderPaneUniversity.setCenter(universityFormView);
+
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
     }
 
+    class ExamResult extends Thread {
+        ExamFormViewController.SelectUniversity university;
+
+        public ExamResult(ExamFormViewController.SelectUniversity university) {
+            this.university = university;
+        }
+
+        @Override
+        public void run() {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(ExamViewController.class.getResource("exam-result-view.fxml"));
+                BorderPane examResultView = fxmlLoader.load();
+                examResultViewController = fxmlLoader.getController();
+                borderPaneExamResult.setCenter(examResultView);
+                examResultViewController.setDuration(stopWatchWorker.messageProperty().get());
+
+                setUniversity();
+                saveExamResult();
+
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        // TODO: date parameter, user should be checked its error prone
+        public void saveExamResult() {
+            LocalDate l = LocalDate.now();
+            String date = l.getYear() + "-" + l.getMonthValue() + "-" + l.getDayOfMonth();
+            net.golbarg.kankor.model.Exam e =
+                    new net.golbarg.kankor.model.Exam(0, user.getId(), "0000", new Date(date),
+                            new Date(stopWatchWorker.getMessage().toString()),
+                            examController.getMath(), examController.getNatural(),
+                            examController.getSocial(),
+                            examController.getAlsana(),examController.getKankorScore(),
+                            examResultViewController.getKankorResult());
+            new TableExam().create(e);
+        }
+
+        public void setUniversity() {
+            ObservableList<FieldSelectionViewController> list = universityViewController.getFields();
+            ObservableList<Faculty> universityList = examController.getUniversity(list);
+
+            for (int i = 0; i < universityList.size(); i++) {
+                System.out.println("selected -> " + universityList.get(i).toString());
+            }
+            System.out.println("set university: " + examController.getKankorScore());
+
+            if (universityList.size() > 0) {
+                Faculty faculty = examController.getPassedField(universityList, 100);
+                if (faculty != null) {
+                    examResultViewController.setKankorResult(faculty.getUniversity() + ", " + faculty.getName());
+                } else {
+                    examResultViewController.setKankorResult("بی نتیجه !");
+                }
+            } else {
+                examResultViewController.setKankorResult("شما هیچ رشته ای را انتخاب نکرده اید!");
+            }
+        }
+
+        public void shareOnWeb() {
+            examResultViewController.getBtnShare().setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    if (examController.getKankorScore() > 250) {
+                        share();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        String text = "برای انتشار در ویب نمره شما باید بالای 250 باشد!";
+                        alert.setContentText(text);
+                        alert.showAndWait();
+                    }
+                }
+            });
+        }
+
+        public void share() {
+
+        }
+    }
 }

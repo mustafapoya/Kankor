@@ -402,7 +402,7 @@ create table `locations` (
     primary key (`id`)
 );
 
-DELETE FROM `locations` where "id" is not null;
+DELETE FROM `locations` where `id` is not null;
 
 /* Tutorials Table Related Query */
 drop table if exists `tutorials`;
@@ -550,6 +550,31 @@ values  (1, 21, 'history'),
         (3, 1, 'history'),
         (4, 1, 'history');
 
+
+/* Updates Table Related Query */
+drop table if exists `UNIVERSITIES`;
+
+create table `UNIVERSITIES` (
+    ID INTEGER AUTO_INCREMENT,
+    TITLE VARCHAR(256) not null,
+    primary key (`ID`)
+);
+
+insert into PUBLIC.UNIVERSITIES (ID, TITLE)
+values  (1, 'کابل'),
+        (2, 'طبی کابل'),
+        (3, 'تعلیم و تربیه کابل'),
+        (4, 'پولیتخنیک'),
+        (5, 'هرات'),
+        (6, 'بلخ'),
+        (7, 'البیرونی'),
+        (8, 'کندهار'),
+        (9, 'تخار'),
+        (10, 'لغمان'),
+        (11, 'ننگرهار'),
+        (12, 'شيخ زايد خوست'),
+        (13, 'کنر'),
+        (14, 'پکتیا');
 
 /* Updates Table Related Query */
 drop table if exists `UPDATES`;

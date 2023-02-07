@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
-
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.Accordion?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.control.ScrollPane?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.UniversityFormViewController">
    <top>
@@ -44,10 +43,13 @@
                      </padding>
                   </Label>
                   <TextField fx:id="txtSearch" prefHeight="30.0" prefWidth="180.0" promptText="نام دانشکده مورد نظر خود را بنویسید" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="btnSearch" mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" text="جستجو">
+                  <Button fx:id="btnSearch" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="جستجو">
                      <HBox.margin>
                         <Insets left="5.0" right="5.0" />
                      </HBox.margin>
+                     <graphic>
+                        <FontIcon iconLiteral="bi-search" iconSize="14" />
+                     </graphic>
                   </Button>
                </children>
             </HBox>
@@ -58,7 +60,7 @@
       </VBox>
    </top>
     <center>
-        <TableView fx:id="tableUniversity" BorderPane.alignment="CENTER">
+        <TableView fx:id="tableViewUniversity" BorderPane.alignment="CENTER">
             <columns>
                 <TableColumn fx:id="columnUniversity" prefWidth="75.0" text="پوهنتون" />
                 <TableColumn fx:id="columnFaculty" prefWidth="75.0" text="دانشکده" />
@@ -79,9 +81,9 @@
             <panes>
                 <TitledPane fx:id="titledPaneChoice1" text="انتخاب اول">
                     <content>
-                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="202.0" prefViewportWidth="200.0">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportHeight="202.0" prefViewportWidth="200.0">
                             <content>
-                                <HBox alignment="CENTER" prefWidth="200.0">
+                                <HBox fx:id="hbChoice1" alignment="TOP_CENTER">
                                     <padding>
                                         <Insets top="5.0" />
                                     </padding></HBox>
@@ -91,9 +93,9 @@
                 </TitledPane>
                 <TitledPane fx:id="titledPaneChoice2" expanded="false" text="انتخاب دوم">
                     <content>
-                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="202.0" prefViewportWidth="200.0">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportHeight="202.0" prefViewportWidth="200.0">
                             <content>
-                                <HBox alignment="CENTER" prefWidth="200.0">
+                                <HBox fx:id="hbChoice2" alignment="TOP_CENTER">
                                     <padding>
                                         <Insets top="5.0" />
                                     </padding></HBox>
@@ -103,9 +105,9 @@
                 </TitledPane>
                 <TitledPane fx:id="titledPaneChoice3" expanded="false" text="انتخاب سوم">
                     <content>
-                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="202.0" prefViewportWidth="200.0">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportHeight="202.0" prefViewportWidth="200.0">
                             <content>
-                                <HBox alignment="CENTER" prefWidth="200.0">
+                                <HBox fx:id="hbChoice3" alignment="TOP_CENTER">
                                     <padding>
                                         <Insets top="5.0" />
                                     </padding></HBox>
@@ -115,9 +117,9 @@
                 </TitledPane>
                 <TitledPane fx:id="titledPaneChoice4" expanded="false" text="انتخاب چهارم">
                     <content>
-                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="202.0" prefViewportWidth="200.0">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportHeight="202.0" prefViewportWidth="200.0">
                             <content>
-                                <HBox alignment="CENTER" prefWidth="200.0">
+                                <HBox fx:id="hbChoice4" alignment="TOP_CENTER">
                                     <padding>
                                         <Insets top="5.0" />
                                     </padding></HBox>
@@ -127,9 +129,9 @@
                 </TitledPane>
                 <TitledPane fx:id="titledPaneChoice5" expanded="false" text="انتخاب پنجم">
                     <content>
-                        <ScrollPane hbarPolicy="NEVER" prefViewportHeight="202.0" prefViewportWidth="200.0">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportHeight="202.0" prefViewportWidth="200.0">
                             <content>
-                                <HBox  alignment="CENTER" prefWidth="200.0">
+                                <HBox fx:id="hbChoice5" alignment="TOP_CENTER">
                                     <padding>
                                         <Insets top="5.0" />
                                     </padding></HBox>

@@ -162,4 +162,35 @@ public class CellFactorySample {
 
         return cellFactory;
     }
+
+    public static Callback<ListView<University>, ListCell<University>> getComboBoxUniversity(String icon, int iconSize) {
+        Callback<ListView<University>, ListCell<University>> cellFactory = new Callback<ListView<University>, ListCell<University>>() {
+            @Override
+            public ListCell call(ListView<University> param) {
+                final Label lblLead = new Label();
+                FontIcon iconLanguage = new FontIcon((icon == null || icon.isEmpty()) ? "bi-house-fill" : icon);
+                iconLanguage.setIconSize(iconSize < 1 ? 14 : iconSize);
+
+                final ListCell<University> cell = new ListCell<University>(){
+                    @Override
+                    protected void updateItem(University item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(item != null) {
+                            lblLead.setText(item.getTitle());
+                            setText(item.getTitle());
+                            setGraphic(iconLanguage);
+                        } else {
+                            lblLead.setText("");
+                            setText("");
+                            setGraphic(null);
+                        }
+                    }
+                };
+
+                return cell;
+            }
+        };
+
+        return cellFactory;
+    }
 }

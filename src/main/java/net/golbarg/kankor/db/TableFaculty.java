@@ -2,6 +2,7 @@ package net.golbarg.kankor.db;
 
 import net.golbarg.kankor.model.Email;
 import net.golbarg.kankor.model.Faculty;
+import net.golbarg.kankor.model.University;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +35,7 @@ public class TableFaculty implements CRUDHandler<Faculty>{
 
     @Override
     public Faculty findById(int id) {
-        String query = String.format("SELECT %s FROM %s where id = ?;", COLUMNS_STR, TABLE_NAME);
+        String query = String.format("SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID where FACULTIES.id = ?;", TABLE_NAME);
 
         Faculty object = null;
 
@@ -57,9 +58,64 @@ public class TableFaculty implements CRUDHandler<Faculty>{
         return object;
     }
 
+    public ArrayList<Faculty> findByName(String facultyName) {
+        String query = String.format("SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION " +
+                                     "FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID " +
+                                     "where FACULTIES.NAME like ?;", TABLE_NAME);
+
+        ArrayList<Faculty> resultList = new ArrayList<>();
+
+        try {
+
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, facultyName + "%");
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                Faculty object = mapColumn(result);
+                resultList.add(object);
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return resultList;
+    }
+
+    public ArrayList<Faculty> getFacultiesOf(int universityId) {
+        String query = String.format("SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION " +
+                "FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID " +
+                "where FACULTIES.UNI_ID = ?;", TABLE_NAME);
+
+        ArrayList<Faculty> resultList = new ArrayList<>();
+
+        try {
+
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, universityId);
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                Faculty object = mapColumn(result);
+                resultList.add(object);
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return resultList;
+    }
+
+
     @Override
     public ArrayList<Faculty> getAll() {
-        String query = String.format("SELECT %s FROM %s;", COLUMNS_STR, TABLE_NAME);
+        String query = String.format("SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID;", TABLE_NAME);
 
         ArrayList<Faculty> resultList = new ArrayList<>();
 
@@ -72,6 +128,55 @@ public class TableFaculty implements CRUDHandler<Faculty>{
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+        return resultList;
+    }
+
+    public ArrayList<String> getDistinctFaculties() {
+        String query = String.format("SELECT DISTINCT NAME FROM %s;", TABLE_NAME);
+
+        ArrayList<String> resultList = new ArrayList<>();
+
+        try {
+            ResultSet result = DBController.executeQuery(query);
+            while (result.next()) {
+                resultList.add(result.getString("NAME"));
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        return resultList;
+    }
+
+    public ArrayList<Faculty> getFacultiesByCode(String [] codes) {
+        String query = String.format(" SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION " +
+                                     " FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID; " +
+                                     " WHERE FACULTIES.CODE IN (?, ?, ?, ?, ?) ORDER BY FACULTIES.MINIMUM_GRADE DESC; ", TABLE_NAME);
+
+        ArrayList<Faculty> resultList = new ArrayList<>();
+
+        try {
+
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            for(int i = 1; i <= codes.length; i++) {
+                if(i > 6) {
+                    break;
+                }
+                statement.setString(i + 1, codes[i]);
+            }
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                resultList.add(mapColumn(resultSet));
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
         return resultList;
     }
 
@@ -159,7 +264,7 @@ public class TableFaculty implements CRUDHandler<Faculty>{
                 result.getString("DEPARTMENT"),
                 result.getString("CODE"),
                 result.getInt("MINIMUM_GRADE"),
-                result.getInt("UNI_ID"),
+                new University(result.getInt("UNI_ID"),result.getString("UNI_TITLE")),
                 result.getInt("ADMISSION")
         );
     }
@@ -170,7 +275,7 @@ public class TableFaculty implements CRUDHandler<Faculty>{
         statement.setString(2, object.getDepartment());
         statement.setString(3, object.getCode());
         statement.setInt(4, object.getMinimumGrade());
-        statement.setInt(5, object.getUniversityId());
+        statement.setInt(5, object.getUniversity().getId());
         statement.setInt(6, object.getAdmission());
         return statement;
     }

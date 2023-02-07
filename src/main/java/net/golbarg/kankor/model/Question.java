@@ -116,6 +116,10 @@ public class Question {
         this.questionUpdate = questionUpdate;
     }
 
+    public String[] getChoices() {
+        return new String[]{getChoice1(), getChoice2(), getChoice3(), getChoice4()};
+    }
+
     @Override
     public String toString() {
         return "Question{" +

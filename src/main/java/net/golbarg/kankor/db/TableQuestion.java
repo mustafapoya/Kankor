@@ -76,6 +76,46 @@ public class TableQuestion implements CRUDHandler<Question>{
         return resultList;
     }
 
+    public ArrayList<Question> getQuestionsOf(String [] subjects, int count) {
+        StringBuilder queryBuilder = new StringBuilder("SELECT " + COLUMNS_STR + " FROM " + TABLE_NAME +
+                                                        " WHERE SUBJECT_NAME IN ");
+
+        queryBuilder.append("(");
+        for(String subject : subjects) {
+            queryBuilder.append("?, ");
+        }
+
+        queryBuilder.delete(queryBuilder.length() - 2, queryBuilder.length());
+        queryBuilder.append(") ");
+        queryBuilder.append(" ORDER BY RAND() LIMIT ?;");
+
+        String query = queryBuilder.toString();
+
+        ArrayList<Question> resultList = new ArrayList<>();
+
+        try {
+
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            for(int i = 0; i < subjects.length; i++) {
+                statement.setString(i+1, subjects[i]);
+            }
+
+            statement.setInt(subjects.length+1, count);
+
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                Question object = mapColumn(result);
+                resultList.add(object);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return resultList;
+
+    }
+
     @Override
     public boolean update(Question object) {
         String query = String.format("update %s set QUESTION = ?, CHOICE1 = ?, CHOICE2 = ?, CHOICE3 = ?, CHOICE4 = ?, CORRECT_CHOICE = ?, RELATED_CLASS = ?, SUBJECT_NAME = ?, QUESTION_TYPE = ?, QUESTION_UPDATE = ? where id = ?", TABLE_NAME);

@@ -1,7 +1,11 @@
 package net.golbarg.kankor.controller;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import net.golbarg.kankor.model.Gender;
+import net.golbarg.kankor.model.Position;
 
 import java.awt.*;
 import java.io.File;
@@ -73,5 +77,27 @@ public class Util {
             throw new RuntimeException("desktop doesn't support mailto; mail is dead anyway ;)");
         }
     }
-    
+
+    public static void setStageLocation(Stage stage) {
+        Position position = new Position(Position.CORNER.BOTTOM_RIGHT, stage.getWidth(), stage.getHeight());
+        stage.setX(position.getXLocation());
+        stage.setY(position.getYLocation());
+        System.out.println(Position.getTaskbarHeight2());
+    }
+
+    public static void displayAtCenter(Stage stage) {
+        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
+        stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
+    }
+
+    public static void displayAtCenterOf(Stage parent, Stage child) {
+        double centerXPosition = parent.getX() + parent.getWidth()/2d;
+        double centerYPosition = parent.getY() + parent.getHeight()/2d;
+
+        child.setOnShown(event -> {
+            child.setX(centerXPosition - child.getWidth()/2d);
+            child.setY(centerYPosition - child.getHeight()/2d);
+        });
+    }
 }

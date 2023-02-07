@@ -33,7 +33,7 @@
          <children>
             <ImageView fx:id="imgUserImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@user_profile.png" />
+                  <Image url="@../images/user_profile.png" />
                </image></ImageView>
             <GridPane>
               <columnConstraints>

@@ -50,7 +50,7 @@ public class MainViewController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("pdf-view.fxml"));
+                    FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("resource-view.fxml"));
                     root.setCenter(fxmlLoader.load());
                 } catch (Exception exception) {
                     exception.printStackTrace();

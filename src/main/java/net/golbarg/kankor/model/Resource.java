@@ -1,6 +1,6 @@
 package net.golbarg.kankor.model;
 
-public class Resource {
+public class Resource implements IListViewCell{
     private int id;
     private ResourceCategory category;
     private String name;
@@ -75,5 +75,10 @@ public class Resource {
                 ", description='" + description + '\'' +
                 ", size=" + size +
                 '}';
+    }
+
+    @Override
+    public String getListItemText() {
+        return getName();
     }
 }

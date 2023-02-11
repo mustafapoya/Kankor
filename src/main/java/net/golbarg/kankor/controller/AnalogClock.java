@@ -8,6 +8,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
+import net.golbarg.kankor.MainApp;
 
 import java.util.Calendar;
 
@@ -19,8 +20,7 @@ public class AnalogClock extends Group {
 
     public AnalogClock(String brandName, double clockRadius){
         setId("analogueClock");
-
-//        getStylesheets().add(ResourceResolver.getResource(getClass(), "analogue-clock.css"));
+        getStylesheets().add(AnalogClock.class.getResource("/net/golbarg/kankor/analogue-clock.css").toExternalForm());
 
         final Circle face = createClockFace(clockRadius);
         final Label brand = createBrand(face, brandName);

@@ -76,11 +76,11 @@ public class ExamViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         subjectSections.addAll(Arrays.asList(lblMathQuestion, lblNaturalQuestion, lblSocialQuestion, lblAlsanaQuestion));
 
-         startExamProcess();
-
-        btnUniversity.setOnAction(event -> {
-            stopExamProcess();
-        });
+//         startExamProcess();
+//
+//        btnUniversity.setOnAction(event -> {
+//            stopExamProcess();
+//        });
     }
 
     public void startExamProcess() {

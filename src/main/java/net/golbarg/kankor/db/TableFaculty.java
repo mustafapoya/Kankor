@@ -150,7 +150,7 @@ public class TableFaculty implements CRUDHandler<Faculty>{
 
     public ArrayList<Faculty> getFacultiesByCode(String [] codes) {
         String query = String.format(" SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION " +
-                                     " FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID; " +
+                                     " FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID " +
                                      " WHERE FACULTIES.CODE IN (?, ?, ?, ?, ?) ORDER BY FACULTIES.MINIMUM_GRADE DESC; ", TABLE_NAME);
 
         ArrayList<Faculty> resultList = new ArrayList<>();
@@ -160,10 +160,7 @@ public class TableFaculty implements CRUDHandler<Faculty>{
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
-            for(int i = 1; i <= codes.length; i++) {
-                if(i > 6) {
-                    break;
-                }
+            for(int i = 0; i < codes.length; i++) {
                 statement.setString(i + 1, codes[i]);
             }
 

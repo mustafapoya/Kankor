@@ -60,7 +60,7 @@ public class AnswerItemViewController implements Initializable {
             }
         }
 
-         System.out.println(getItemNumber() + " : " + getSelectedAnswer() + " selected cell : " + getSelectedCell());
+//         System.out.println(getItemNumber() + " : " + getSelectedAnswer() + " selected cell : " + getSelectedCell());
     }
 
     public int getSelectedAnswer() {

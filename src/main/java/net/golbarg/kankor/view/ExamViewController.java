@@ -245,6 +245,6 @@ public class ExamViewController implements Initializable {
     }
 
     public String getDuration() {
-        return stopWatchWorker.messageProperty().toString();
+        return lblUpTimer.getText();
     }
 }

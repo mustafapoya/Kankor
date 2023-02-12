@@ -124,11 +124,13 @@ public class ExamFormViewController implements Initializable {
             examResultViewController = fxmlLoader.getController();
             borderPaneExamResult.setCenter(examResultView);
 
+            ObservableList<FieldSelectionViewController> fields = universityViewController.getFields();
+
             ObservableList<Faculty> university = examViewController.getExamController().getUniversity(universityViewController.getFields());
             Faculty passedField = examViewController.getExamController().getPassedField(university, examViewController.getExamController().getKankorScore());
 
             ExamController examController = examViewController.getExamController();
-            String result = passedField == null ? "" : passedField.getName();
+            String result = passedField == null ? "بی نتیجه" : passedField.getName();
 
             ExamResult examResult = new ExamResult(0, examController.getKankorScore(), examController.getTotalCorrect(),
                                         examController.getQuestionGenerator().getTotalQuestion() - examController.getTotalCorrect(),

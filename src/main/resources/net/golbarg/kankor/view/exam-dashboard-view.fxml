@@ -10,10 +10,7 @@
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
@@ -29,101 +26,6 @@
                            <padding>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </padding>
-                           <children>
-                              <HBox fx:id="root" maxWidth="1.7976931348623157E308" minHeight="90.0" minWidth="200.0" nodeOrientation="RIGHT_TO_LEFT" styleClass="dash-item-hr-container">
-                                 <children>
-                                    <GridPane hgap="1.0" maxWidth="1.7976931348623157E308" vgap="1.0" HBox.hgrow="ALWAYS">
-                                      <columnConstraints>
-                                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
-                                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <Label fx:id="lblTitle" maxWidth="1.7976931348623157E308" text="نتیجه امتحان کانکور" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS">
-                                             <padding>
-                                                <Insets left="5.0" right="5.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label fx:id="lblValue" maxWidth="1.7976931348623157E308" style="-fx-font-size: 26px;" text="234" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
-                                             <graphic>
-                                                <FontIcon fx:id="icon" iconColor="#14b96e" iconLiteral="bi-caret-up-fill" iconSize="40" />
-                                             </graphic>
-                                          </Label>
-                                          <ProgressIndicator fx:id="progressIndicator" minHeight="80.0" minWidth="80.0" progress="0.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox fx:id="root1" maxWidth="1.7976931348623157E308" minHeight="90.0" minWidth="200.0" nodeOrientation="RIGHT_TO_LEFT" styleClass="dash-item-hr-container">
-                                 <children>
-                                    <GridPane hgap="1.0" maxWidth="1.7976931348623157E308" vgap="1.0" HBox.hgrow="ALWAYS">
-                                      <columnConstraints>
-                                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
-                                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <Label fx:id="lblTitle1" maxWidth="1.7976931348623157E308" text="نتیجه امتحان کانکور" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS">
-                                             <padding>
-                                                <Insets left="5.0" right="5.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label fx:id="lblValue1" maxWidth="1.7976931348623157E308" style="-fx-font-size: 26px;" text="234" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
-                                             <graphic>
-                                                <FontIcon fx:id="icon1" iconColor="#14b96e" iconLiteral="bi-caret-up-fill" iconSize="40" />
-                                             </graphic>
-                                          </Label>
-                                          <ProgressIndicator fx:id="progressIndicator1" minHeight="80.0" minWidth="80.0" progress="0.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox fx:id="root2" maxWidth="1.7976931348623157E308" minHeight="90.0" minWidth="200.0" nodeOrientation="RIGHT_TO_LEFT" styleClass="dash-item-hr-container">
-                                 <children>
-                                    <GridPane hgap="1.0" maxWidth="1.7976931348623157E308" vgap="1.0" HBox.hgrow="ALWAYS">
-                                      <columnConstraints>
-                                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
-                                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <Label fx:id="lblTitle2" maxWidth="1.7976931348623157E308" text="نتیجه امتحان کانکور" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS">
-                                             <padding>
-                                                <Insets left="5.0" right="5.0" />
-                                             </padding>
-                                          </Label>
-                                          <Label fx:id="lblValue2" maxWidth="1.7976931348623157E308" style="-fx-font-size: 26px;" text="234" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
-                                             <graphic>
-                                                <FontIcon fx:id="icon2" iconColor="#14b96e" iconLiteral="bi-caret-up-fill" iconSize="40" />
-                                             </graphic>
-                                          </Label>
-                                          <ProgressIndicator fx:id="progressIndicator2" minHeight="80.0" minWidth="80.0" progress="0.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                 </padding>
-                              </HBox>
-                           </children>
                         </HBox>
                      </children>
                   </VBox>

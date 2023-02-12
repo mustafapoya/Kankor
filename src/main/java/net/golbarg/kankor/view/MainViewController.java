@@ -46,6 +46,18 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        btnExam.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("exam-dashboard-view.fxml"));
+                    root.setCenter(fxmlLoader.load());
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+
         btnResource.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

@@ -20,7 +20,7 @@ public class QuestionGenerator {
     public static final String[] ALSANA = { "dari", "pashto", "general" };
 
     public QuestionGenerator() {
-        setNumberOfQuestions(47, 41, 38, 35);
+        setNumberOfQuestions(46, 40, 38, 36);
     }
 
     public QuestionGenerator(int math, int natural, int social, int alsana) {

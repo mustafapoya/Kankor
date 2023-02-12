@@ -52,6 +52,7 @@
 .lblClockTime {
     -fx-font-size: 16;
     -fx-font-weight: bold;
+    -fx-font-family: "Courier New";
 }
 
 .about-header {
@@ -65,6 +66,12 @@
 .lbl-subject-section {
     -fx-text-fill: #fff;
     -fx-background-color:  #032d57;
+}
+
+.lbl-subject-section:hover {
+    -fx-text-fill: #fff;
+    -fx-background-color: #0674e2;
+    -fx-cursor: hand;
 }
 
 .lbl-subject-section-selected {
@@ -84,20 +91,20 @@
 
 .lbl-answer-item {
     -fx-border-color: green;
-    -fx-border-radius: 20px;
+    -fx-border-radius: 15px;
     -fx-border-width: 2px;
-    -fx-font-size: 16px;
+    -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
 
 .lbl-answer-item-selected {
     -fx-border-color: green;
-    -fx-border-radius: 20px;
+    -fx-border-radius: 15px;
     -fx-background-color: green;
     -fx-background-radius: 20px;
     -fx-text-fill: white;
     -fx-border-width: 2px;
-    -fx-font-size: 16px;
+    -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
 
@@ -115,4 +122,10 @@
 
 .dash-item-hr-container .progress-indicator  {
     -fx-padding: 0 0 -20 0;
+}
+
+.question-item-view {
+    -fx-border-style:  hidden hidden solid hidden;
+    -fx-border-width:  2px;
+    -fx-border-color:  #fe9003;
 }

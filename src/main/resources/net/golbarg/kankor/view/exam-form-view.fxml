@@ -11,43 +11,35 @@
 
 <BorderPane fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefHeight="480.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.ExamFormViewController">
     <center>
-        <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" tabMinHeight="25.0" tabMinWidth="80.0" BorderPane.alignment="CENTER">
+        <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="32.0" tabMinHeight="32.0" tabMinWidth="85.0" BorderPane.alignment="CENTER">
             <tabs>
                 <Tab fx:id="tabExam" text="امتحان">
                     <graphic>
-                        <FontIcon iconLiteral="bi-alarm" iconSize="16" />
+                        <FontIcon iconLiteral="bi-ui-radios" iconSize="20" />
                     </graphic>
                     <content>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0">
-                            <bottom>
-                                <VBox alignment="CENTER" BorderPane.alignment="CENTER">
-                                    <children>
-                                        <HBox alignment="CENTER">
-                                            <children>
-                                                <Button fx:id="btnUniversity" mnemonicParsing="false" text="تعیین رشته" />
-                                            </children>
-                                            <padding>
-                                                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-                                            </padding>
-                                        </HBox>
-                                    </children>
-                                </VBox>
-                            </bottom></BorderPane>
+                        <BorderPane fx:id="borderPaneExam" prefHeight="200.0" prefWidth="200.0" />
                     </content>
                 </Tab>
                 <Tab fx:id="tabUniversity" text="تعیین رشته">
                     <graphic>
-                        <FontIcon iconLiteral="bi-alarm" iconSize="16" />
+                        <FontIcon iconLiteral="bi-ui-checks" iconSize="20" />
                     </graphic>
                     <content>
                         <BorderPane fx:id="borderPaneUniversity" prefHeight="200.0" prefWidth="200.0">
                             <bottom>
                                 <VBox alignment="CENTER" BorderPane.alignment="CENTER">
                                     <children>
-                                        <HBox alignment="CENTER">
+                                        <HBox alignment="CENTER_RIGHT">
                                             <children>
-                                                <Button mnemonicParsing="false" text="نتیجه" />
+                                                <Button fx:id="btnViewResult" minWidth="80.0" mnemonicParsing="false" prefHeight="30.0" text="نتیجه">
+                                       <graphic>
+                                          <FontIcon iconLiteral="bi-hourglass-split" iconSize="20" />
+                                       </graphic></Button>
                                             </children>
+                                 <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </padding>
                                         </HBox>
                                     </children>
                                 </VBox>
@@ -56,7 +48,7 @@
                 </Tab>
                 <Tab fx:id="tabResult" text="نتیجه امتحان">
                     <graphic>
-                        <FontIcon iconLiteral="bi-alarm" iconSize="16" />
+                        <FontIcon iconLiteral="bi-hourglass-split" iconSize="20" />
                     </graphic>
                     <content>
                         <BorderPane fx:id="borderPaneExamResult" prefHeight="200.0" prefWidth="200.0" />
@@ -64,7 +56,7 @@
                 </Tab>
                 <Tab fx:id="tabReview" text="بررسی سوالات">
                     <graphic>
-                        <FontIcon iconLiteral="bi-alarm" iconSize="16" />
+                        <FontIcon iconLiteral="bi-search" iconSize="20" />
                     </graphic>
                     <content>
                         <BorderPane fx:id="borderPaneExamReview" prefHeight="200.0" prefWidth="200.0" />

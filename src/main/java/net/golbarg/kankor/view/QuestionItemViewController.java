@@ -64,12 +64,12 @@ public class QuestionItemViewController implements Initializable {
 //        initData(tmpQuestion);
     }
 
-    public void initData(Question question) {
+    public void initData(Question question, int number) {
         if(question == null) {
             question = tmpQuestion;
         }
         // render question
-        QuestionTextController questionText = new QuestionTextController(question.getQuestion(), 1);
+        QuestionTextController questionText = new QuestionTextController(question.getQuestion(), number);
         tfQuestion.getChildren().add(questionText);
         tfQuestion.setTranslateY(5);
 
@@ -142,5 +142,4 @@ public class QuestionItemViewController implements Initializable {
                 break;
         }
     }
-
 }

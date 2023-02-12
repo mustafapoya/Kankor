@@ -30,7 +30,7 @@ public class QuestionTextController extends TextFlow {
 
     private void convertQuestion() {
         if(number != -1) {
-            questionNumber = new Text("سوال (" + number + ")");
+            questionNumber = new Text("سوال (" + number + ")  ");
             getChildren().add(questionNumber);
         } else {
             questionNumber = new Text("");

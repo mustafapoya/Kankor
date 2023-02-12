@@ -1,5 +1,6 @@
 package net.golbarg.kankor.view;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -7,11 +8,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
+import net.golbarg.kankor.controller.ExamController;
 import net.golbarg.kankor.controller.SystemController;
+import net.golbarg.kankor.model.Exam;
+import net.golbarg.kankor.model.ExamResult;
+import net.golbarg.kankor.model.Faculty;
 import net.golbarg.kankor.model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class ExamFormViewController implements Initializable {
@@ -31,6 +38,8 @@ public class ExamFormViewController implements Initializable {
     // Exam Tab Section
     @FXML
     private BorderPane borderPaneExam;
+    @FXML
+    private Button btnUniversity;
     ExamViewController examViewController;
 
     // University tab
@@ -38,10 +47,8 @@ public class ExamFormViewController implements Initializable {
     private BorderPane borderPaneUniversity;
     @FXML
     private Button btnViewResult;
-
     UniversityFormViewController universityViewController;
     UniversitySelection universitySelection;
-
     //
     @FXML
     private BorderPane borderPaneExamResult;
@@ -49,12 +56,14 @@ public class ExamFormViewController implements Initializable {
     //
     @FXML
     private BorderPane borderPaneExamReview;
-
     //
     User user;
+    private ArrayList<Tab> tabs = new ArrayList<>();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        disableTabs();
+        tabs.addAll(Arrays.asList(tabExam, tabUniversity, tabResult, tabReview));
+        enableTab(0);
         user = SystemController.currentUser;
 
         // init exam
@@ -64,33 +73,28 @@ public class ExamFormViewController implements Initializable {
             examViewController = fxmlLoader.getController();
             borderPaneExam.setCenter(examView);
             examViewController.startExamProcess();
-            examViewController.getBtnUniversity().setOnAction(event -> {
-                gotoUniversityTab();
+
+            btnUniversity.setOnAction(event -> {
+                examViewController.processQuestionAnswers();
+                enableTab(1);
+                universitySelection = new UniversitySelection();
+                universitySelection.run();
             });
+
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-
     }
 
-    public void gotoUniversityTab() {
-        tabPane.getTabs().get(0).setDisable(true);
-        tabPane.getTabs().get(1).setDisable(false);
-        tabPane.getSelectionModel().select(1);
-
-        try {
-            universitySelection = new UniversitySelection();
-            universitySelection.run();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
+    private void enableTab(int index) {
+        for(int i = 0; i < tabs.size(); i++) {
+            if(index == i) {
+                tabs.get(i).setDisable(false);
+                tabPane.getSelectionModel().select(i);
+            } else {
+                tabs.get(i).setDisable(true);
+            }
         }
-    }
-
-    private void disableTabs() {
-        tabUniversity.setDisable(true);
-        tabResult.setDisable(true);
-        tabReview.setDisable(true);
     }
 
     class UniversitySelection extends Thread {
@@ -103,16 +107,8 @@ public class ExamFormViewController implements Initializable {
                 borderPaneUniversity.setCenter(universityFormView);
 
                 btnViewResult.setOnAction(event -> {
-                    tabPane.getTabs().get(1).setDisable(true);
-                    tabPane.getTabs().get(2).setDisable(false);
-                    tabPane.getSelectionModel().select(2);
-                    try {
-                        ExamResult result = new ExamResult(universitySelection);
-                        result.run();
-                    } catch (Exception e) {
-                        System.err.println(e.getMessage());
-                        e.printStackTrace();
-                    }
+                    enableTab(2);
+                    loadExamResult();
                 });
 
             } catch (Exception exception) {
@@ -121,28 +117,28 @@ public class ExamFormViewController implements Initializable {
         }
     }
 
-    class ExamResult extends Thread {
-        UniversitySelection university;
+    private void loadExamResult() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ExamViewController.class.getResource("exam-result-view.fxml"));
+            BorderPane examResultView = fxmlLoader.load();
+            examResultViewController = fxmlLoader.getController();
+            borderPaneExamResult.setCenter(examResultView);
 
-        public ExamResult(UniversitySelection university) {
-            this.university = university;
-        }
+            ObservableList<Faculty> university = examViewController.getExamController().getUniversity(universityViewController.getFields());
+            Faculty passedField = examViewController.getExamController().getPassedField(university, examViewController.getExamController().getKankorScore());
 
-        @Override
-        public void run() {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(ExamViewController.class.getResource("exam-result-view.fxml"));
-                BorderPane examResultView = fxmlLoader.load();
-                examResultViewController = fxmlLoader.getController();
-                borderPaneExamResult.setCenter(examResultView);
-                examResultViewController.setDuration(examViewController.stopWatchWorker.messageProperty().get());
+            ExamController examController = examViewController.getExamController();
+            String result = passedField == null ? "" : passedField.getName();
 
-                examResultViewController.setUniversity(universityViewController, examViewController);
-                examResultViewController.saveExamResult();
+            ExamResult examResult = new ExamResult(0, examController.getKankorScore(), examController.getTotalCorrect(),
+                                        examController.getQuestionGenerator().getTotalQuestion() - examController.getTotalCorrect(),
+                                                    result, examViewController.getDuration());
 
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+            examResultViewController.initData(examResult);
+
+//          examResultViewController.saveExamResult();
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
     }
 }

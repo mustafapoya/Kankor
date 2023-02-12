@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefHeight="480.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.ExamViewController">
+<BorderPane fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefHeight="480.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.ExamViewController">
     <right>
         <ScrollPane fx:id="spAnswerSheet" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
             <content>
@@ -24,11 +24,11 @@
     <top>
         <VBox BorderPane.alignment="CENTER_LEFT">
             <children>
-                <HBox prefHeight="35.0" styleClass="hb-subject-header-container">
+                <HBox prefHeight="45.0" styleClass="hb-subject-header-container">
                     <children>
                         <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                             <children>
-                                <Label fx:id="lblMathQuestion" maxWidth="300.0" prefHeight="35.0" styleClass="lbl-subject-section-selected" text="ریاضیات" HBox.hgrow="ALWAYS">
+                                <Label fx:id="lblMathQuestion" maxHeight="1.7976931348623157E308" maxWidth="300.0" styleClass="lbl-subject-section-selected" text="ریاضیات" HBox.hgrow="ALWAYS">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -36,13 +36,13 @@
                                         <Insets left="5.0" right="5.0" />
                                     </padding>
                            <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="bi-calculator" iconSize="16" />
+                              <FontIcon iconColor="WHITE" iconLiteral="bi-calculator" iconSize="20" />
                            </graphic>
                            <cursor>
                               <Cursor fx:constant="DEFAULT" />
                            </cursor>
                                 </Label>
-                                <Label fx:id="lblNaturalQuestion" maxWidth="300.0" prefHeight="35.0" styleClass="lbl-subject-section" text="علوم طبیعی" HBox.hgrow="ALWAYS">
+                                <Label fx:id="lblNaturalQuestion" maxHeight="1.7976931348623157E308" maxWidth="300.0" styleClass="lbl-subject-section" text="علوم طبیعی" HBox.hgrow="ALWAYS">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -50,10 +50,10 @@
                                         <Insets left="5.0" right="5.0" />
                                     </padding>
                            <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="bi-columns-gap" iconSize="16" />
+                              <FontIcon iconColor="WHITE" iconLiteral="bi-columns-gap" iconSize="20" />
                            </graphic>
                                 </Label>
-                                <Label fx:id="lblSocialQuestion" maxWidth="300.0" prefHeight="35.0" styleClass="lbl-subject-section" text="علوم اجتماعی و دینی" HBox.hgrow="ALWAYS">
+                                <Label fx:id="lblSocialQuestion" maxHeight="1.7976931348623157E308" maxWidth="300.0" styleClass="lbl-subject-section" text="علوم اجتماعی و دینی" HBox.hgrow="ALWAYS">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -61,10 +61,10 @@
                                         <Insets left="5.0" right="5.0" />
                                     </padding>
                            <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="bi-journal-text" iconSize="16" />
+                              <FontIcon iconColor="WHITE" iconLiteral="bi-journal-text" iconSize="20" />
                            </graphic>
                                 </Label>
-                                <Label fx:id="lblAlsanaQuestion" maxWidth="300.0" prefHeight="35.0" styleClass="lbl-subject-section" text="السنه و معلومات عمومی" HBox.hgrow="ALWAYS">
+                                <Label fx:id="lblAlsanaQuestion" maxHeight="1.7976931348623157E308" maxWidth="300.0" styleClass="lbl-subject-section" text="السنه و معلومات عمومی" HBox.hgrow="ALWAYS">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -72,22 +72,22 @@
                                         <Insets left="5.0" right="5.0" />
                                     </padding>
                            <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="bi-kanban" iconSize="16" />
+                              <FontIcon iconColor="WHITE" iconLiteral="bi-kanban" iconSize="20" />
                            </graphic>
                                 </Label>
                             </children>
                         </HBox>
                         <HBox alignment="CENTER" prefWidth="200.0">
                             <children>
-                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="35.0" styleClass="lbl-subject-answer" text="ورقه جوابات" HBox.hgrow="ALWAYS">
+                                <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="200.0" styleClass="lbl-subject-answer" text="ورقه جوابات" HBox.hgrow="ALWAYS">
                            <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="bi-list-check" iconSize="16" />
+                              <FontIcon iconColor="WHITE" iconLiteral="bi-list-check" iconSize="20" />
                            </graphic></Label>
                             </children>
                         </HBox>
                     </children>
                 </HBox>
-                <HBox alignment="CENTER" prefHeight="50.0">
+                <HBox alignment="CENTER" prefHeight="55.0">
                     <children>
                         <GridPane HBox.hgrow="ALWAYS">
                             <columnConstraints>
@@ -105,16 +105,12 @@
                             </children>
                         </GridPane>
                   <HBox alignment="CENTER" maxWidth="200.0" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                              <Button fx:id="btnUniversity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" text="تعیین رشته" HBox.hgrow="ALWAYS">
-                           <graphic>
-                              <FontIcon iconLiteral="bi-ui-checks" iconSize="20" />
-                           </graphic>
-                        </Button>
-                     </children>
                      <padding>
                         <Insets left="5.0" right="5.0" />
                      </padding>
+                     <children>
+                        <Button fx:id="btnEndExam" mnemonicParsing="false" text="end exam" />
+                     </children>
                   </HBox>
                     </children>
                 </HBox>

@@ -18,7 +18,25 @@
                         <FontIcon iconLiteral="bi-ui-radios" iconSize="20" />
                     </graphic>
                     <content>
-                        <BorderPane fx:id="borderPaneExam" prefHeight="200.0" prefWidth="200.0" />
+                        <BorderPane fx:id="borderPaneExam" prefHeight="200.0" prefWidth="200.0">
+                     <bottom>
+                        <VBox BorderPane.alignment="CENTER">
+                           <children>
+                              <HBox alignment="CENTER_RIGHT">
+                                 <children>
+                                    <Button fx:id="btnUniversity" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="انتخاب رشته">
+                                       <graphic>
+                                          <FontIcon iconLiteral="bi-ui-checks" iconSize="20" />
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </bottom></BorderPane>
                     </content>
                 </Tab>
                 <Tab fx:id="tabUniversity" text="تعیین رشته">
@@ -32,7 +50,7 @@
                                     <children>
                                         <HBox alignment="CENTER_RIGHT">
                                             <children>
-                                                <Button fx:id="btnViewResult" minWidth="80.0" mnemonicParsing="false" prefHeight="30.0" text="نتیجه">
+                                                <Button fx:id="btnViewResult" minWidth="80.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="نتیجه">
                                        <graphic>
                                           <FontIcon iconLiteral="bi-hourglass-split" iconSize="20" />
                                        </graphic></Button>

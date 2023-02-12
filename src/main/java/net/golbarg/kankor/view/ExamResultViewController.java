@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import net.golbarg.kankor.controller.SystemController;
 import net.golbarg.kankor.db.TableExam;
 import net.golbarg.kankor.model.Exam;
 import net.golbarg.kankor.model.ExamResult;
@@ -24,7 +25,6 @@ import java.util.ResourceBundle;
 public class ExamResultViewController implements Initializable {
     @FXML
     private BorderPane root;
-
     @FXML
     private ImageView imgUserImage;
     @FXML
@@ -50,18 +50,13 @@ public class ExamResultViewController implements Initializable {
     @FXML
     private Button btnShareResult;
 
-    private User user;
-    private ExamResult examResult;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
-    public void loadData(User user, ExamResult examResult) {
-        this.user = user;
-        this.examResult = examResult;
-
+    public void initData(ExamResult examResult) {
+        User user = SystemController.currentUser;
         //
         lblFullName.setText(user.getName() + ", " + user.getLastName());
         lblKankorId.setText("Kankor ID: " + user.getId());
@@ -76,29 +71,29 @@ public class ExamResultViewController implements Initializable {
 
     // TODO: date parameter, user should be checked its error prone
     public void saveExamResult() {
-        LocalDate l = LocalDate.now();
-        String date = l.getYear() + "-" + l.getMonthValue() + "-" + l.getDayOfMonth();
-        Exam e = Exam(0, user.getId(), "0000", new Date(date),
-                        new Date(examResult.getDuration()),
-                        examViewController.examController.getMath(), examViewController.examController.getNatural(),
-                        examViewController.examController.getSocial(),
-                        examViewController.examController.getAlsana(), examViewController.examController.getKankorScore(),
-                        examResultViewController.getKankorResult());
-        new TableExam().create(e);
+//        LocalDate l = LocalDate.now();
+//        String date = l.getYear() + "-" + l.getMonthValue() + "-" + l.getDayOfMonth();
+//        Exam e = Exam(0, user.getId(), "0000", new Date(date),
+//                        new Date(examResult.getDuration()),
+//                        examViewController.examController.getMath(), examViewController.examController.getNatural(),
+//                        examViewController.examController.getSocial(),
+//                        examViewController.examController.getAlsana(), examViewController.examController.getKankorScore(),
+//                        examResultViewController.getKankorResult());
+//        new TableExam().create(e);
     }
 
     public void setUniversity(UniversityFormViewController universityView, ExamViewController examView) {
         ObservableList<FieldSelectionViewController> list = universityView.getFields();
-        ObservableList<Faculty> universityList = examView.examController.getUniversity(list);
+        ObservableList<Faculty> universityList = examView.getExamController().getUniversity(list);
 
         for (int i = 0; i < universityList.size(); i++) {
             System.out.println("selected -> " + universityList.get(i).toString());
         }
 
-        System.out.println("set university: " + examView.examController.getKankorScore());
+        System.out.println("set university: " + examView.getExamController().getKankorScore());
 
         if (universityList.size() > 0) {
-            Faculty faculty = examView.examController.getPassedField(universityList, 100);
+            Faculty faculty = examView.getExamController().getPassedField(universityList, 100);
             if (faculty != null) {
                 setKankorResult(faculty.getUniversity() + ", " + faculty.getName());
             } else {
@@ -113,14 +108,14 @@ public class ExamResultViewController implements Initializable {
         btnShareResult.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (examViewController.examController.getKankorScore() > 250) {
-                    share();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    String text = "برای انتشار در ویب نمره شما باید بالای 250 باشد!";
-                    alert.setContentText(text);
-                    alert.showAndWait();
-                }
+//                if (examViewController.examController.getKankorScore() > 250) {
+//                    share();
+//                } else {
+//                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                    String text = "برای انتشار در ویب نمره شما باید بالای 250 باشد!";
+//                    alert.setContentText(text);
+//                    alert.showAndWait();
+//                }
             }
         });
     }
@@ -135,10 +130,6 @@ public class ExamResultViewController implements Initializable {
 
     public Button getBtnShareResult() {
         return btnShareResult;
-    }
-
-    public void setUserDetails(User User) {
-        lblFullName.setText(user.getName() + ", " + user.getLastName());
     }
 
     public void setDuration(String duration) {

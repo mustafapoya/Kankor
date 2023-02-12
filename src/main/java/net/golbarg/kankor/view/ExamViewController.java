@@ -4,7 +4,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -33,7 +31,8 @@ import java.util.ResourceBundle;
 public class ExamViewController implements Initializable {
     @FXML
     private BorderPane root;
-
+    @FXML
+    private Button btnEndExam;
     @FXML
     private ScrollPane spAnswerSheet;
     @FXML
@@ -56,36 +55,37 @@ public class ExamViewController implements Initializable {
     private ScrollPane spQuestion;
     @FXML
     private VBox vbQuestion;
-    @FXML
-    private Button btnUniversity;
-
     // Up Timer
     static StopWatchWorker stopWatchWorker;
-    Thread upTimer;
+    private Thread upTimer;
     // Down Timer
-    CountDownWorker countDownWorker;
-    Thread downTimer;
+    static CountDownWorker countDownWorker;
+    private Thread downTimer;
 
-    AnswerSheetViewController answerSheet;
-    ObservableList<Question> questionList = FXCollections.observableArrayList();
-    ObservableList<Label> subjectSections = FXCollections.observableArrayList();
-    ExamController examController;
-    Exam examProcess;
+    private AnswerSheetViewController answerSheet;
+    private ObservableList<Question> questionList = FXCollections.observableArrayList();
+    private ObservableList<Label> subjectSections = FXCollections.observableArrayList();
+    private ExamController examController;
+    private Exam examProcess;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         subjectSections.addAll(Arrays.asList(lblMathQuestion, lblNaturalQuestion, lblSocialQuestion, lblAlsanaQuestion));
+        examController = new ExamController();
 
-//         startExamProcess();
-//
-//        btnUniversity.setOnAction(event -> {
-//            stopExamProcess();
+//        startExamProcess();
+//        btnEndExam.setOnAction(event -> {
+//            processQuestionAnswers();
+//            System.out.println(examController);
 //        });
+    }
+
+    public void processQuestionAnswers() {
+        examController.checkAnswers(answerSheet, questionList);
     }
 
     public void startExamProcess() {
         try {
-            examController = new ExamController();
             examProcess = new Exam();
             examProcess.run();
         } catch (Exception e) {
@@ -178,7 +178,6 @@ public class ExamViewController implements Initializable {
         vbQuestion.getChildren().clear();
         try {
             for (int i = 0; i < questionList.size(); i++) {
-
                 FXMLLoader fxmlLoader = new FXMLLoader(ExamViewController.class.getResource("question-item-view.fxml"));
                 VBox questionView = fxmlLoader.load();
                 QuestionItemViewController questionController = fxmlLoader.getController();
@@ -241,8 +240,11 @@ public class ExamViewController implements Initializable {
         }
     }
 
-    public Button getBtnUniversity() {
-        return btnUniversity;
+    public ExamController getExamController() {
+        return examController;
     }
 
+    public String getDuration() {
+        return stopWatchWorker.messageProperty().toString();
+    }
 }

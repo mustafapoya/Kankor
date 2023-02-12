@@ -64,6 +64,7 @@
 }
 
 .lbl-subject-section {
+    -fx-font-size: 14px;
     -fx-text-fill: #fff;
     -fx-background-color:  #032d57;
 }
@@ -75,11 +76,14 @@
 }
 
 .lbl-subject-section-selected {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
     -fx-text-fill: #fff;
     -fx-background-color:  #0674e2;
 }
 
 .lbl-subject-answer {
+    -fx-font-size: 14px;
     -fx-text-fill: #fff;
 }
 

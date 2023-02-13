@@ -84,7 +84,7 @@ public class ColumnSelectionViewController implements Initializable {
             }
         }
 
-        System.out.println(getTextInput() + " : " + getSelectedValue() + " selected cell : " + getSelectedCell());
+//        System.out.println(getTextInput() + " : " + getSelectedValue() + " selected cell : " + getSelectedCell());
     }
 
     public int getSelectedValue() {

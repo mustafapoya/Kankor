@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import net.golbarg.kankor.view.UserLoginViewController;
@@ -20,7 +19,7 @@ public class MainApp extends Application {
         this.stage = stage;
         this.hostServices = getHostServices();
 //        loadMainView();
-        loadView("view/main-view.fxml");
+        loadView("view/exam-form-view.fxml");
     }
 
     public static void main(String[] args) {

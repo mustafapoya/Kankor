@@ -2,6 +2,7 @@ package net.golbarg.kankor.view;
 
 import com.dansoftware.pdfdisplayer.PDFDisplayer;
 import com.dansoftware.pdfdisplayer.PdfJSVersion;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import net.golbarg.kankor.custom.CellFactorySample;
+import net.golbarg.kankor.custom.ListViewCellFactory;
 import net.golbarg.kankor.db.TableLocation;
 import net.golbarg.kankor.db.TableResource;
 import net.golbarg.kankor.db.TableResourceCategory;
@@ -23,6 +25,7 @@ import net.golbarg.kankor.db.TableTutorialDetail;
 import net.golbarg.kankor.model.*;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import javax.swing.plaf.BorderUIResource;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -31,10 +34,6 @@ import java.util.ResourceBundle;
 public class ResourceViewController implements Initializable {
     @FXML
     private BorderPane root;
-    @FXML
-    private ToolBar toolBar;
-    @FXML
-    private Button btnOpenFile;
     @FXML
     private ComboBox<ResourceCategory> comboCategory;
     @FXML
@@ -53,22 +52,27 @@ public class ResourceViewController implements Initializable {
         resourceList.addAll(new TableResource().getAll());
         filteredResourceList = new FilteredList<>(resourceList, data -> true);
 
+        //
         listViewResources.setItems(filteredResourceList);
-        listViewResources.setCellFactory(createResourceListViewCellFactory());
+        ListViewCellFactory<Resource> resourceCellFactory = new ListViewCellFactory<>("bi-file-earmark-richtext", 16);
+        listViewResources.setCellFactory(resourceCellFactory.createCellFactory());
 
         listViewResources.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Resource>() {
             @Override
             public void changed(ObservableValue<? extends Resource> observable, Resource oldValue, Resource newValue) {
                 if (newValue != null) {
-                    try {
-                        PDFDisplayer displayer = new PDFDisplayer(PdfJSVersion._2_2_228);
-                        pdfContainer.setCenter(displayer.toNode());
-                        File file = new File("assets/resource/" + newValue.getFileName());
-                        displayer.loadPDF(file);
+                    currentResource = newValue;
 
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    PDFDisplayer displayer = new PDFDisplayer(PdfJSVersion._2_2_228);
+                    pdfContainer.setCenter(displayer.toNode());
+                    File file = new File("assets/resource/" + newValue.getFileName());
+                    Platform.runLater(() -> {
+                        try {
+                            displayer.loadPDF(file);
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
+                    });
                 }
             }
         });
@@ -89,7 +93,6 @@ public class ResourceViewController implements Initializable {
             }
         });
         comboCategory.getSelectionModel().selectFirst();
-
     }
 
     private void filterResources(ResourceCategory newValue, FilteredList<Resource> filteredList) {
@@ -105,34 +108,5 @@ public class ResourceViewController implements Initializable {
                 return false;
             }
         });
-    }
-
-    private Callback<ListView<Resource>, ListCell<Resource>> createResourceListViewCellFactory() {
-        return new Callback<ListView<Resource>, ListCell<Resource>>() {
-            @Override
-            public ListCell<Resource> call(ListView<Resource> param) {
-                final Label leadLbl = new Label();
-                FontIcon listIcon = new FontIcon("bi-file-earmark-richtext");
-                listIcon.setIconSize(16);
-
-                final ListCell<Resource> cell = new ListCell<Resource>() {
-                    @Override
-                    protected void updateItem(Resource item, boolean empty) {
-                        super.updateItem(item, empty);
-
-                        if (item != null) {
-                            leadLbl.setText(item.getName().trim());
-                            setText(item.getName().trim());
-                            setGraphic(listIcon);
-                        } else {
-                            leadLbl.setText("");
-                            setText("");
-                            setGraphic(null);
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
     }
 }

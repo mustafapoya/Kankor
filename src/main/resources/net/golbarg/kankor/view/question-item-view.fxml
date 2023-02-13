@@ -8,12 +8,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefWidth="700.0" spacing="5.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.QuestionItemViewController">
+<VBox fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefWidth="700.0" spacing="5.0" styleClass="question-item-view" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.QuestionItemViewController">
    <padding>
       <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
    </padding>
    <children>
-      <TextFlow fx:id="tfQuestion" minHeight="80.0" prefWidth="200.0" />
+      <TextFlow fx:id="tfQuestion" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="60.0" textAlignment="JUSTIFY" />
       <GridPane>
         <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0" />
@@ -30,10 +30,10 @@
             <Label fx:id="lbl2" text="(2)" GridPane.columnIndex="2" />
             <Label fx:id="lbl3" text="(3)" GridPane.rowIndex="1" />
             <Label fx:id="lbl4" text="(4)" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Label fx:id="lblAnswer1" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
-            <Label fx:id="lblAnswer2" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
-            <Label fx:id="lblAnswer3" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
-            <Label fx:id="lblAnswer4" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+            <Label fx:id="lblAnswer1" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" text="Label" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+            <Label fx:id="lblAnswer3" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" text="Label" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+            <Label fx:id="lblAnswer2" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" text="Label" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
+            <Label fx:id="lblAnswer4" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" text="Label" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>

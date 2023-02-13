@@ -39,7 +39,7 @@ public class FieldSelectionViewController implements Initializable {
         root.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println(getSelectedFieldValue());
+//                System.out.println(getSelectedFieldValue());
             }
         });
     }

@@ -13,21 +13,22 @@ public class ExamController {
     private ObservableList<Question> naturalList = FXCollections.observableArrayList();
     private ObservableList<Question> socialList = FXCollections.observableArrayList();
     private ObservableList<Question> alsanaList = FXCollections.observableArrayList();
-    private int math, natural, social, alsana, totalCorrect;
-    ObservableList<Question> questions = FXCollections.observableArrayList();
-
-    AnswerSheetViewController answerSheet;
-    QuestionGenerator generator;
+    private int mathCorrect, naturalCorrect, socialCorrect, alsanaCorrect, totalCorrect;
+    private QuestionGenerator questionGenerator;
 
     public ExamController() {
-        generator = new QuestionGenerator();
+        questionGenerator = new QuestionGenerator();
+    }
+
+    public ExamController(int math, int natural, int social, int alsana) {
+        questionGenerator = new QuestionGenerator(math, natural, social, alsana);
     }
 
     public void generateQuestion() {
-        mathList = generator.getMathQuestions();
-        naturalList = generator.getNaturalQuestion();
-        socialList = generator.getSocialQuestion();
-        alsanaList = generator.getAlsanaQuestion();
+        mathList = questionGenerator.getMathQuestions();
+        naturalList = questionGenerator.getNaturalQuestion();
+        socialList = questionGenerator.getSocialQuestion();
+        alsanaList = questionGenerator.getAlsanaQuestion();
     }
 
     public ObservableList<Question> getMathList() {
@@ -46,14 +47,13 @@ public class ExamController {
         return alsanaList;
     }
 
-    public void compare(AnswerSheetViewController answers, ObservableList<Question> questions) {
-        this.answerSheet = answers;
-        this.questions = questions;
-        math = 0;
-        social = 0;
-        natural = 0;
-        alsana = 0;
+    public void checkAnswers(AnswerSheetViewController answers, ObservableList<Question> questions) {
+        mathCorrect = 0;
+        socialCorrect = 0;
+        naturalCorrect = 0;
+        alsanaCorrect = 0;
         totalCorrect = 0;
+
         for (int i = 0; i < questions.size(); i++) {
             int selectedAnswer = answers.getRowList().get(i).getSelectedAnswer();
             int correctAnswer = questions.get(i).getCorrectChoice();
@@ -62,12 +62,11 @@ public class ExamController {
                 totalCorrect++;
                 System.out.println("correct");
                 checkSubjectType(questions.get(i).getSubjectName());
-                System.out.println("Math Correct -> " + math);
-                System.out.println("Social Correct -> " + social);
-                System.out.println("Natural Correct -> " + natural);
-                System.out.println("Alsana Correct -> " + alsana);
+                System.out.println("Math Correct -> " + mathCorrect);
+                System.out.println("Social Correct -> " + socialCorrect);
+                System.out.println("Natural Correct -> " + naturalCorrect);
+                System.out.println("Alsana Correct -> " + alsanaCorrect);
             }
-//			System.out.println("my selection -> " + answers.getRows().get(i).getSelectedCellValue() + 1);
         }
     }
 
@@ -95,18 +94,23 @@ public class ExamController {
         }
         return null;
     }
-    public int getMath() {
-        return math;
+
+    public int getMathCorrect() {
+        return mathCorrect;
     }
-    public int getAlsana() {
-        return alsana;
+
+    public int getAlsanaCorrect() {
+        return alsanaCorrect;
     }
-    public int getNatural() {
-        return natural;
+
+    public int getNaturalCorrect() {
+        return naturalCorrect;
     }
-    public int getSocial() {
-        return social;
+
+    public int getSocialCorrect() {
+        return socialCorrect;
     }
+
     public int getTotalCorrect() {
         return totalCorrect;
     }
@@ -117,40 +121,47 @@ public class ExamController {
             case "math":
             case "triangles":
             case "geometry":
-                math++;
+                mathCorrect++;
                 break;
             // Natural
             case "chemistry":
             case "physic":
             case "biology":
-                natural++;
+                naturalCorrect++;
                 break;
             // Social
             case "islamic":
             case "history":
             case "geography":
-                social++;
+                socialCorrect++;
                 break;
             // Alsana
             case "dari":
             case "pashto":
             case "general":
-                alsana++;
+                alsanaCorrect++;
                 break;
             default:
                 break;
         }
     }
 
-    public AnswerSheetViewController getAnswerSheet() {
-        return answerSheet;
-    }
-
     public double getKankorScore() {
         return totalCorrect * 2;
     }
 
-    public ObservableList<Question> getQuestions() {
-        return questions;
+    public QuestionGenerator getQuestionGenerator() {
+        return questionGenerator;
+    }
+
+    @Override
+    public String toString() {
+        return "ExamController{" +
+                "mathCorrect=" + mathCorrect +
+                ", naturalCorrect=" + naturalCorrect +
+                ", socialCorrect=" + socialCorrect +
+                ", alsanaCorrect=" + alsanaCorrect +
+                ", totalCorrect=" + totalCorrect +
+                '}';
     }
 }

@@ -9,7 +9,6 @@ module net.golbarg.kankor.kankor {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires org.kordamp.ikonli.fontawesome5;
-    requires eu.hansolo.tilesfx;
     requires com.h2database;
     requires PDFViewerFX;
     requires com.google.gson;

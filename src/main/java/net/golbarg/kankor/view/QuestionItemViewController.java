@@ -14,6 +14,7 @@ import net.golbarg.kankor.db.TableQuestion;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.model.Subject;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,6 +47,7 @@ public class QuestionItemViewController implements Initializable {
     private Label lblAnswer4;
     private TableQuestion tableQuestion;
     private ArrayList<Label> answers = new ArrayList<>();
+    private ArrayList<Label> labels  = new ArrayList<>();
 
     // this object is for test purpose
     Question tmpQuestion;
@@ -57,6 +59,7 @@ public class QuestionItemViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //initialization
         answers.addAll(Arrays.asList(lblAnswer1, lblAnswer2, lblAnswer3, lblAnswer4));
+        labels.addAll(Arrays.asList(lbl1, lbl2, lbl3, lbl4));
 
         // test purpose
 //        tableQuestion = new TableQuestion();
@@ -64,12 +67,12 @@ public class QuestionItemViewController implements Initializable {
 //        initData(tmpQuestion);
     }
 
-    public void initData(Question question) {
+    public void initData(Question question, int number) {
         if(question == null) {
             question = tmpQuestion;
         }
         // render question
-        QuestionTextController questionText = new QuestionTextController(question.getQuestion(), 1);
+        QuestionTextController questionText = new QuestionTextController(question.getQuestion(), number);
         tfQuestion.getChildren().add(questionText);
         tfQuestion.setTranslateY(5);
 
@@ -92,24 +95,24 @@ public class QuestionItemViewController implements Initializable {
         }
     }
 
-    private void setCorrectAnswer(int i) {
+    public void setCorrectAnswer(int i) {
         correctAnswer = i;
         switch (i) {
             case 1:
-                lbl1.setStyle("-fx-text-fill: #00ff2a;-fx-font-weight:bold;");
-                lblAnswer1.setStyle("-fx-text-fill: #00ff2a;-fx-font-weight:bold;");
+                lbl1.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
+                lblAnswer1.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
                 break;
             case 2:
-                lbl2.setStyle("-fx-text-fill: #00ff2a;-fx-font-weight:bold;");
-                lblAnswer2.setStyle("-fx-text-fill: #00ff2a;-fx-font-weight:bold;");
+                lbl2.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
+                lblAnswer2.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
                 break;
             case 3:
-                lbl3.setStyle("-fx-text-fill: #00ff2a;-fx-font-weight:bold;");
-                lblAnswer3.setStyle("-fx-text-fill: #00ff2a;-fx-font-weight:bold;");
+                lbl3.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
+                lblAnswer3.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
                 break;
             case 4:
-                lbl4.setStyle("-fx-text-fill: #00ff2a;-fx-font-weight:bold;");
-                lblAnswer4.setStyle("-fx-text-fill: #00ff2a;-fx-font-weight:bold;");
+                lbl4.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
+                lblAnswer4.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
                 break;
             default:
                 break;
@@ -142,5 +145,4 @@ public class QuestionItemViewController implements Initializable {
                 break;
         }
     }
-
 }

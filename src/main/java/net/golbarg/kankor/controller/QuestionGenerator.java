@@ -20,7 +20,7 @@ public class QuestionGenerator {
     public static final String[] ALSANA = { "dari", "pashto", "general" };
 
     public QuestionGenerator() {
-        setNumberOfQuestions(47, 41, 38, 35);
+        setNumberOfQuestions(46, 40, 38, 36);
     }
 
     public QuestionGenerator(int math, int natural, int social, int alsana) {
@@ -86,4 +86,33 @@ public class QuestionGenerator {
         return examResults;
     }
 
+    public int getMath() {
+        return math;
+    }
+
+    public int getAlsana() {
+        return alsana;
+    }
+
+    public int getNatural() {
+        return natural;
+    }
+
+    public int getSocial() {
+        return social;
+    }
+
+    public int getTotalQuestion() {
+        return getMath() + getNatural() + getSocial() + getAlsana();
+    }
+
+    @Override
+    public String toString() {
+        return "QuestionGenerator{" +
+                "math=" + math +
+                ", natural=" + natural +
+                ", social=" + social +
+                ", alsana=" + alsana +
+                '}';
+    }
 }

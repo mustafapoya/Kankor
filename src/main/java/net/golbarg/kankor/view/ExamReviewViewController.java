@@ -29,7 +29,7 @@ public class ExamReviewViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        test_exam_review();
+//        test_exam_review();
     }
 
     private void test_exam_review() {

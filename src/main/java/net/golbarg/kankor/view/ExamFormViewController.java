@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import net.golbarg.kankor.controller.ExamController;
 import net.golbarg.kankor.controller.SystemController;
 import net.golbarg.kankor.model.Exam;
@@ -56,6 +57,9 @@ public class ExamFormViewController implements Initializable {
     //
     @FXML
     private BorderPane borderPaneExamReview;
+    @FXML
+    private Button btnBackResult;
+
     //
     User user;
     private ArrayList<Tab> tabs = new ArrayList<>();
@@ -139,6 +143,23 @@ public class ExamFormViewController implements Initializable {
             examResultViewController.initData(examResult);
 
 //          examResultViewController.saveExamResult();
+
+            examResultViewController.getBtnCheckQuestions().setOnAction(event -> {
+                enableTab(3);
+
+                try {
+                    FXMLLoader reviewLoader = new FXMLLoader(ExamFormViewController.class.getResource("exam-review-view.fxml"));
+                    BorderPane reviewView = reviewLoader.load();
+                    ExamReviewViewController examReviewViewController = reviewLoader.getController();
+                    examReviewViewController.initData(examViewController.getQuestionList(), examViewController.getAnswerSheet());
+                    borderPaneExamReview.setCenter(reviewView);
+                    btnBackResult.setOnAction(event2-> {
+                        enableTab(2);
+                    });
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            });
         } catch (Exception exception) {
             exception.printStackTrace();
         }

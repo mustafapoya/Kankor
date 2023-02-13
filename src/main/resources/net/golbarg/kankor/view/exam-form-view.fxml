@@ -77,7 +77,25 @@
                         <FontIcon iconLiteral="bi-search" iconSize="20" />
                     </graphic>
                     <content>
-                        <BorderPane fx:id="borderPaneExamReview" prefHeight="200.0" prefWidth="200.0" />
+                        <BorderPane fx:id="borderPaneExamReview" prefHeight="200.0" prefWidth="200.0">
+                     <bottom>
+                        <VBox BorderPane.alignment="CENTER">
+                           <children>
+                              <HBox alignment="CENTER_RIGHT">
+                                 <children>
+                                    <Button fx:id="btnBackResult" minWidth="80.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="برگشت">
+                                       <graphic>
+                                          <FontIcon iconLiteral="bi-arrow-right" iconSize="20" />
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </bottom></BorderPane>
                     </content>
                 </Tab>
             </tabs>

@@ -247,4 +247,12 @@ public class ExamViewController implements Initializable {
     public String getDuration() {
         return lblUpTimer.getText();
     }
+
+    public ObservableList<Question> getQuestionList() {
+        return questionList;
+    }
+
+    public AnswerSheetViewController getAnswerSheet() {
+        return answerSheet;
+    }
 }

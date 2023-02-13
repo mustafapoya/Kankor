@@ -30,10 +30,10 @@
             <Label fx:id="lbl2" text="(2)" GridPane.columnIndex="2" />
             <Label fx:id="lbl3" text="(3)" GridPane.rowIndex="1" />
             <Label fx:id="lbl4" text="(4)" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Label fx:id="lblAnswer1" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
-            <Label fx:id="lblAnswer2" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
-            <Label fx:id="lblAnswer3" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
-            <Label fx:id="lblAnswer4" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+            <Label fx:id="lblAnswer1" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" text="Label" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+            <Label fx:id="lblAnswer3" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" text="Label" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+            <Label fx:id="lblAnswer2" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" text="Label" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" />
+            <Label fx:id="lblAnswer4" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" text="Label" textAlignment="RIGHT" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>

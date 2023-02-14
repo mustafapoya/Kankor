@@ -193,4 +193,35 @@ public class CellFactorySample {
 
         return cellFactory;
     }
+
+    public static Callback<ListView<QuestionSubject>, ListCell<QuestionSubject>> getComboBoxQuestionSubject(String icon, int iconSize) {
+        Callback<ListView<QuestionSubject>, ListCell<QuestionSubject>> cellFactory = new Callback<ListView<QuestionSubject>, ListCell<QuestionSubject>>() {
+            @Override
+            public ListCell call(ListView<QuestionSubject> param) {
+                final Label lblLead = new Label();
+                FontIcon iconLanguage = new FontIcon((icon == null || icon.isEmpty()) ? "bi-journal-album" : icon);
+                iconLanguage.setIconSize(iconSize < 1 ? 14 : iconSize);
+
+                final ListCell<QuestionSubject> cell = new ListCell<QuestionSubject>(){
+                    @Override
+                    protected void updateItem(QuestionSubject item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(item != null) {
+                            lblLead.setText(item.getTitlePersian());
+                            setText(item.getTitlePersian());
+                            setGraphic(iconLanguage);
+                        } else {
+                            lblLead.setText("");
+                            setText("");
+                            setGraphic(null);
+                        }
+                    }
+                };
+
+                return cell;
+            }
+        };
+
+        return cellFactory;
+    }
 }

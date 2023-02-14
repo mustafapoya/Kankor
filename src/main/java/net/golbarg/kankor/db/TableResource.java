@@ -68,8 +68,7 @@ public class TableResource implements CRUDHandler<Resource> {
         try {
             ResultSet result = DBController.executeQuery(query);
             while (result.next()) {
-                Resource object = mapColumn(result);
-                resultList.add(object);
+                resultList.add(mapColumn(result));
             }
         } catch (Exception exception) {
             exception.printStackTrace();

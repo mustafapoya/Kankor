@@ -21,8 +21,11 @@ public class Util {
     public static File projectLocationFolder = new File("");
     public static File userImageLocationFolder = new File(projectLocationFolder.getAbsolutePath(), "/assets/user/profile_image/");
     public static String defaultUserImage = "user_profile.png";
+    public static String PACKAGE_PATH = "/net/golbarg/kankor/";
 
-
+    public static String fileFromPcakge(String file) {
+        return PACKAGE_PATH + file;
+    }
     public static Image convertFileToImage(File imageFile) throws FileNotFoundException {
         return new Image(new FileInputStream(imageFile));
     }

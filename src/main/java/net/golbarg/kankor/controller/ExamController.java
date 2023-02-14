@@ -3,10 +3,15 @@ package net.golbarg.kankor.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import net.golbarg.kankor.db.TableFaculty;
+import net.golbarg.kankor.db.TableQuestionSubject;
 import net.golbarg.kankor.model.Faculty;
 import net.golbarg.kankor.model.Question;
+import net.golbarg.kankor.model.QuestionSubject;
+import net.golbarg.kankor.model.Subject;
 import net.golbarg.kankor.view.AnswerSheetViewController;
 import net.golbarg.kankor.view.FieldSelectionViewController;
+
+import java.util.ArrayList;
 
 public class ExamController {
     private ObservableList<Question> mathList = FXCollections.observableArrayList();
@@ -15,13 +20,16 @@ public class ExamController {
     private ObservableList<Question> alsanaList = FXCollections.observableArrayList();
     private int mathCorrect, naturalCorrect, socialCorrect, alsanaCorrect, totalCorrect;
     private QuestionGenerator questionGenerator;
+    private ArrayList<QuestionSubject> subjects = new ArrayList<>();
 
     public ExamController() {
         questionGenerator = new QuestionGenerator();
+        subjects = new TableQuestionSubject().getAll();
     }
 
     public ExamController(int math, int natural, int social, int alsana) {
         questionGenerator = new QuestionGenerator(math, natural, social, alsana);
+        subjects = new TableQuestionSubject().getAll();
     }
 
     public void generateQuestion() {
@@ -61,7 +69,7 @@ public class ExamController {
             if (selectedAnswer == correctAnswer) {
                 totalCorrect++;
                 System.out.println("correct");
-                checkSubjectType(questions.get(i).getSubjectName());
+                checkSubjectType(questions.get(i).getSubject().getId());
                 System.out.println("Math Correct -> " + mathCorrect);
                 System.out.println("Social Correct -> " + socialCorrect);
                 System.out.println("Natural Correct -> " + naturalCorrect);
@@ -115,34 +123,27 @@ public class ExamController {
         return totalCorrect;
     }
 
-    private void checkSubjectType(String value) {
-        switch (value) {
-            // Mathematic
-            case "math":
-            case "triangles":
-            case "geometry":
-                mathCorrect++;
-                break;
-            // Natural
-            case "chemistry":
-            case "physic":
-            case "biology":
-                naturalCorrect++;
-                break;
-            // Social
-            case "islamic":
-            case "history":
-            case "geography":
-                socialCorrect++;
-                break;
-            // Alsana
-            case "dari":
-            case "pashto":
-            case "general":
-                alsanaCorrect++;
-                break;
-            default:
-                break;
+    private void checkSubjectType(int subjectId) {
+        QuestionSubject subject = subjects.stream().filter(o -> o.getId() == subjectId).findAny().orElse(null);
+        if(subject != null) {
+            String value = subject.getType();
+
+            switch (value) {
+                case "math":
+                    mathCorrect++;
+                    break;
+                case "natural":
+                    naturalCorrect++;
+                    break;
+                case "social":
+                    socialCorrect++;
+                    break;
+                case "alsana":
+                    alsanaCorrect++;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package net.golbarg.kankor.db;
 
 import net.golbarg.kankor.model.Faculty;
 import net.golbarg.kankor.model.Question;
+import net.golbarg.kankor.model.QuestionSubject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,13 +12,13 @@ import java.util.ArrayList;
 
 public class TableQuestion implements CRUDHandler<Question>{
     public static final String TABLE_NAME = "QUESTIONS";
-    public static final String [] COLUMNS = {"ID", "QUESTION", "CHOICE1", "CHOICE2", "CHOICE3", "CHOICE4", "CORRECT_CHOICE", "RELATED_CLASS", "SUBJECT_NAME", "QUESTION_TYPE", "QUESTION_UPDATE"};
-    public static final String COLUMNS_STR = "ID, QUESTION, CHOICE1, CHOICE2, CHOICE3, CHOICE4, CORRECT_CHOICE, RELATED_CLASS, SUBJECT_NAME, QUESTION_TYPE, QUESTION_UPDATE";
+    public static final String [] COLUMNS = {"ID", "SUBJECT_ID", "QUESTION", "CHOICE1", "CHOICE2", "CHOICE3", "CHOICE4", "CORRECT_CHOICE", "RELATED_CLASS", "QUESTION_TYPE", "QUESTION_UPDATE"};
+    public static final String COLUMNS_STR = "ID, SUBJECT_ID, QUESTION, CHOICE1, CHOICE2, CHOICE3, CHOICE4, CORRECT_CHOICE, RELATED_CLASS, QUESTION_TYPE, QUESTION_UPDATE";
 
 
     @Override
     public boolean create(Question object) {
-        String query = String.format("insert into %s (QUESTION, CHOICE1, CHOICE2, CHOICE3, CHOICE4, CORRECT_CHOICE, RELATED_CLASS, SUBJECT_NAME, QUESTION_TYPE, QUESTION_UPDATE) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
+        String query = String.format("insert into %s (SUBJECT_ID, QUESTION, CHOICE1, CHOICE2, CHOICE3, CHOICE4, CORRECT_CHOICE, RELATED_CLASS, QUESTION_TYPE, QUESTION_UPDATE) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -76,12 +77,12 @@ public class TableQuestion implements CRUDHandler<Question>{
         return resultList;
     }
 
-    public ArrayList<Question> getQuestionsOf(String [] subjects, int count) {
+    public ArrayList<Question> getQuestionsOf(int [] subjectIds, int count) {
         StringBuilder queryBuilder = new StringBuilder("SELECT " + COLUMNS_STR + " FROM " + TABLE_NAME +
-                                                        " WHERE SUBJECT_NAME IN ");
+                                                        " WHERE SUBJECT_ID IN ");
 
         queryBuilder.append("(");
-        for(String subject : subjects) {
+        for(int subjectId : subjectIds) {
             queryBuilder.append("?, ");
         }
 
@@ -98,11 +99,11 @@ public class TableQuestion implements CRUDHandler<Question>{
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
-            for(int i = 0; i < subjects.length; i++) {
-                statement.setString(i+1, subjects[i]);
+            for(int i = 0; i < subjectIds.length; i++) {
+                statement.setInt(i+1, subjectIds[i]);
             }
 
-            statement.setInt(subjects.length+1, count);
+            statement.setInt(subjectIds.length+1, count);
 
             ResultSet result = statement.executeQuery();
             while (result.next()) {
@@ -118,7 +119,7 @@ public class TableQuestion implements CRUDHandler<Question>{
 
     @Override
     public boolean update(Question object) {
-        String query = String.format("update %s set QUESTION = ?, CHOICE1 = ?, CHOICE2 = ?, CHOICE3 = ?, CHOICE4 = ?, CORRECT_CHOICE = ?, RELATED_CLASS = ?, SUBJECT_NAME = ?, QUESTION_TYPE = ?, QUESTION_UPDATE = ? where id = ?", TABLE_NAME);
+        String query = String.format("update %s set SUBJECT_ID = ?, QUESTION = ?, CHOICE1 = ?, CHOICE2 = ?, CHOICE3 = ?, CHOICE4 = ?, CORRECT_CHOICE = ?, RELATED_CLASS = ?, QUESTION_TYPE = ?, QUESTION_UPDATE = ? where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -196,6 +197,7 @@ public class TableQuestion implements CRUDHandler<Question>{
     public Question mapColumn(ResultSet result) throws SQLException {
         return new Question(
                 result.getInt("ID"),
+                new QuestionSubject(result.getInt("SUBJECT_ID"), "", "", ""),
                 result.getString("QUESTION"),
                 result.getString("CHOICE1"),
                 result.getString("CHOICE2"),
@@ -203,7 +205,6 @@ public class TableQuestion implements CRUDHandler<Question>{
                 result.getString("CHOICE4"),
                 result.getInt("CORRECT_CHOICE"),
                 result.getString("RELATED_CLASS"),
-                result.getString("SUBJECT_NAME"),
                 result.getString("QUESTION_TYPE"),
                 result.getInt("QUESTION_UPDATE")
         );
@@ -212,13 +213,13 @@ public class TableQuestion implements CRUDHandler<Question>{
     @Override
     public PreparedStatement putValues(PreparedStatement statement, Question object) throws SQLException {
         statement.setString(1, object.getQuestion());
+        statement.setInt(8, object.getSubject().getId());
         statement.setString(2, object.getChoice1());
         statement.setString(3, object.getChoice2());
         statement.setString(4, object.getChoice3());
         statement.setString(5, object.getChoice4());
         statement.setInt(6, object.getCorrectChoice());
         statement.setString(7, object.getRelatedClass());
-        statement.setString(8, object.getSubjectName());
         statement.setString(9, object.getQuestionType());
         statement.setInt(10, object.getQuestionUpdate());
         return statement;

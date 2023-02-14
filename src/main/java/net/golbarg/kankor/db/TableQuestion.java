@@ -77,6 +77,29 @@ public class TableQuestion implements CRUDHandler<Question>{
         return resultList;
     }
 
+    public ArrayList<Question> getQuestionOf(int subjectId) {
+        String query = String.format("SELECT %s FROM %s WHERE SUBJECT_ID = ?;", COLUMNS_STR, TABLE_NAME);
+
+        ArrayList<Question> resultList = new ArrayList<>();
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setInt(1, subjectId);
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                Question object = mapColumn(result);
+                resultList.add(object);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return resultList;
+    }
+
     public ArrayList<Question> getQuestionsOf(int [] subjectIds, int count) {
         StringBuilder queryBuilder = new StringBuilder("SELECT " + COLUMNS_STR + " FROM " + TABLE_NAME +
                                                         " WHERE SUBJECT_ID IN ");
@@ -114,7 +137,6 @@ public class TableQuestion implements CRUDHandler<Question>{
             exception.printStackTrace();
         }
         return resultList;
-
     }
 
     @Override

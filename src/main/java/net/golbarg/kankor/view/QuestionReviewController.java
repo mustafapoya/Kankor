@@ -50,7 +50,11 @@ public class QuestionReviewController implements Initializable {
     @FXML
     private VBox vbContentContainer;
     @FXML
-    private Pagination pagination;
+    private Label lblSummary;
+    @FXML
+    private Button btnNext;
+    @FXML
+    private Button btnPrevious;
 
     //
     ObservableList<String> searchList = FXCollections.observableArrayList();
@@ -58,12 +62,17 @@ public class QuestionReviewController implements Initializable {
     ObservableList<QuestionUpdate> typeList = FXCollections.observableArrayList();
     ObservableList<Question> questionList = FXCollections.observableArrayList();
     TableQuestion tableQuestion;
-    double scrollPosition;
+
+    private int current_page = 1;
+    private int data_per_page = 30;
+    private int number_of_pages = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         progressBar.setVisible(false);
         toggleSwitchShowAnswer.setSelected(true);
+        tableQuestion = new TableQuestion();
+
         // load question subjects
         subjectList.addAll(new TableQuestionSubject().getAll());
         comboSubject.setItems(subjectList);
@@ -76,63 +85,63 @@ public class QuestionReviewController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends QuestionSubject> observableValue, QuestionSubject oldValue, QuestionSubject newValue) {
                 if(newValue != null) {
-                    System.out.println("do the action");
+                    questionList.clear();
+                    questionList.addAll(tableQuestion.getQuestionOf(newValue.getId()));
+                    number_of_pages = (int) Math.ceil(questionList.size() / (double)data_per_page);
+                    current_page = 1;
+                    lblSummary.setText("مجموع سوالات: " + questionList.size());
+                    loadQuestions();
                 }
             }
         });
-
         comboSubject.getSelectionModel().selectFirst();
+
         //
-        tableQuestion = new TableQuestion();
-        questionList.addAll(tableQuestion.getAll());
-
-        loadQuestions();
-
-        pagination.setPageCount(5);
-        pagination.setCurrentPageIndex(1);
-        pagination.setMaxPageIndicatorCount(10);
-
-        pagination.setPageFactory(new Callback<Integer, Node>() {
-            @Override
-            public Node call(Integer pageIndex) {
-                return createPage(pageIndex);
+        btnNext.setOnAction(event -> {
+            if(current_page < number_of_pages) {
+                current_page++;
+                loadQuestions();
             }
         });
-    }
 
-    public int itemsPerPage() {
-        return 8;
-    }
-
-    public VBox createPage(int pageIndex) {
-        VBox box = new VBox(5);
-        int page = pageIndex * itemsPerPage();
-        for (int i = page; i < page + itemsPerPage(); i++) {
-            VBox element = new VBox();
-            Hyperlink link = new Hyperlink("Item " + (i+1));
-            link.setVisited(true);
-            Label text = new Label("Search results\nfor "+ link.getText());
-            element.getChildren().addAll(link, text);
-            box.getChildren().add(element);
-        }
-        return box;
+        btnPrevious.setOnAction(event -> {
+            if(current_page > 1) {
+                current_page--;
+                loadQuestions();
+            }
+        });
     }
 
     private void loadQuestions() {
-        vbContentContainer.getChildren().clear();
-        try {
-            for (int i = 0; i < 100; i++) {
-                FXMLLoader fxmlLoader = new FXMLLoader(ExamViewController.class.getResource("question-item-view.fxml"));
-                VBox questionView = fxmlLoader.load();
-                QuestionItemViewController questionController = fxmlLoader.getController();
-                questionController.initData(questionList.get(i), (i+1));
-                vbContentContainer.getChildren().add(questionView);
-                if(toggleSwitchShowAnswer.isSelected()) {
-                    questionController.setCorrectAnswer(questionList.get(i).getCorrectChoice());
+        if(current_page <= number_of_pages && current_page >= 1) {
+            vbContentContainer.getChildren().clear();
+            scrollPaneContent.setVvalue(0.0);
+            try {
+                for (int i = (current_page - 1) * data_per_page; i < current_page * data_per_page && i < questionList.size(); i++) {
+                    FXMLLoader fxmlLoader = new FXMLLoader(ExamViewController.class.getResource("question-item-view.fxml"));
+                    VBox questionView = fxmlLoader.load();
+                    QuestionItemViewController questionController = fxmlLoader.getController();
+                    questionController.initData(questionList.get(i), (i+1));
+                    vbContentContainer.getChildren().add(questionView);
+                    if(toggleSwitchShowAnswer.isSelected()) {
+                        questionController.setCorrectAnswer(questionList.get(i).getCorrectChoice());
+                    }
                 }
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        }
+
+        if(current_page >= number_of_pages) {
+            btnNext.setDisable(true);
+        } else {
+            btnNext.setDisable(false);
+        }
+
+        if(current_page <= 1) {
+            btnPrevious.setDisable(true);
+        } else {
+            btnPrevious.setDisable(false);
         }
     }
 

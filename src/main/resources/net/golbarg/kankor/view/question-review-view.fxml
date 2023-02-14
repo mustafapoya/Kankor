@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -57,7 +56,7 @@
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="31.0" minHeight="31.0" prefHeight="31.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
                                 <Label text="مضمون">
@@ -68,15 +67,15 @@
                                         <Insets left="5.0" right="5.0" />
                                     </GridPane.margin></Label>
                                 <ComboBox fx:id="comboSubject" maxWidth="1.7976931348623157E308" prefHeight="30.0" GridPane.columnIndex="1" />
-                                <Label text="نوعیت" GridPane.columnIndex="2">
+                                <Label text="نوعیت" visible="false" GridPane.columnIndex="2">
                                     <graphic>
                                         <FontIcon iconLiteral="bi-ui-radios-grid" iconSize="16" />
                                     </graphic>
                                     <GridPane.margin>
                                         <Insets left="5.0" right="5.0" />
                                     </GridPane.margin></Label>
-                                <ComboBox fx:id="comboType" maxWidth="1.7976931348623157E308" prefHeight="30.0" GridPane.columnIndex="3" />
-                                <HBox spacing="2.0" GridPane.columnSpan="4" GridPane.rowIndex="1">
+                                <ComboBox fx:id="comboType" maxWidth="1.7976931348623157E308" prefHeight="30.0" visible="false" GridPane.columnIndex="3" />
+                                <HBox alignment="BOTTOM_LEFT" spacing="2.0" GridPane.columnSpan="4" GridPane.rowIndex="1">
                                     <children>
                                         <TextField fx:id="txtSearch" maxWidth="1.7976931348623157E308" prefHeight="30.0" promptText="جستجو" HBox.hgrow="ALWAYS" />
                                         <Button fx:id="btnSearch" mnemonicParsing="false" prefHeight="30.0" text="جستجو">
@@ -108,10 +107,27 @@
     <bottom>
         <VBox BorderPane.alignment="CENTER">
             <children>
-                <HBox>
-                    <children>
-                        <Pagination fx:id="pagination" pageCount="100" style="-fx-page-information-visible: false;" HBox.hgrow="ALWAYS" />
-                    </children>
+                <HBox alignment="CENTER_RIGHT" spacing="5.0">
+               <children>
+                  <Label fx:id="lblSummary" maxWidth="1.7976931348623157E308" prefHeight="35.0" text="Label" HBox.hgrow="ALWAYS">
+                     <graphic>
+                        <FontIcon iconLiteral="bi-info-square" iconSize="20" />
+                     </graphic>
+                  </Label>
+                  <Button fx:id="btnPrevious" minWidth="89.0" mnemonicParsing="false" prefHeight="35.0" text="قبلی">
+                     <graphic>
+                        <FontIcon iconLiteral="bi-arrow-right-short" iconSize="20" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnNext" contentDisplay="RIGHT" minWidth="89.0" mnemonicParsing="false" prefHeight="35.0" text="بعدی">
+                     <graphic>
+                        <FontIcon iconLiteral="bi-arrow-left-short" iconSize="20" />
+                     </graphic>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </padding>
                 </HBox>
             </children>
         </VBox>

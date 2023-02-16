@@ -1,25 +1,25 @@
 package net.golbarg.kankor.view;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import net.golbarg.kankor.controller.QuestionGenerator;
 import net.golbarg.kankor.custom.CellFactorySample;
 import net.golbarg.kankor.db.TableQuestion;
 import net.golbarg.kankor.db.TableQuestionSubject;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.model.QuestionSubject;
 import net.golbarg.kankor.model.QuestionUpdate;
-import net.golbarg.kankor.model.University;
 import org.controlsfx.control.ToggleSwitch;
 
 import java.net.URL;
@@ -61,6 +61,7 @@ public class QuestionReviewController implements Initializable {
     ObservableList<QuestionSubject> subjectList = FXCollections.observableArrayList();
     ObservableList<QuestionUpdate> typeList = FXCollections.observableArrayList();
     ObservableList<Question> questionList = FXCollections.observableArrayList();
+    ObservableList<QuestionItemViewController> questionItems = FXCollections.observableArrayList();
     TableQuestion tableQuestion;
 
     private int current_page = 1;
@@ -72,6 +73,19 @@ public class QuestionReviewController implements Initializable {
         progressBar.setVisible(false);
         toggleSwitchShowAnswer.setSelected(true);
         tableQuestion = new TableQuestion();
+
+        toggleSwitchShowAnswer.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                for(QuestionItemViewController questionItem: questionItems) {
+                    if(newValue) {
+                        questionItem.selectCorrectAnswer();
+                    } else {
+                        questionItem.resetCorrectAnswer();
+                    }
+                }
+            }
+        });
 
         // load question subjects
         subjectList.addAll(new TableQuestionSubject().getAll());
@@ -96,6 +110,13 @@ public class QuestionReviewController implements Initializable {
         });
         comboSubject.getSelectionModel().selectFirst();
 
+        btnNote.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Load bookmarked questions");
+            }
+        });
+
         //
         btnNext.setOnAction(event -> {
             if(current_page < number_of_pages) {
@@ -116,17 +137,26 @@ public class QuestionReviewController implements Initializable {
         if(current_page <= number_of_pages && current_page >= 1) {
             vbContentContainer.getChildren().clear();
             scrollPaneContent.setVvalue(0.0);
+            questionItems.clear();
             try {
-                for (int i = (current_page - 1) * data_per_page; i < current_page * data_per_page && i < questionList.size(); i++) {
-                    FXMLLoader fxmlLoader = new FXMLLoader(ExamViewController.class.getResource("question-item-view.fxml"));
-                    VBox questionView = fxmlLoader.load();
-                    QuestionItemViewController questionController = fxmlLoader.getController();
-                    questionController.initData(questionList.get(i), (i+1));
-                    vbContentContainer.getChildren().add(questionView);
-                    if(toggleSwitchShowAnswer.isSelected()) {
-                        questionController.setCorrectAnswer(questionList.get(i).getCorrectChoice());
+                Platform.runLater(() -> {
+                    try {
+                        for (int i = (current_page - 1) * data_per_page; i < current_page * data_per_page && i < questionList.size(); i++) {
+                            FXMLLoader fxmlLoader = new FXMLLoader(ExamViewController.class.getResource("question-item-view.fxml"));
+                            VBox questionView = fxmlLoader.load();
+                            QuestionItemViewController questionController = fxmlLoader.getController();
+                            questionController.initData(questionList.get(i), (i+1));
+                            vbContentContainer.getChildren().add(questionView);
+                            if(toggleSwitchShowAnswer.isSelected()) {
+                                questionController.setCorrectAnswer(questionList.get(i).getCorrectChoice());
+                            }
+                            questionItems.add(questionController);
+                        }
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
                     }
-                }
+                });
+
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

@@ -50,7 +50,7 @@ public class QuestionItemViewController implements Initializable {
     private ArrayList<Label> labels  = new ArrayList<>();
 
     // this object is for test purpose
-    Question tmpQuestion;
+    Question question;
 
     private int correctAnswer;
     private int selectedAnswer;
@@ -68,9 +68,8 @@ public class QuestionItemViewController implements Initializable {
     }
 
     public void initData(Question question, int number) {
-        if(question == null) {
-            question = tmpQuestion;
-        }
+        this.question = question;
+
         // render question
         QuestionTextController questionText = new QuestionTextController(question.getQuestion(), number);
         tfQuestion.getChildren().add(questionText);
@@ -113,6 +112,54 @@ public class QuestionItemViewController implements Initializable {
             case 4:
                 lbl4.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
                 lblAnswer4.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void selectCorrectAnswer() {
+        correctAnswer = question.getCorrectChoice();
+        switch (correctAnswer) {
+            case 1:
+                lbl1.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
+                lblAnswer1.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
+                break;
+            case 2:
+                lbl2.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
+                lblAnswer2.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
+                break;
+            case 3:
+                lbl3.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
+                lblAnswer3.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
+                break;
+            case 4:
+                lbl4.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
+                lblAnswer4.setStyle("-fx-text-fill: #079f20;-fx-font-weight:bold;");
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void resetCorrectAnswer() {
+        correctAnswer = question.getCorrectChoice();
+        switch (correctAnswer) {
+            case 1:
+                lbl1.setStyle(null);
+                lblAnswer1.setStyle(null);
+                break;
+            case 2:
+                lbl2.setStyle(null);
+                lblAnswer2.setStyle(null);
+                break;
+            case 3:
+                lbl3.setStyle(null);
+                lblAnswer3.setStyle(null);
+                break;
+            case 4:
+                lbl4.setStyle(null);
+                lblAnswer4.setStyle(null);
                 break;
             default:
                 break;

@@ -46,39 +46,39 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        btnExam.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("exam-dashboard-view.fxml"));
-                    root.setCenter(fxmlLoader.load());
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+        btnExam.setOnAction(event -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("exam-dashboard-view.fxml"));
+                root.setCenter(fxmlLoader.load());
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         });
 
-        btnReview.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("question-review-view.fxml"));
-                    root.setCenter(fxmlLoader.load());
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+        btnReview.setOnAction(event -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("question-review-view.fxml"));
+                root.setCenter(fxmlLoader.load());
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         });
 
-        btnResource.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("resource-view.fxml"));
-                    root.setCenter(fxmlLoader.load());
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+        btnHelp.setOnAction(event -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("help-view.fxml"));
+                root.setCenter(fxmlLoader.load());
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+
+        btnResource.setOnAction(event -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("resource-view.fxml"));
+                root.setCenter(fxmlLoader.load());
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         });
 

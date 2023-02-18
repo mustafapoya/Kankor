@@ -20,22 +20,28 @@
     <top>
         <VBox BorderPane.alignment="CENTER">
             <children>
+                <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" prefHeight="8.0" />
                 <HBox alignment="CENTER_LEFT" prefHeight="45.0">
                     <children>
-                  <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER_LEFT" spacing="5.0" HBox.hgrow="ALWAYS">
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
+                     <children>
+                                <Label text="مضمون">
+                                    <graphic>
+                                        <FontIcon iconLiteral="bi-file-earmark-text" iconSize="16" />
+                                    </graphic></Label>
+                                <ComboBox fx:id="comboSubject" maxWidth="1.7976931348623157E308" prefHeight="30.0" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="5.0">
                      <children>
                                 <Button fx:id="btnNote" mnemonicParsing="false" prefHeight="35.0" text="یادداشت ها">
                                     <graphic>
                                         <FontIcon iconLiteral="bi-clipboard" iconSize="16" />
                                     </graphic>
                                 </Button>
-                     </children>
-                     <padding>
-                        <Insets left="5.0" right="5.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT">
-                     <children>
                         <ToggleSwitch fx:id="toggleSwitchShowAnswer" prefHeight="30.0" selected="true" text="نمایش جوابات" />
                      </children>
                      <padding>
@@ -44,7 +50,6 @@
                   </HBox>
                     </children>
                 </HBox>
-                <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" prefHeight="8.0" />
                 <HBox>
                     <children>
                         <GridPane hgap="3.0" vgap="5.0" HBox.hgrow="ALWAYS">
@@ -55,27 +60,10 @@
                                 <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                                 <RowConstraints maxHeight="31.0" minHeight="31.0" prefHeight="31.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Label text="مضمون">
-                                    <graphic>
-                                        <FontIcon iconLiteral="bi-file-earmark-text" iconSize="16" />
-                                    </graphic>
-                                    <GridPane.margin>
-                                        <Insets left="5.0" right="5.0" />
-                                    </GridPane.margin></Label>
-                                <ComboBox fx:id="comboSubject" maxWidth="1.7976931348623157E308" prefHeight="30.0" GridPane.columnIndex="1" />
-                                <Label text="نوعیت" visible="false" GridPane.columnIndex="2">
-                                    <graphic>
-                                        <FontIcon iconLiteral="bi-ui-radios-grid" iconSize="16" />
-                                    </graphic>
-                                    <GridPane.margin>
-                                        <Insets left="5.0" right="5.0" />
-                                    </GridPane.margin></Label>
-                                <ComboBox fx:id="comboType" maxWidth="1.7976931348623157E308" prefHeight="30.0" visible="false" GridPane.columnIndex="3" />
-                                <HBox alignment="BOTTOM_LEFT" spacing="2.0" GridPane.columnSpan="4" GridPane.rowIndex="1">
+                                <HBox alignment="BOTTOM_LEFT" spacing="2.0" GridPane.columnSpan="4">
                                     <children>
                                         <TextField fx:id="txtSearch" maxWidth="1.7976931348623157E308" prefHeight="30.0" promptText="جستجو" HBox.hgrow="ALWAYS" />
                                         <Button fx:id="btnSearch" mnemonicParsing="false" prefHeight="30.0" text="جستجو">
@@ -91,9 +79,9 @@
                      </padding>
                         </GridPane>
                     </children>
-                    <padding>
-                        <Insets bottom="3.0" />
-                    </padding>
+               <padding>
+                  <Insets top="3.0" />
+               </padding>
                 </HBox>
             </children>
         </VBox>
@@ -111,7 +99,7 @@
                <children>
                   <Label fx:id="lblSummary" maxWidth="1.7976931348623157E308" prefHeight="35.0" text="Label" HBox.hgrow="ALWAYS">
                      <graphic>
-                        <FontIcon iconLiteral="bi-info-square" iconSize="20" />
+                        <FontIcon iconLiteral="bi-info" iconSize="20" />
                      </graphic>
                   </Label>
                   <Button fx:id="btnPrevious" minWidth="89.0" mnemonicParsing="false" prefHeight="35.0" text="قبلی">

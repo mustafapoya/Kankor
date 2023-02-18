@@ -37,8 +37,6 @@ public class QuestionReviewController implements Initializable {
 
     @FXML
     private ComboBox<QuestionSubject> comboSubject;
-    @FXML
-    private ComboBox<String> comboType;
 
     @FXML
     private TextField txtSearch;
@@ -57,9 +55,7 @@ public class QuestionReviewController implements Initializable {
     private Button btnPrevious;
 
     //
-    ObservableList<String> searchList = FXCollections.observableArrayList();
     ObservableList<QuestionSubject> subjectList = FXCollections.observableArrayList();
-    ObservableList<QuestionUpdate> typeList = FXCollections.observableArrayList();
     ObservableList<Question> questionList = FXCollections.observableArrayList();
     ObservableList<QuestionItemViewController> questionItems = FXCollections.observableArrayList();
     TableQuestion tableQuestion;

@@ -14,10 +14,10 @@ public class QuestionGenerator {
     private int social;
     private int alsana;
 
-    public static final String[] MATHEMATICS = { "math", "triangles", "geometry" };
-    public static final String[] NATURALS = { "chemistry", "physic", "biology" };
-    public static final String[] SOCIALS = { "islamic", "history", "geography" };
-    public static final String[] ALSANA = { "dari", "pashto", "general" };
+    public static final int[] MATHEMATICS = { 9, 12, 6 };
+    public static final int[] NATURALS = { 2, 11, 1 };
+    public static final int[] SOCIALS = { 8, 7, 5 };
+    public static final int[] ALSANA = { 3, 10, 4 };
 
     public QuestionGenerator() {
         setNumberOfQuestions(46, 40, 38, 36);

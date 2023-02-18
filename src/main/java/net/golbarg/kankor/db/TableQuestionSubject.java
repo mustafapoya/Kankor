@@ -1,6 +1,6 @@
 package net.golbarg.kankor.db;
 
-import net.golbarg.kankor.model.Question;
+import net.golbarg.kankor.model.QuestionSubject;
 import net.golbarg.kankor.model.Resource;
 import net.golbarg.kankor.model.ResourceCategory;
 
@@ -10,15 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class TableResource implements CRUDHandler<Resource> {
-    public static final String TABLE_NAME = "RESOURCES";
-    public static final String [] COLUMNS = {"ID", "CATEGORY_ID", "NAME", "FILE_NAME", "DESCRIPTION", "SIZE"};
-    public static final String COLUMNS_STR = "ID, CATEGORY_ID, NAME, FILE_NAME, DESCRIPTION, `SIZE`";
-
+public class TableQuestionSubject implements CRUDHandler<QuestionSubject> {
+    public static final String TABLE_NAME = "QUESTION_SUBJECTS";
+    public static final String [] COLUMNS = {"ID", "SUBJECT_TYPE", "SUBJECT_KEY", "SUBJECT_TITLE_PE"};
+    public static final String COLUMNS_STR = "ID, SUBJECT_TYPE, SUBJECT_KEY, SUBJECT_TITLE_PE";
 
     @Override
-    public boolean create(Resource object) {
-        String query = String.format("insert into %s (CATEGORY_ID, NAME, FILE_NAME, DESCRIPTION, `SIZE`) values (?, ?, ?, ?, ?)", TABLE_NAME);
+    public boolean create(QuestionSubject object) {
+        String query = String.format("insert into %s (SUBJECT_TYPE, SUBJECT_KEY, SUBJECT_TITLE_PE) values (?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -35,10 +34,10 @@ public class TableResource implements CRUDHandler<Resource> {
     }
 
     @Override
-    public Resource findById(int id) {
+    public QuestionSubject findById(int id) {
         String query = String.format("SELECT %s FROM %s where id = ?;", COLUMNS_STR, TABLE_NAME);
 
-        Resource object = null;
+        QuestionSubject object = null;
 
         try {
 
@@ -60,10 +59,10 @@ public class TableResource implements CRUDHandler<Resource> {
     }
 
     @Override
-    public ArrayList<Resource> getAll() {
+    public ArrayList<QuestionSubject> getAll() {
         String query = String.format("SELECT %s FROM %s;", COLUMNS_STR, TABLE_NAME);
 
-        ArrayList<Resource> resultList = new ArrayList<>();
+        ArrayList<QuestionSubject> resultList = new ArrayList<>();
 
         try {
             ResultSet result = DBController.executeQuery(query);
@@ -77,14 +76,14 @@ public class TableResource implements CRUDHandler<Resource> {
     }
 
     @Override
-    public boolean update(Resource object) {
-        String query = String.format("update %s set CATEGORY_ID = ?, NAME = ?, FILE_NAME = ?, DESCRIPTION = ?, `SIZE` = ? where id = ?", TABLE_NAME);
+    public boolean update(QuestionSubject object) {
+        String query = String.format("update %s set SUBJECT_TYPE = ?, SUBJECT_KEY = ?, SUBJECT_TITLE_PE = ? where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement = putValues(statement, object);
-            statement.setInt(6, object.getId());
+            statement.setInt(4, object.getId());
             statement.executeUpdate();
 
             return true;
@@ -96,7 +95,7 @@ public class TableResource implements CRUDHandler<Resource> {
     }
 
     @Override
-    public boolean delete(Resource object) {
+    public boolean delete(QuestionSubject object) {
         String query = String.format("DELETE from %s where id = ?", TABLE_NAME);
 
         try {
@@ -153,24 +152,20 @@ public class TableResource implements CRUDHandler<Resource> {
     }
 
     @Override
-    public Resource mapColumn(ResultSet result) throws SQLException {
-        return new Resource(
+    public QuestionSubject mapColumn(ResultSet result) throws SQLException {
+        return new QuestionSubject(
                 result.getInt("ID"),
-                new ResourceCategory(result.getInt("CATEGORY_ID"), ""),
-                result.getString("NAME"),
-                result.getString("FILE_NAME"),
-                result.getString("DESCRIPTION"),
-                result.getDouble("SIZE")
+                result.getString("SUBJECT_TYPE"),
+                result.getString("SUBJECT_KEY"),
+                result.getString("SUBJECT_TITLE_PE")
         );
     }
 
     @Override
-    public PreparedStatement putValues(PreparedStatement statement, Resource object) throws SQLException {
-        statement.setInt(1, object.getCategory().getId());
-        statement.setString(2, object.getName());
-        statement.setString(3, object.getFileName());
-        statement.setString(4, object.getDescription());
-        statement.setDouble(5, object.getSize());
+    public PreparedStatement putValues(PreparedStatement statement, QuestionSubject object) throws SQLException {
+        statement.setString(1, object.getType());
+        statement.setString(2, object.getKey());
+        statement.setString(3, object.getTitlePersian());
         return statement;
     }
 }

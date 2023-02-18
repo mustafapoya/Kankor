@@ -433,21 +433,32 @@ create table tutorial_details (
 );
 
 /* Questions Table Related Query */
+drop table if exists `QUESTION_SUBJECTS`;
+
+create table QUESTION_SUBJECTS (
+   ID               INTEGER AUTO_INCREMENT,
+   SUBJECT_TYPE      VARCHAR    not null,
+   SUBJECT_KEY      VARCHAR    not null,
+   SUBJECT_TITLE_PE VARCHAR    not null,
+   primary key (`ID`)
+);
+
+/* Questions Table Related Query */
 drop table if exists `QUESTIONS`;
 
-create table QUESTIONS (
-    ID          INTEGER AUTO_INCREMENT,
-    QUESTION    CLOB    not null,
-    CHOICE1     CLOB    not null,
-    CHOICE2     CLOB    not null,
-    CHOICE3     CLOB    not null,
-    CHOICE4     CLOB    not null,
-    CORRECT_CHOICE       INTEGER not null,
-    RELATED_CLASS        VARCHAR,
-    SUBJECT_NAME         VARCHAR,
-    QUESTION_TYPE        VARCHAR,
-    QUESTION_UPDATE      INTEGER,
-
+create table QUESTIONS
+(
+    ID              INTEGER AUTO_INCREMENT,
+    SUBJECT_ID      INTEGER,
+    QUESTION        CLOB not null,
+    CHOICE1         CLOB not null,
+    CHOICE2         CLOB not null,
+    CHOICE3         CLOB not null,
+    CHOICE4         CLOB not null,
+    CORRECT_CHOICE  INTEGER not null,
+    RELATED_CLASS   VARCHAR,
+    QUESTION_TYPE   VARCHAR,
+    QUESTION_UPDATE INTEGER,
     primary key (`ID`)
 );
 

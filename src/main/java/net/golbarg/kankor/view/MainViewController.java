@@ -58,6 +58,18 @@ public class MainViewController implements Initializable {
             }
         });
 
+        btnReview.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("question-review-view.fxml"));
+                    root.setCenter(fxmlLoader.load());
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+
         btnResource.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

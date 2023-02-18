@@ -2,6 +2,7 @@ package net.golbarg.kankor.model;
 
 public class Question {
     private int id;
+    private QuestionSubject subject;
     private String question;
     private String choice1;
     private String choice2;
@@ -9,13 +10,13 @@ public class Question {
     private String choice4;
     private int correctChoice;
     private String relatedClass;
-    private String subjectName;
     private String questionType;
     private int questionUpdate;
 
-    public Question(int id, String question, String choice1, String choice2, String choice3, String choice4,
-                    int correctChoice, String relatedClass, String subjectName, String questionType, int questionUpdate) {
+    public Question(int id, QuestionSubject subject, String question, String choice1, String choice2, String choice3,
+                    String choice4, int correctChoice, String relatedClass, String questionType, int questionUpdate) {
         this.id = id;
+        this.subject = subject;
         this.question = question;
         this.choice1 = choice1;
         this.choice2 = choice2;
@@ -23,7 +24,6 @@ public class Question {
         this.choice4 = choice4;
         this.correctChoice = correctChoice;
         this.relatedClass = relatedClass;
-        this.subjectName = subjectName;
         this.questionType = questionType;
         this.questionUpdate = questionUpdate;
     }
@@ -92,12 +92,12 @@ public class Question {
         this.relatedClass = relatedClass;
     }
 
-    public String getSubjectName() {
-        return subjectName;
+    public QuestionSubject getSubject() {
+        return subject;
     }
 
-    public void setSubjectName(String subjectName) {
-        this.subjectName = subjectName;
+    public void setSubject(QuestionSubject subject) {
+        this.subject = subject;
     }
 
     public String getQuestionType() {
@@ -131,7 +131,7 @@ public class Question {
                 ", choice4='" + choice4 + '\'' +
                 ", correctChoice=" + correctChoice +
                 ", relatedClass='" + relatedClass + '\'' +
-                ", subjectName='" + subjectName + '\'' +
+                ", subject='" + subject + '\'' +
                 ", questionType='" + questionType + '\'' +
                 ", questionUpdate=" + questionUpdate +
                 '}';

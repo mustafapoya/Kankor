@@ -20,7 +20,7 @@ public class AnalogClock extends Group {
 
     public AnalogClock(String brandName, double clockRadius){
         setId("analogueClock");
-        getStylesheets().add(AnalogClock.class.getResource("/net/golbarg/kankor/analogue-clock.css").toExternalForm());
+        getStylesheets().add(AnalogClock.class.getResource(Util.fileFromPcakge("analogue-clock.css")).toExternalForm());
 
         final Circle face = createClockFace(clockRadius);
         final Label brand = createBrand(face, brandName);

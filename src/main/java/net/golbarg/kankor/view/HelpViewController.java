@@ -14,9 +14,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
+import net.golbarg.kankor.MainApp;
 import net.golbarg.kankor.custom.CellFactorySample;
 import net.golbarg.kankor.db.TableTutorial;
 import net.golbarg.kankor.db.TableTutorialDetail;
@@ -85,6 +87,7 @@ public class HelpViewController implements Initializable {
             public void changed(ObservableValue<? extends TutorialDetail> observableValue, TutorialDetail oldValue, TutorialDetail newValue) {
                 try {
                     if (newValue != null) {
+                        webEngine.setUserStyleSheetLocation(MainApp.class.getResource("html_style.css").toString());
                         webEngine.loadContent(newValue.getFullDescription());
                     }
                 } catch (Exception exception) {

@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
+import net.golbarg.kankor.controller.SystemController;
 import net.golbarg.kankor.db.TableNews;
 import net.golbarg.kankor.model.News;
 import net.golbarg.kankor.model.Tutorial;
@@ -112,7 +113,7 @@ public class NewsViewController implements Initializable {
     public void initializeHtmlViewer() {
         webEngine = webContent.getEngine();
         webContent.setStyle("-fx-font-size:15px;");
-        webEngine.load("http://www.microcis.net/news/");
+        webEngine.load(SystemController.SERVER_ADDRESS);
     }
 
     public void initOfflineNews() {

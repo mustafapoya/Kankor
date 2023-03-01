@@ -6,40 +6,28 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-
 <BorderPane fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.NewsViewController">
-   <top>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <HBox>
-               <children>
-                  <ToolBar prefHeight="40.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                    <items>
-                      <Button fx:id="btnRefresh" mnemonicParsing="false" text="آپدیت">
-                           <graphic>
-                              <FontIcon iconLiteral="bi-arrow-clockwise" />
-                           </graphic>
-                        </Button>
-                    </items>
-                  </ToolBar>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </top>
    <center>
       <SplitPane dividerPositions="0.3193979933110368" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <items>
             <VBox prefHeight="358.0" prefWidth="181.0" spacing="2.0">
                <children>
-                  <TextField fx:id="txtSearchNews" prefHeight="30.0" promptText="جستجو" VBox.vgrow="NEVER" />
+                  <HBox alignment="CENTER_LEFT" spacing="2.0" VBox.vgrow="NEVER">
+                     <children>
+                        <TextField fx:id="txtSearchNews" prefHeight="30.0" promptText="جستجو" HBox.hgrow="ALWAYS" />
+                      <Button fx:id="btnRefresh" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0">
+                           <graphic>
+                              <FontIcon iconLiteral="bi-arrow-clockwise" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
                   <ListView fx:id="listViewNews" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>

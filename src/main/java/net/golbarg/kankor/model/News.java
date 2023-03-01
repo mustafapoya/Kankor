@@ -1,22 +1,26 @@
 package net.golbarg.kankor.model;
 
-import java.util.Date;
+
+import java.time.LocalDate;
 
 public class News {
     private int id;
+    private String category;
     private String title;
-    private String content;
-    private Date date;
-    private String url;
     private String description;
+    private String urlLink;
+    private String content;
+    private LocalDate newsDate;
 
-    public News(int id, String title, String content, Date date, String url, String description) {
+    public News(int id, String category, String title, String description, String urlLink,
+                String content, LocalDate newsDate) {
         this.id = id;
+        this.category = category;
         this.title = title;
-        this.content = content;
-        this.date = date;
-        this.url = url;
         this.description = description;
+        this.urlLink = urlLink;
+        this.content = content;
+        this.newsDate = newsDate;
     }
 
     public int getId() {
@@ -27,36 +31,20 @@ public class News {
         this.id = id;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getDescription() {
@@ -67,15 +55,40 @@ public class News {
         this.description = description;
     }
 
+    public String getUrlLink() {
+        return urlLink;
+    }
+
+    public void setUrlLink(String urlLink) {
+        this.urlLink = urlLink;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDate getNewsDate() {
+        return newsDate;
+    }
+
+    public void setNewsDate(LocalDate newsDate) {
+        this.newsDate = newsDate;
+    }
+
     @Override
     public String toString() {
         return "News{" +
                 "id=" + id +
+                ", category='" + category + '\'' +
                 ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", date=" + date +
-                ", url='" + url + '\'' +
                 ", description='" + description + '\'' +
+                ", urlLink='" + urlLink + '\'' +
+                ", content='" + content + '\'' +
+                ", newsDate=" + newsDate +
                 '}';
     }
 }

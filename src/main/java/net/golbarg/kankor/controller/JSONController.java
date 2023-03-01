@@ -1,5 +1,6 @@
 package net.golbarg.kankor.controller;
 
+import net.golbarg.kankor.model.News;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -30,13 +31,21 @@ public class JSONController {
             for (int i = 0; i < arr.size(); i++) {
 
                 JSONObject new_obj = (JSONObject) arr.get(i);
-                LocalDate date = LocalDate.parse(new_obj.get("news_date").toString());
-                System.out.println(date.getMonth());
+                int id = Integer.parseInt(new_obj.get("id").toString());
+                String category = new_obj.get("category").toString();
+                String title = new_obj.get("title").toString();
+                String description = new_obj.get("description").toString();
+                String urlLink = new_obj.get("url_link").toString();
+                String content = new_obj.get("content").toString();
+                LocalDate news_date = LocalDate.parse(new_obj.get("news_date").toString());
 
-//                if(new_obj.get("Slug").equals("albania")) {
-//                    System.out.println("Total Recovered: "+new.obj.get("TotalRecovered"));
-//                    break;
-//                }
+                News news = new News(
+                        id, category,
+                        title, description,
+                        urlLink, content, news_date
+                );
+
+                System.out.println(news);
             }
 
         } catch (Exception exception) {

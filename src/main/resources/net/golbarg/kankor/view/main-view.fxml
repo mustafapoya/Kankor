@@ -14,7 +14,7 @@
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="30.0">
+            <HBox prefHeight="40.0">
                <children>
                   <HBox alignment="CENTER_LEFT" prefWidth="200.0" HBox.hgrow="NEVER">
                      <children>
@@ -31,7 +31,7 @@
                   <HBox HBox.hgrow="ALWAYS" />
                   <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                      <children>
-                        <FontIcon iconLiteral="bi-person-circle" iconSize="20" />
+                        <FontIcon iconLiteral="bi-person-circle" iconSize="24" />
                      </children>
                      <HBox.margin>
                         <Insets />
@@ -46,43 +46,46 @@
                <items>
                   <Button fx:id="btnExam" mnemonicParsing="false" text="امتحان">
                      <graphic>
-                        <FontIcon iconLiteral="bi-collection" />
+                        <FontIcon iconLiteral="bi-stopwatch" iconSize="16" />
                      </graphic>
                   </Button>
                   <Button fx:id="btnPractice" mnemonicParsing="false" text="تمرین">
                      <graphic>
-                        <FontIcon iconLiteral="bi-collection" />
+                        <FontIcon iconLiteral="bi-sliders" iconSize="16" />
                      </graphic>
                   </Button>
                   <Button fx:id="btnReview" mnemonicParsing="false" text="مرور سوالات">
                      <graphic>
-                        <FontIcon iconLiteral="bi-collection" />
+                        <FontIcon iconLiteral="bi-smartwatch" iconSize="16" />
                      </graphic>
                   </Button>
-                  <Button fx:id="btnMatch" mnemonicParsing="false" text="مسابقه" />
+                  <Button fx:id="btnMatch" mnemonicParsing="false" text="مسابقه">
+                     <graphic>
+                        <FontIcon iconLiteral="bi-app-indicator" iconSize="16" />
+                     </graphic></Button>
                   <Button fx:id="btnResource" mnemonicParsing="false" text="منابع مطالعه">
                      <graphic>
-                        <FontIcon iconLiteral="bi-collection" />
+                        <FontIcon iconLiteral="bi-book" iconSize="16" />
                      </graphic>
                   </Button>
                   <Button fx:id="btnHelp" mnemonicParsing="false" text="رهنمائی">
                      <graphic>
-                        <FontIcon iconLiteral="bi-collection" />
+                        <FontIcon iconLiteral="bi-file-earmark-richtext" iconSize="16" />
                      </graphic>
                   </Button>
                   <Button fx:id="btnResults" mnemonicParsing="false" text="نتایج">
                      <graphic>
-                        <FontIcon iconLiteral="bi-collection" />
+                        <FontIcon iconLiteral="bi-megaphone" iconSize="16" />
                      </graphic>
                   </Button>
                   <Button fx:id="btnUpdate" mnemonicParsing="false" text="آپدیت">
                      <graphic>
-                        <FontIcon iconLiteral="bi-collection" />
+                        <FontIcon iconLiteral="bi-cloud-download" iconSize="16" />
                      </graphic>
                   </Button>
                   <Button fx:id="btnNews" mnemonicParsing="false" text="اخبار">
                      <graphic>
-                        <FontIcon iconLiteral="bi-collection" />
+                        <FontIcon iconLiteral="bi-newspaper" iconSize="16" />
                      </graphic>
                   </Button>
                </items>

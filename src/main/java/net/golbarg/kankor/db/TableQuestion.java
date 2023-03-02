@@ -77,6 +77,27 @@ public class TableQuestion implements CRUDHandler<Question>{
         return resultList;
     }
 
+    public ArrayList<Question> getQuestions(int numberOfQuestions) {
+        String query = String.format("SELECT %s FROM %s ORDER BY rand() LIMIT ?;", COLUMNS_STR, TABLE_NAME);
+        ArrayList<Question> resultList = new ArrayList<>();
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setInt(1, numberOfQuestions);
+
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                Question object = mapColumn(result);
+                resultList.add(object);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return resultList;
+    }
+
     public ArrayList<Question> getQuestionOf(int subjectId) {
         String query = String.format("SELECT %s FROM %s WHERE SUBJECT_ID = ?;", COLUMNS_STR, TABLE_NAME);
 
@@ -90,6 +111,29 @@ public class TableQuestion implements CRUDHandler<Question>{
 
             ResultSet result = statement.executeQuery();
 
+            while (result.next()) {
+                Question object = mapColumn(result);
+                resultList.add(object);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return resultList;
+    }
+
+    public ArrayList<Question> getQuestionsOf(int subjectId, int count) {
+        String query = String.format("SELECT %s FROM %s WHERE SUBJECT_ID = ?  ORDER BY rand() LIMIT ?;", COLUMNS_STR, TABLE_NAME);
+
+        ArrayList<Question> resultList = new ArrayList<>();
+
+        try {
+
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, subjectId);
+            statement.setInt(2, count);
+
+            ResultSet result = statement.executeQuery();
             while (result.next()) {
                 Question object = mapColumn(result);
                 resultList.add(object);

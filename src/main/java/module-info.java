@@ -11,7 +11,7 @@ module net.golbarg.kankor.kankor {
     requires org.kordamp.ikonli.fontawesome5;
     requires com.h2database;
     requires PDFViewerFX;
-    requires com.google.gson;
+    requires json.simple;
 
 
     opens net.golbarg.kankor to javafx.fxml;

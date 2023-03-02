@@ -288,37 +288,20 @@ drop table if exists `news`;
 
 create table `news` (
     `id`  INTEGER auto_increment,
+    `category` VARCHAR(512),
     `title`  VARCHAR(512),
-    `content`  CLOB,
-    `date` datetime null,
-    `url_link` VARCHAR(256),
     `description`  CLOB(256),
+    `url_link` VARCHAR(256),
+    `content`  CLOB,
+    `NEWS_DATE` datetime null,
+
     primary key (`id`)
 );
 
-insert into PUBLIC.NEWS (ID, TITLE, CONTENT, DATE, URL_LINK, DESCRIPTION)
-values  (15, '.html', '<html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title></title>
-</head>
-<body>
-<p>در حال آماده سازی</p>
-
-</body></html>', null, 'http://www.golbarg.net/news/', null);
-
-/* Tutorials Table Related Query */
-drop table if exists `news_article`;
-
-create table `news_article` (
-    `id`          INTEGER auto_increment,
-    `title`       CLOB,
-    `content`     CLOB,
-    `url_link`    CLOB,
-    `date`        VARCHAR(64),
-    `description` VARCHAR(255),
-    `category`    INTEGER,
-    primary key (`id`)
-);
+INSERT INTO PUBLIC.NEWS (`id`, `category`, `title`, `description`, `url_link`, `content`, `news_date`)
+VALUES
+    (1, 'important', 'Important News', 'description', 'http://www.golbarg.net/news/', '<html><head>\r\n<meta http-equiv="Content-Type" content="text/html; charset=utf-8">\r\n	<title></title>\r\n</head>\r\n<body>\r\n<p>در حال آماده سازی</p>\r\n\r\n</body></html>', '2023-02-25'),
+    (2, 'کتگوری', 'عنوان', 'توضیحات', 'google.com', 'مطلب', '2023-02-26');
 
 /* Tutorials Table Related Query */
 drop table if exists `tutorials`;

@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 public class TableNews implements CRUDHandler<News> {
     public static final String TABLE_NAME = "NEWS";
-    public static final String COLUMNS_STR = "ID, TITLE, CONTENT, DATE, URL_LINK, DESCRIPTION";
+    public static final String COLUMNS_STR = "ID, CATEGORY, TITLE, DESCRIPTION, URL_LINK, CONTENT, NEWS_DATE";
 
     @Override
     public boolean create(News object) {
-        String query = String.format("insert into %s (TITLE, CONTENT, `DATE`, URL_LINK, DESCRIPTION) values (?, ?, ?, ?, ?)", TABLE_NAME);
+        String query = String.format("insert into %s (CATEGORY, TITLE, DESCRIPTION, URL_LINK, CONTENT, NEWS_DATE) values (?, ?, ?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -70,13 +70,13 @@ public class TableNews implements CRUDHandler<News> {
 
     @Override
     public boolean update(News object) {
-        String query = String.format("update %s set TITLE = ?, CONTENT = ?, `DATE` = ?, URL_LINK = ?, DESCRIPTION = ? where id = ?", TABLE_NAME);
+        String query = String.format("update %s set CATEGORY = ?, TITLE = ?, DESCRIPTION = ?, URL_LINK = ?, CONTENT = ?, NEWS_DATE = ? where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement = putValues(statement, object);
-            statement.setInt(6, object.getId());
+            statement.setInt(7, object.getId());
             statement.executeUpdate();
 
             return true;
@@ -148,21 +148,23 @@ public class TableNews implements CRUDHandler<News> {
     public News mapColumn(ResultSet result) throws SQLException {
         return new News(
                 result.getInt("ID"),
+                result.getString("CATEGORY"),
                 result.getString("TITLE"),
-                result.getString("CONTENT"),
-                result.getDate("DATE"),
+                result.getString("DESCRIPTION"),
                 result.getString("URL_LINK"),
-                result.getString("DESCRIPTION")
+                result.getString("CONTENT"),
+                result.getDate("NEWS_DATE").toLocalDate()
         );
     }
 
     @Override
     public PreparedStatement putValues(PreparedStatement statement, News object) throws SQLException {
-        statement.setString(1, object.getTitle());
-        statement.setString(2, object.getContent());
-        statement.setDate(3, Date.valueOf(object.getDate().toString()));
-        statement.setString(4, object.getUrl());
-        statement.setString(5, object.getDescription());
+        statement.setString(1, object.getCategory());
+        statement.setString(2, object.getTitle());
+        statement.setString(3, object.getDescription());
+        statement.setString(4, object.getUrlLink());
+        statement.setString(5, object.getContent());
+        statement.setDate(6, Date.valueOf(object.getNewsDate().toString()));
         return statement;
     }
 }

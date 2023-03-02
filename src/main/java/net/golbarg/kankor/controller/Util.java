@@ -12,8 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
@@ -103,4 +102,23 @@ public class Util {
             child.setY(centerYPosition - child.getHeight()/2d);
         });
     }
+
+    public static boolean isServerAvailable() {
+        try {
+            URL url = new URL(SystemController.SERVER_ADDRESS);
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+            conn.getInputStream().close();
+            return true;
+
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
 }

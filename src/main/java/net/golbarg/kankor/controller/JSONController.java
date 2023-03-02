@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -19,38 +20,42 @@ public class JSONController {
     public static void main(String[] args) {
 
         try {
-            String data = getDataFromURL("http://localhost:8100/api/kankor_news");
-
-            System.out.println(data);
-
-            JSONParser parse = new JSONParser();
-            JSONObject data_obj = (JSONObject) parse.parse(data);
-
-            JSONArray arr = (JSONArray) data_obj.get("news");
-
-            for (int i = 0; i < arr.size(); i++) {
-
-                JSONObject new_obj = (JSONObject) arr.get(i);
-                int id = Integer.parseInt(new_obj.get("id").toString());
-                String category = new_obj.get("category").toString();
-                String title = new_obj.get("title").toString();
-                String description = new_obj.get("description").toString();
-                String urlLink = new_obj.get("url_link").toString();
-                String content = new_obj.get("content").toString();
-                LocalDate news_date = LocalDate.parse(new_obj.get("news_date").toString());
-
-                News news = new News(
-                        id, category,
-                        title, description,
-                        urlLink, content, news_date
-                );
-
-                System.out.println(news);
-            }
-
+            System.out.println(getNews());;
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+    }
+
+    public static ArrayList<News> getNews() throws Exception {
+
+        String data = getDataFromURL(SystemController.SERVER_ADDRESS + "api/kankor_news");
+
+        JSONParser parse = new JSONParser();
+        JSONObject data_obj = (JSONObject) parse.parse(data);
+
+        JSONArray arr = (JSONArray) data_obj.get("news");
+
+        ArrayList<News> result = new ArrayList<>();
+
+        for (int i = 0; i < arr.size(); i++) {
+
+            JSONObject new_obj = (JSONObject) arr.get(i);
+            int id = Integer.parseInt(new_obj.get("id").toString());
+            String category = new_obj.get("category").toString();
+            String title = new_obj.get("title").toString();
+            String description = new_obj.get("description").toString();
+            String urlLink = new_obj.get("url_link").toString();
+            String content = new_obj.get("content").toString();
+            LocalDate news_date = LocalDate.parse(new_obj.get("news_date").toString());
+
+            result.add(new News(
+                    id, category,
+                    title, description,
+                    urlLink, content, news_date
+            ));
+        }
+
+        return result;
     }
 
     public static String getDataFromURL(String urlAddress) throws MalformedURLException, ProtocolException, IOException {

@@ -18,7 +18,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
+import net.golbarg.kankor.controller.JSONController;
 import net.golbarg.kankor.controller.SystemController;
+import net.golbarg.kankor.controller.Util;
 import net.golbarg.kankor.db.TableNews;
 import net.golbarg.kankor.model.News;
 import net.golbarg.kankor.model.Tutorial;
@@ -26,6 +28,7 @@ import net.golbarg.kankor.model.TutorialDetail;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class NewsViewController implements Initializable {
@@ -53,9 +56,12 @@ public class NewsViewController implements Initializable {
 
     ObservableList<News> offlineNewsList = FXCollections.observableArrayList();
     FilteredList<News> filteredNewsList;
+    TableNews tableNews;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        tableNews = new TableNews();
+
         initializeZoomSlider();
         createProgressReport(webContent.getEngine());
         initializeHtmlViewer();
@@ -65,6 +71,23 @@ public class NewsViewController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
                 filterTutorialDetails(txtSearchNews.getText(), filteredNewsList);
+            }
+        });
+
+        btnRefresh.setOnAction(event -> {
+            if(Util.isServerAvailable()) {
+                try {
+                    ArrayList<News> newsList = JSONController.getNews();
+                    for(int i = 0;i < newsList.size(); i++) {
+                        if(!offlineNewsList.contains(newsList.get(i))) {
+                            tableNews.create(newsList.get(i));
+                        }
+                    }
+
+                    initOfflineNews();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         });
     }

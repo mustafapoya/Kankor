@@ -91,4 +91,12 @@ public class News {
                 ", newsDate=" + newsDate +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null && obj instanceof News) {
+            return this.id == ((News) obj).id;
+        }
+        return false;
+    }
 }

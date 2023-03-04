@@ -55,6 +55,15 @@ public class MainViewController implements Initializable {
             }
         });
 
+        btnPractice.setOnAction(event -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("exam-specific-view.fxml"));
+                root.setCenter(fxmlLoader.load());
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+
         btnReview.setOnAction(event -> {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("question-review-view.fxml"));
@@ -82,5 +91,13 @@ public class MainViewController implements Initializable {
             }
         });
 
+        btnNews.setOnAction(event -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("news-view.fxml"));
+                root.setCenter(fxmlLoader.load());
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
     }
 }

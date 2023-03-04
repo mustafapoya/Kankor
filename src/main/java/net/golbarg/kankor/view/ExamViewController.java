@@ -67,6 +67,7 @@ public class ExamViewController implements Initializable {
     private ObservableList<Label> subjectSections = FXCollections.observableArrayList();
     private ExamController examController;
     private Exam examProcess;
+    private int questionCount = 160;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,6 +79,11 @@ public class ExamViewController implements Initializable {
 //            processQuestionAnswers();
 //            System.out.println(examController);
 //        });
+    }
+
+    public void initQuestionsList(ObservableList<Question> questionList) {
+        this.questionList = questionList;
+        this.questionCount = this.questionList.size();
     }
 
     public void processQuestionAnswers() {
@@ -108,7 +114,7 @@ public class ExamViewController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader(ExamViewController.class.getResource("answer-sheet-view.fxml"));
                 VBox answerSheetView = fxmlLoader.load();
                 answerSheet = fxmlLoader.getController();
-                answerSheet.initAnswerSheet(160);
+                answerSheet.initAnswerSheet(questionCount);
                 hboxAnswers.getChildren().add(answerSheetView);
 
                 // start timers
@@ -123,7 +129,9 @@ public class ExamViewController implements Initializable {
                 lblClock.setAlignment(Pos.CENTER);
 
                 //init questions
-                initializeQuestions();
+                if(questionList.isEmpty()) {
+                    initializeQuestions();
+                }
                 setQuestion();
                 bindQuestionScrollPane();
                 changeScrollPaneSize();

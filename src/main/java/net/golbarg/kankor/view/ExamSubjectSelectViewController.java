@@ -113,9 +113,8 @@ public class ExamSubjectSelectViewController implements Initializable {
     private Label lblPashto;
     @FXML
     private Label lblGeneral;
-
-//    String subject[] = { "all", "math", "triangles", "geometry", "chemistry", "physic", "biology", "islamic", "history",
-//            "geography", "dari", "pashto", "general" };
+    @FXML
+    private Label lblTotalQuestions;
 
     HashMap<String, QuestionSubject> subjects = new HashMap<>();
     private HashMap<String, SubjectSelection> hashSubjects = new HashMap<>();
@@ -124,15 +123,9 @@ public class ExamSubjectSelectViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initQuestionSubjects();
-
+        lblTotalQuestions.setText("");
         tableQuestion = new TableQuestion();
         initSubjectsDetails();
-
-        lblType.setOnMouseClicked(e -> {
-//            System.out.println(numberOfQuestions());
-//            showSelectedChecks();
-            getQuestions();
-        });
 
     }
     private void initQuestionSubjects() {
@@ -176,6 +169,9 @@ public class ExamSubjectSelectViewController implements Initializable {
                 @Override
                 public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
                     hashSubjects.get(key).getLabel().setText(newValue + " سوال ");
+                    int questionTotal = numberOfQuestions();
+                    if(questionTotal > 0)
+                        lblTotalQuestions.setText(String.valueOf(questionTotal) + " سوال ");
                 }
             });
         }
@@ -215,7 +211,7 @@ public class ExamSubjectSelectViewController implements Initializable {
         return sum;
     }
 
-    public void getQuestions() {
+    public ObservableList<Question> getQuestions() {
         questionList.clear();
         if (checkAll.isSelected()) {
             questionList.addAll(tableQuestion.getQuestions(hashSubjects.get("all").getSpinner().getValue()));
@@ -231,13 +227,7 @@ public class ExamSubjectSelectViewController implements Initializable {
                 }
             }
         }
-
-        for(int i = 0; i < questionList.size(); i++) {
-            System.out.print(questionList.get(i).getId() + ", ");
-            if(i % 10 == 0) {
-                System.out.println();
-            }
-        }
+        return questionList;
     }
 
 }

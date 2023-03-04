@@ -9,16 +9,15 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefHeight="800.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.ExamSubjectSelectViewController">
+<BorderPane fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.ExamSubjectSelectViewController">
    <padding>
       <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
    </padding>
    <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="spContent" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
          <content>
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
@@ -30,9 +29,10 @@
                       <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="35.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="0.0" prefHeight="0.0" valignment="CENTER" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="35.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="35.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="35.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="35.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="35.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="35.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
@@ -53,8 +53,8 @@
                               <Insets left="5.0" right="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="lblType" text="نوعیت" GridPane.columnIndex="1" />
-                        <ComboBox maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="2" />
+                        <Label fx:id="lblType" text="نوعیت" visible="false" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="comboType" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="150.0" visible="false" GridPane.columnIndex="2" />
                         <CheckBox fx:id="checkTrigonometry" mnemonicParsing="false" text="مثلثات" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Spinner fx:id="spinnerTrigonometry" maxWidth="1.7976931348623157E308" prefHeight="30.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                         <Label fx:id="lblTrigonometry" text="110 سوال" GridPane.columnIndex="3" GridPane.rowIndex="3" />
@@ -91,6 +91,8 @@
                         <CheckBox fx:id="checkAll" mnemonicParsing="false" text="تمام بخش ها" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Spinner fx:id="spinnerAll" maxWidth="1.7976931348623157E308" prefHeight="30.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <Label fx:id="lblAll" text="110 سوال" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label fx:id="lblTotalQuestions" text="110 سوال" GridPane.columnIndex="3" GridPane.rowIndex="14" />
+                        <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="30.0" text="مجموع سوالات انتخاب شده" GridPane.columnIndex="2" GridPane.rowIndex="14" />
                      </children>
                   </GridPane>
                </children>
@@ -101,15 +103,4 @@
          </content>
       </ScrollPane>
    </center>
-   <top>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0">
-               <children>
-                  <Label text="انتخاب مضامین" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </top>
 </BorderPane>

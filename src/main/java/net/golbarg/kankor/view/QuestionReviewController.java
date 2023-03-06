@@ -23,6 +23,7 @@ import net.golbarg.kankor.model.QuestionSubject;
 import net.golbarg.kankor.model.QuestionUpdate;
 import org.controlsfx.control.ToggleSwitch;
 
+import javax.swing.event.ChangeEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -30,7 +31,7 @@ public class QuestionReviewController implements Initializable {
     @FXML
     private BorderPane root;
     @FXML
-    private Button btnNote;
+    private ToggleButton toggleBookmark;
     @FXML
     private ToggleSwitch toggleSwitchShowAnswer;
     @FXML
@@ -96,6 +97,7 @@ public class QuestionReviewController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends QuestionSubject> observableValue, QuestionSubject oldValue, QuestionSubject newValue) {
                 if(newValue != null) {
+                    txtSearch.setText("");
                     questionList.clear();
                     questionList.addAll(tableQuestion.getQuestionOf(newValue.getId()));
                     number_of_pages = (int) Math.ceil(questionList.size() / (double)data_per_page);
@@ -107,10 +109,23 @@ public class QuestionReviewController implements Initializable {
         });
         comboSubject.getSelectionModel().selectFirst();
 
-        btnNote.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Load bookmarked questions");
+        toggleBookmark.setOnAction(event -> {
+            if(toggleBookmark.isSelected()) {
+                System.out.println("Load Bookmarks");
+                questionList.clear();
+                questionList.addAll(tableQuestion.getBookmarks(comboSubject.getSelectionModel().getSelectedItem().getId()));
+                number_of_pages = (int) Math.ceil(questionList.size() / (double)data_per_page);
+                current_page = 1;
+                lblSummary.setText("مجموع سوالات: " + questionList.size());
+                loadQuestions();
+            } else {
+                txtSearch.setText("");
+                questionList.clear();
+                questionList.addAll(tableQuestion.getQuestionOf(comboSubject.getSelectionModel().getSelectedItem().getId()));
+                number_of_pages = (int) Math.ceil(questionList.size() / (double)data_per_page);
+                current_page = 1;
+                lblSummary.setText("مجموع سوالات: " + questionList.size());
+                loadQuestions();
             }
         });
 
@@ -133,6 +148,20 @@ public class QuestionReviewController implements Initializable {
         vbContentContainer.setStyle("-fx-background-color:white;");
         vbContentContainer.setPadding(new Insets(5));
         vbContentContainer.setFillWidth(true);
+
+        btnSearch.setOnAction(event -> {
+            String searchText = txtSearch.getText();
+            if(searchText.length() > 0) {
+                System.out.println("Searching");
+                questionList.clear();
+                questionList.addAll(tableQuestion.getQuestionOf(comboSubject.getSelectionModel().getSelectedItem().getId(), searchText));
+                System.out.println("Searching" + questionList.size());
+                number_of_pages = (int) Math.ceil(questionList.size() / (double)data_per_page);
+                current_page = 1;
+                lblSummary.setText("مجموع سوالات: " + questionList.size());
+                loadQuestions();
+            }
+        });
     }
 
     private void loadQuestions() {

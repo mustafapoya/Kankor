@@ -94,7 +94,7 @@ public class QuestionItemViewController implements Initializable {
             QuestionTextController answerText = new QuestionTextController(question.getChoices()[i], -1);
             setAnswerValue(answers.get(i), answerText);
         }
-
+        checkIcon();
     }
 
     private void updateBookmarkIcon() {
@@ -109,6 +109,14 @@ public class QuestionItemViewController implements Initializable {
             btnBookmark.setGraphic(Util.getBookmarkIcon());
             tableQuestion.toggle_bookmark(this.question, false);
             question.setBookmark(false);
+        }
+    }
+
+    private void checkIcon() {
+        if(this.question.isBookmark()) {
+            btnBookmark.setGraphic(Util.getBookmarkFillIcon());
+        } else {
+            btnBookmark.setGraphic(Util.getBookmarkIcon());
         }
     }
 

@@ -8,17 +8,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TableQuestion implements CRUDHandler<Question>{
     public static final String TABLE_NAME = "QUESTIONS";
     public static final String [] COLUMNS = {"ID", "SUBJECT_ID", "QUESTION", "CHOICE1", "CHOICE2", "CHOICE3", "CHOICE4", "CORRECT_CHOICE", "RELATED_CLASS", "QUESTION_TYPE", "QUESTION_UPDATE"};
-    public static final String COLUMNS_STR = "ID, SUBJECT_ID, QUESTION, CHOICE1, CHOICE2, CHOICE3, CHOICE4, CORRECT_CHOICE, RELATED_CLASS, QUESTION_TYPE, QUESTION_UPDATE";
+    public static final String COLUMNS_STR = "ID, SUBJECT_ID, QUESTION, CHOICE1, CHOICE2, CHOICE3, CHOICE4, CORRECT_CHOICE, RELATED_CLASS, QUESTION_TYPE, QUESTION_UPDATE, BOOKMARK";
 
 
     @Override
     public boolean create(Question object) {
-        String query = String.format("insert into %s (SUBJECT_ID, QUESTION, CHOICE1, CHOICE2, CHOICE3, CHOICE4, CORRECT_CHOICE, RELATED_CLASS, QUESTION_TYPE, QUESTION_UPDATE) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
+        String query = String.format("insert into %s (SUBJECT_ID, QUESTION, CHOICE1, CHOICE2, CHOICE3, CHOICE4, CORRECT_CHOICE, RELATED_CLASS, QUESTION_TYPE, QUESTION_UPDATE, BOOKMARK) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -121,13 +124,59 @@ public class TableQuestion implements CRUDHandler<Question>{
         return resultList;
     }
 
+    public ArrayList<Question> getQuestionOf(int subjectId, String searchText) {
+        String query = String.format("SELECT %s FROM %s WHERE SUBJECT_ID = ? AND QUESTION LIKE ?;", COLUMNS_STR, TABLE_NAME);
+
+        ArrayList<Question> resultList = new ArrayList<>();
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setInt(1, subjectId);
+            statement.setString(2, "%" + searchText + "%");
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                Question object = mapColumn(result);
+                resultList.add(object);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return resultList;
+    }
+
+    public ArrayList<Question> getBookmarks(int subjectId) {
+        String query = String.format("SELECT %s FROM %s WHERE SUBJECT_ID = ? AND BOOKMARK = TRUE;", COLUMNS_STR, TABLE_NAME);
+
+        ArrayList<Question> resultList = new ArrayList<>();
+
+        try {
+            Connection connection = DBController.getLocalConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setInt(1, subjectId);
+
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                Question object = mapColumn(result);
+                resultList.add(object);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return resultList;
+    }
+
     public ArrayList<Question> getQuestionsOf(int subjectId, int count) {
         String query = String.format("SELECT %s FROM %s WHERE SUBJECT_ID = ?  ORDER BY rand() LIMIT ?;", COLUMNS_STR, TABLE_NAME);
 
         ArrayList<Question> resultList = new ArrayList<>();
 
         try {
-
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, subjectId);
@@ -185,13 +234,13 @@ public class TableQuestion implements CRUDHandler<Question>{
 
     @Override
     public boolean update(Question object) {
-        String query = String.format("update %s set SUBJECT_ID = ?, QUESTION = ?, CHOICE1 = ?, CHOICE2 = ?, CHOICE3 = ?, CHOICE4 = ?, CORRECT_CHOICE = ?, RELATED_CLASS = ?, QUESTION_TYPE = ?, QUESTION_UPDATE = ? where id = ?", TABLE_NAME);
+        String query = String.format("update %s set SUBJECT_ID = ?, QUESTION = ?, CHOICE1 = ?, CHOICE2 = ?, CHOICE3 = ?, CHOICE4 = ?, CORRECT_CHOICE = ?, RELATED_CLASS = ?, QUESTION_TYPE = ?, QUESTION_UPDATE = ?, BOOKMARK = ? where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement = putValues(statement, object);
-            statement.setInt(11, object.getId());
+            statement.setInt(12, object.getId());
             statement.executeUpdate();
 
             return true;
@@ -200,6 +249,22 @@ public class TableQuestion implements CRUDHandler<Question>{
         }
 
         return false;
+    }
+
+    public void toggle_bookmark(Question question, boolean bookmark) {
+        String query = "UPDATE " + TABLE_NAME +" SET bookmark = ? where id = ?;";
+
+        try (Connection connection = DBController.getLocalConnection();) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setBoolean(1, bookmark);
+            statement.setLong(2, question.getId());
+
+            int result = statement.executeUpdate();
+        } catch(SQLException e) {
+            Logger.getAnonymousLogger().log(
+                    Level.SEVERE,
+                    LocalDateTime.now() + ": Could not load question from database ");
+        }
     }
 
     @Override
@@ -272,7 +337,8 @@ public class TableQuestion implements CRUDHandler<Question>{
                 result.getInt("CORRECT_CHOICE"),
                 result.getString("RELATED_CLASS"),
                 result.getString("QUESTION_TYPE"),
-                result.getInt("QUESTION_UPDATE")
+                result.getInt("QUESTION_UPDATE"),
+                result.getBoolean("BOOKMARK")
         );
     }
 
@@ -288,6 +354,7 @@ public class TableQuestion implements CRUDHandler<Question>{
         statement.setString(7, object.getRelatedClass());
         statement.setString(9, object.getQuestionType());
         statement.setInt(10, object.getQuestionUpdate());
+        statement.setBoolean(11, object.isBookmark());
         return statement;
     }
 }

@@ -1,7 +1,10 @@
 package net.golbarg.kankor.view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -10,9 +13,11 @@ import javafx.scene.text.TextFlow;
 import net.golbarg.kankor.controller.ExamController;
 import net.golbarg.kankor.controller.QuestionGenerator;
 import net.golbarg.kankor.controller.QuestionTextController;
+import net.golbarg.kankor.controller.Util;
 import net.golbarg.kankor.db.TableQuestion;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.model.Subject;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.lang.reflect.Array;
 import java.net.URL;
@@ -45,11 +50,13 @@ public class QuestionItemViewController implements Initializable {
     private Label lblAnswer3;
     @FXML
     private Label lblAnswer4;
-    private TableQuestion tableQuestion;
+    @FXML
+    private Button btnBookmark;
     private ArrayList<Label> answers = new ArrayList<>();
     private ArrayList<Label> labels  = new ArrayList<>();
 
     // this object is for test purpose
+    private TableQuestion tableQuestion;
     Question question;
 
     private int correctAnswer;
@@ -57,6 +64,7 @@ public class QuestionItemViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        tableQuestion = new TableQuestion();
         //initialization
         answers.addAll(Arrays.asList(lblAnswer1, lblAnswer2, lblAnswer3, lblAnswer4));
         labels.addAll(Arrays.asList(lbl1, lbl2, lbl3, lbl4));
@@ -65,6 +73,13 @@ public class QuestionItemViewController implements Initializable {
 //        tableQuestion = new TableQuestion();
 //        tmpQuestion = tableQuestion.getQuestionsOf(QuestionGenerator.MATHEMATICS, 10).get(0);
 //        initData(tmpQuestion);
+
+        btnBookmark.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                updateBookmarkIcon();
+            }
+        });
     }
 
     public void initData(Question question, int number) {
@@ -79,7 +94,30 @@ public class QuestionItemViewController implements Initializable {
             QuestionTextController answerText = new QuestionTextController(question.getChoices()[i], -1);
             setAnswerValue(answers.get(i), answerText);
         }
+        checkIcon();
+    }
 
+    private void updateBookmarkIcon() {
+        FontIcon icon = (FontIcon) btnBookmark.getGraphic();
+        String current_icon = icon.getIconLiteral();
+
+        if(current_icon.equals("bi-journal-bookmark")) {
+            btnBookmark.setGraphic(Util.getBookmarkFillIcon());
+            tableQuestion.toggle_bookmark(this.question, true);
+            question.setBookmark(true);
+        } else {
+            btnBookmark.setGraphic(Util.getBookmarkIcon());
+            tableQuestion.toggle_bookmark(this.question, false);
+            question.setBookmark(false);
+        }
+    }
+
+    private void checkIcon() {
+        if(this.question.isBookmark()) {
+            btnBookmark.setGraphic(Util.getBookmarkFillIcon());
+        } else {
+            btnBookmark.setGraphic(Util.getBookmarkIcon());
+        }
     }
 
     private void setAnswerValue(Label lbl, QuestionTextController question) {

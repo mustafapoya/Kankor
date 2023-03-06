@@ -6,6 +6,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import net.golbarg.kankor.model.Gender;
 import net.golbarg.kankor.model.Position;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.awt.*;
 import java.io.File;
@@ -121,4 +122,15 @@ public class Util {
         }
     }
 
+    public static FontIcon getBookmarkFillIcon() {
+        FontIcon icon = new FontIcon("bi-journal-bookmark-fill");
+        icon.setIconSize(15);
+        return icon;
+    }
+
+    public static FontIcon getBookmarkIcon() {
+        FontIcon icon = new FontIcon("bi-journal-bookmark");
+        icon.setIconSize(15);
+        return icon;
+    }
 }

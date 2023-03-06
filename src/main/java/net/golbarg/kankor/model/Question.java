@@ -13,8 +13,10 @@ public class Question {
     private String questionType;
     private int questionUpdate;
 
+    private boolean bookmark;
+
     public Question(int id, QuestionSubject subject, String question, String choice1, String choice2, String choice3,
-                    String choice4, int correctChoice, String relatedClass, String questionType, int questionUpdate) {
+                    String choice4, int correctChoice, String relatedClass, String questionType, int questionUpdate, boolean bookmark) {
         this.id = id;
         this.subject = subject;
         this.question = question;
@@ -26,6 +28,7 @@ public class Question {
         this.relatedClass = relatedClass;
         this.questionType = questionType;
         this.questionUpdate = questionUpdate;
+        this.bookmark = bookmark;
     }
 
     public int getId() {
@@ -120,10 +123,19 @@ public class Question {
         return new String[]{getChoice1(), getChoice2(), getChoice3(), getChoice4()};
     }
 
+    public boolean isBookmark() {
+        return bookmark;
+    }
+
+    public void setBookmark(boolean bookmark) {
+        this.bookmark = bookmark;
+    }
+
     @Override
     public String toString() {
         return "Question{" +
                 "id=" + id +
+                ", subject=" + subject +
                 ", question='" + question + '\'' +
                 ", choice1='" + choice1 + '\'' +
                 ", choice2='" + choice2 + '\'' +
@@ -131,9 +143,9 @@ public class Question {
                 ", choice4='" + choice4 + '\'' +
                 ", correctChoice=" + correctChoice +
                 ", relatedClass='" + relatedClass + '\'' +
-                ", subject='" + subject + '\'' +
                 ", questionType='" + questionType + '\'' +
                 ", questionUpdate=" + questionUpdate +
+                ", bookmark=" + bookmark +
                 '}';
     }
 }

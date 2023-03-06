@@ -442,6 +442,7 @@ create table QUESTIONS
     RELATED_CLASS   VARCHAR,
     QUESTION_TYPE   VARCHAR,
     QUESTION_UPDATE INTEGER,
+    BOOKMARK        BOOLEAN,
     primary key (`ID`)
 );
 

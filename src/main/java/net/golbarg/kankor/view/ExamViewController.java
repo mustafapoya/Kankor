@@ -230,10 +230,10 @@ public class ExamViewController implements Initializable {
         vbQuestion.setPadding(new Insets(20));
         vbQuestion.setFillWidth(true);
         spQuestion.setVmin(0);
-        spQuestion.setVmax(160);
+        spQuestion.setVmax(questionCount);
         spQuestion.setHvalue(1);
         spAnswerSheet.setVmin(0);
-        spAnswerSheet.setVmax(160);
+        spAnswerSheet.setVmax(questionCount);
     }
 
     private void highlightSubjectSection(int which) {

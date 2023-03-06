@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -127,6 +128,11 @@ public class QuestionReviewController implements Initializable {
                 loadQuestions();
             }
         });
+
+        scrollPaneContent.setStyle("-fx-background:white;");
+        vbContentContainer.setStyle("-fx-background-color:white;");
+        vbContentContainer.setPadding(new Insets(5));
+        vbContentContainer.setFillWidth(true);
     }
 
     private void loadQuestions() {

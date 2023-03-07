@@ -8,11 +8,19 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.AboutViewController">
     <center>
-        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="برنامه آموزشی کانکور" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="این برنامه بر اساس پروسه امتحان کانکور طراحی گردیده است که به شاگردان کمک مینماید تا از طریق این برنامه آمادگی لازم را جهت امتحان کانکور اخذ نمایند." wrappingWidth="580.0" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="15.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin></VBox>
     </center>
    <top>
         <HBox alignment="CENTER_LEFT" prefWidth="200.0" styleClass="about-header" BorderPane.alignment="CENTER">

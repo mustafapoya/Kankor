@@ -88,6 +88,11 @@
                         <FontIcon iconLiteral="bi-newspaper" iconSize="16" />
                      </graphic>
                   </Button>
+                  <Button fx:id="btnAbout" mnemonicParsing="false" text="درباره">
+                     <graphic>
+                        <FontIcon iconLiteral="bi-record-circle" iconSize="16" />
+                     </graphic>
+                  </Button>
                </items>
             </ToolBar>
          </children>

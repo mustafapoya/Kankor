@@ -224,4 +224,36 @@ public class CellFactorySample {
 
         return cellFactory;
     }
+
+    public static Callback<ListView<Exam>, ListCell<Exam>> getComboBoxExamDate(String icon, int iconSize) {
+        Callback<ListView<Exam>, ListCell<Exam>> cellFactory = new Callback<ListView<Exam>, ListCell<Exam>>() {
+            @Override
+            public ListCell call(ListView<Exam> param) {
+                final Label lblLead = new Label();
+                FontIcon iconLanguage = new FontIcon((icon == null || icon.isEmpty()) ? "bi-calendar3" : icon);
+                iconLanguage.setIconSize(iconSize < 1 ? 14 : iconSize);
+
+                final ListCell<Exam> cell = new ListCell<Exam>(){
+                    @Override
+                    protected void updateItem(Exam item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(item != null) {
+                            lblLead.setText(item.getExamDate().toString());
+                            setText(item.getExamDate().toString());
+                            setGraphic(iconLanguage);
+                        } else {
+                            lblLead.setText("");
+                            setText("");
+                            setGraphic(null);
+                        }
+                    }
+                };
+
+                return cell;
+            }
+        };
+
+        return cellFactory;
+    }
+
 }

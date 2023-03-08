@@ -7,7 +7,7 @@ public class Exam {
     private int userId;
     private String kankorId;
     private Date examDate;
-    private Date examDuration;
+    private long examDuration;
     private double mathGrade;
     private double naturalGrade;
     private double socialGrade;
@@ -15,7 +15,7 @@ public class Exam {
     private double examGrade;
     private String examPassedField;
 
-    public Exam(int id, int userId, String kankorId, Date examDate, Date examDuration, double mathGrade,
+    public Exam(int id, int userId, String kankorId, Date examDate, long examDuration, double mathGrade,
                 double naturalGrade, double socialGrade, double alsanaGrade, double examGrade, String examPassedField) {
         this.id = id;
         this.userId = userId;
@@ -62,11 +62,11 @@ public class Exam {
         this.examDate = examDate;
     }
 
-    public Date getExamDuration() {
+    public long getExamDuration() {
         return examDuration;
     }
 
-    public void setExamDuration(Date examDuration) {
+    public void setExamDuration(long examDuration) {
         this.examDuration = examDuration;
     }
 

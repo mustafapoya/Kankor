@@ -160,14 +160,13 @@ public class TableExam implements CRUDHandler<Exam> {
                 result.getInt("USER_ID"),
                 result.getString("KONKOR_ID"),
                 result.getDate("EXAM_DATE"),
-                result.getDate("EXAM_DURATION"),
+                result.getLong("EXAM_DURATION"),
                 result.getDouble("MATH_GRADE"),
                 result.getDouble("NATURAL_GRADE"),
                 result.getDouble("SOCIAL_GRADE"),
                 result.getDouble("ALSANA_GRADE"),
                 result.getDouble("EXAM_GRADE"),
                 result.getString("EXAM_PASSEDFIELD")
-
         );
     }
 
@@ -176,7 +175,7 @@ public class TableExam implements CRUDHandler<Exam> {
         statement.setInt(1, object.getUserId());
         statement.setString(2, object.getKankorId());
         statement.setDate(3, Date.valueOf(object.getExamDate().toString()));
-        statement.setDate(4, Date.valueOf(object.getExamDuration().toString()));
+        statement.setLong(4, object.getExamDuration());
         statement.setDouble(5, object.getMathGrade());
         statement.setDouble(6, object.getNaturalGrade());
         statement.setDouble(7, object.getSocialGrade());

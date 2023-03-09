@@ -24,6 +24,8 @@ public class MainViewController implements Initializable {
     // header
     @FXML
     private Button btnProfile;
+    @FXML
+    private Button btnSetting;
 
     // sidebar menu
     @FXML
@@ -50,6 +52,19 @@ public class MainViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        btnProfile.setOnAction(event -> {
+            System.out.println("Profile");
+        });
+
+        btnSetting.setOnAction(event -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("setting-view.fxml"));
+                root.setCenter(fxmlLoader.load());
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
 
         btnExam.setOnAction(event -> {
             try {

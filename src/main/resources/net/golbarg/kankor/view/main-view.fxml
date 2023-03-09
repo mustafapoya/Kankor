@@ -29,15 +29,24 @@
                      </padding>
                   </HBox>
                   <HBox HBox.hgrow="ALWAYS" />
-                  <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER_RIGHT" spacing="3.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <FontIcon iconLiteral="bi-person-circle" iconSize="24" />
+                        <Button fx:id="btnSetting" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 15px;">
+                           <graphic>
+                              <FontIcon iconLiteral="bi-gear-fill" iconSize="20" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnProfile" contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 15px;">
+                           <graphic>
+                              <FontIcon iconLiteral="bi-person-circle" iconSize="20" />
+                           </graphic>
+                        </Button>
                      </children>
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                      <padding>
-                        <Insets right="5.0" top="5.0" />
+                        <Insets right="5.0" />
                      </padding>
                   </HBox>
                </children>

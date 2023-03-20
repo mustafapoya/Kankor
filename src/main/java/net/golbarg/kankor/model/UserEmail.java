@@ -1,14 +1,16 @@
 package net.golbarg.kankor.model;
 
-public class Email {
+public class UserEmail {
     private int id;
+    private User user;
     private String email;
     private String phone;
     private String title;
     private String content;
 
-    public Email(int id, String email, String phone, String title, String content) {
+    public UserEmail(int id, User user, String email, String phone, String title, String content) {
         this.id = id;
+        this.user = user;
         this.email = email;
         this.phone = phone;
         this.title = title;
@@ -21,6 +23,14 @@ public class Email {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getEmail() {
@@ -57,8 +67,9 @@ public class Email {
 
     @Override
     public String toString() {
-        return "Email{" +
+        return "UserEmail{" +
                 "id=" + id +
+                ", user=" + user +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", title='" + title + '\'' +

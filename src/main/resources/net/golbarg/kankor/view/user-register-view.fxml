@@ -140,17 +140,12 @@
                               <FontIcon iconLiteral="fas-user-astronaut" iconSize="14" />
                            </graphic>
                         </Label>
-                        <Label text="نام پدر" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                           <graphic>
-                              <FontIcon iconLiteral="fas-user" iconSize="14" />
-                           </graphic>
-                        </Label>
                         <Label text="شماره تلفن" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                            <graphic>
                               <FontIcon iconLiteral="fas-mobile-alt" iconSize="14" />
                            </graphic>
                         </Label>
-                        <Label text="جنسیت" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                        <Label text="جنسیت" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                            <graphic>
                               <FontIcon iconLiteral="fab-odnoklassniki" iconSize="14" />
                            </graphic>
@@ -160,18 +155,17 @@
                               <FontIcon iconLiteral="fas-search-location" iconSize="14" />
                            </graphic>
                         </Label>
-                        <Label text="مکتب" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                        <Label text="مکتب" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
                            <graphic>
                               <FontIcon iconLiteral="fas-school" iconSize="14" />
                            </graphic>
                         </Label>
                         <TextField fx:id="txtName" prefHeight="30.0" GridPane.rowIndex="1" />
                         <TextField fx:id="txtLastName" prefHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="txtFatherName" prefHeight="30.0" GridPane.rowIndex="3" />
                         <TextField fx:id="txtPhoneNumber" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="comboGender" maxWidth="1.7976931348623157E308" prefHeight="30.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="comboGender" maxWidth="1.7976931348623157E308" prefHeight="30.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
                         <ComboBox fx:id="comboProvince" maxWidth="1.7976931348623157E308" prefHeight="30.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" />
-                        <TextField fx:id="txtSchoolName" maxWidth="1.7976931348623157E308" prefHeight="30.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                        <TextField fx:id="txtSchoolName" maxWidth="1.7976931348623157E308" prefHeight="30.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
                </content>

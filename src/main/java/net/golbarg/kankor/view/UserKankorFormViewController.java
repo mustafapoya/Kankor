@@ -23,14 +23,13 @@ import net.golbarg.kankor.model.Gender;
 import net.golbarg.kankor.model.Language;
 import net.golbarg.kankor.model.Location;
 import net.golbarg.kankor.model.User;
-import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-public class KankorFormViewController implements Initializable {
+public class UserKankorFormViewController implements Initializable {
     // first Section which include User image and it's ID
     @FXML
     private ImageView imgUserImage;

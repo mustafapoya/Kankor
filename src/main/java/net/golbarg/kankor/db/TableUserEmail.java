@@ -1,20 +1,19 @@
 package net.golbarg.kankor.db;
 
-import net.golbarg.kankor.model.Exam;
+import net.golbarg.kankor.model.User;
+import net.golbarg.kankor.model.UserEmail;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class TableExam implements CRUDHandler<Exam> {
-    public static final String TABLE_NAME = "EXAMS";
-    public static final String [] COLUMNS = {"ID", "USER_ID", "KANKOR_ID", "EXAM_DATE", "EXAM_DURATION", "MATH_GRADE",
-                                             "NATURAL_GRADE", "SOCIAL_GRADE", "ALSANA_GRADE", "EXAM_GRADE", "EXAM_PASSEDFIELD"};
-    public static final String COLUMNS_STR = "ID, USER_ID, KONKOR_ID, EXAM_DATE, EXAM_DURATION, MATH_GRADE, NATURAL_GRADE, SOCIAL_GRADE, ALSANA_GRADE, EXAM_GRADE, EXAM_PASSEDFIELD";
-
+public class TableUserEmail implements CRUDHandler<UserEmail> {
+    public static final String TABLE_NAME = "USER_EMAILS";
+    public static final String [] COLUMNS = {"ID", "USER_ID", "EMAIL", "PHONE", "TITLE", "CONTENT"};
+    public static final String COLUMNS_STR = "ID, USER_ID, EMAIL, PHONE, TITLE, CONTENT";
 
     @Override
-    public boolean create(Exam object) {
-        String query = String.format("insert into %s (USER_ID, KONKOR_ID, EXAM_DATE, EXAM_DURATION, MATH_GRADE, NATURAL_GRADE, SOCIAL_GRADE, ALSANA_GRADE, EXAM_GRADE, EXAM_PASSEDFIELD) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
+    public boolean create(UserEmail object) {
+        String query = String.format("insert into %s (USER_ID, EMAIL, PHONE, TITLE, CONTENT) values (?, ?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -31,10 +30,10 @@ public class TableExam implements CRUDHandler<Exam> {
     }
 
     @Override
-    public Exam findById(int id) {
+    public UserEmail findById(int id) {
         String query = String.format("SELECT %s FROM %s where id = ?;", COLUMNS_STR, TABLE_NAME);
 
-        Exam object = null;
+        UserEmail object = null;
 
         try {
 
@@ -56,15 +55,15 @@ public class TableExam implements CRUDHandler<Exam> {
     }
 
     @Override
-    public ArrayList<Exam> getAll() {
+    public ArrayList<UserEmail> getAll() {
         String query = String.format("SELECT %s FROM %s;", COLUMNS_STR, TABLE_NAME);
 
-        ArrayList<Exam> resultList = new ArrayList<>();
+        ArrayList<UserEmail> resultList = new ArrayList<>();
 
         try {
             ResultSet result = DBController.executeQuery(query);
             while (result.next()) {
-                Exam object = mapColumn(result);
+                UserEmail object = mapColumn(result);
                 resultList.add(object);
             }
         } catch (Exception exception) {
@@ -74,16 +73,14 @@ public class TableExam implements CRUDHandler<Exam> {
     }
 
     @Override
-    public boolean update(Exam object) {
-        String query = String.format("update %s set USER_ID = ?, KONKOR_ID = ?, EXAM_DATE = ?, EXAM_DURATION = ?, MATH_GRADE = ?, " +
-                                     "NATURAL_GRADE = ?, SOCIAL_GRADE = ?, ALSANA_GRADE = ?, EXAM_GRADE = ?, EXAM_PASSEDFIELD = ? " +
-                                     "where id = ?", TABLE_NAME);
+    public boolean update(UserEmail object) {
+        String query = String.format("update %s set USER_ID = ?, EMAIL = ?, PHONE = ?, TITLE = ?, CONTENT = ? where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement = putValues(statement, object);
-            statement.setInt(11, object.getId());
+            statement.setInt(6, object.getId());
             statement.executeUpdate();
 
             return true;
@@ -95,7 +92,7 @@ public class TableExam implements CRUDHandler<Exam> {
     }
 
     @Override
-    public boolean delete(Exam object) {
+    public boolean delete(UserEmail object) {
         String query = String.format("DELETE from %s where id = ?", TABLE_NAME);
 
         try {
@@ -152,35 +149,24 @@ public class TableExam implements CRUDHandler<Exam> {
     }
 
     @Override
-    public Exam mapColumn(ResultSet result) throws SQLException {
-        return new Exam(
+    public UserEmail mapColumn(ResultSet result) throws SQLException {
+        return new UserEmail(
                 result.getInt("ID"),
-                result.getInt("USER_ID"),
-                result.getString("KONKOR_ID"),
-                result.getDate("EXAM_DATE"),
-                result.getLong("EXAM_DURATION"),
-                result.getDouble("MATH_GRADE"),
-                result.getDouble("NATURAL_GRADE"),
-                result.getDouble("SOCIAL_GRADE"),
-                result.getDouble("ALSANA_GRADE"),
-                result.getDouble("EXAM_GRADE"),
-                result.getString("EXAM_PASSEDFIELD")
+                new User(result.getInt("USER_ID")),
+                result.getString("EMAIL"),
+                result.getString("PHONE"),
+                result.getString("TITLE"),
+                result.getString("CONTENT")
         );
     }
 
     @Override
-    public PreparedStatement putValues(PreparedStatement statement, Exam object) throws SQLException {
-        statement.setInt(1, object.getUserId());
-        statement.setString(2, object.getKankorId());
-        statement.setDate(3, Date.valueOf(object.getExamDate().toString()));
-        statement.setLong(4, object.getExamDuration());
-        statement.setDouble(5, object.getMathGrade());
-        statement.setDouble(6, object.getNaturalGrade());
-        statement.setDouble(7, object.getSocialGrade());
-        statement.setDouble(8, object.getAlsanaGrade());
-        statement.setDouble(9, object.getExamGrade());
-        statement.setString(10, object.getExamPassedField());
-
+    public PreparedStatement putValues(PreparedStatement statement, UserEmail object) throws SQLException {
+        statement.setInt(1, object.getUser().getId());
+        statement.setString(2, object.getEmail());
+        statement.setString(3, object.getPhone());
+        statement.setString(4, object.getTitle());
+        statement.setString(5, object.getContent());
         return statement;
     }
 }

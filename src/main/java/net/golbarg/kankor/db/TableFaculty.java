@@ -1,6 +1,5 @@
 package net.golbarg.kankor.db;
 
-import net.golbarg.kankor.model.Email;
 import net.golbarg.kankor.model.Faculty;
 import net.golbarg.kankor.model.University;
 

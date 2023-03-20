@@ -1,10 +1,8 @@
 package net.golbarg.kankor.model;
 
-public class KankorForm {
+public class UserKankorForm {
     private int id;
-    private int userId;
-    private String name;
-    private String lastName;
+    private User user;
     private String fatherName;
     private String grandFatherName;
     private Location currentLocation;
@@ -14,16 +12,14 @@ public class KankorForm {
     private String originDistrict;
     private String originVillage;
     private int graduateYear;
-    private String schoolName;
     private String tazkiraId;
-    private Gender gender;
     private Language language;
 
-    public KankorForm(int id, int userId, String name, String lastName, String fatherName, String grandFatherName, Location currentLocation, String currentDistrict, String currentVillage, Location originLocation, String originDistrict, String originVillage, int graduateYear, String schoolName, String tazkiraId, Gender gender, Language language) {
+    public UserKankorForm(int id, User user, String fatherName, String grandFatherName, Location currentLocation,
+                          String currentDistrict, String currentVillage, Location originLocation, String originDistrict,
+                          String originVillage, int graduateYear, String tazkiraId, Language language) {
         this.id = id;
-        this.userId = userId;
-        this.name = name;
-        this.lastName = lastName;
+        this.user = user;
         this.fatherName = fatherName;
         this.grandFatherName = grandFatherName;
         this.currentLocation = currentLocation;
@@ -33,9 +29,7 @@ public class KankorForm {
         this.originDistrict = originDistrict;
         this.originVillage = originVillage;
         this.graduateYear = graduateYear;
-        this.schoolName = schoolName;
         this.tazkiraId = tazkiraId;
-        this.gender = gender;
         this.language = language;
     }
 
@@ -47,28 +41,12 @@ public class KankorForm {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getFatherName() {
@@ -143,28 +121,12 @@ public class KankorForm {
         this.graduateYear = graduateYear;
     }
 
-    public String getSchoolName() {
-        return schoolName;
-    }
-
-    public void setSchoolName(String schoolName) {
-        this.schoolName = schoolName;
-    }
-
     public String getTazkiraId() {
         return tazkiraId;
     }
 
     public void setTazkiraId(String tazkiraId) {
         this.tazkiraId = tazkiraId;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
     }
 
     public Language getLanguage() {
@@ -177,11 +139,9 @@ public class KankorForm {
 
     @Override
     public String toString() {
-        return "KankorForm{" +
+        return "UserKankorForm{" +
                 "id=" + id +
-                ", userId=" + userId +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", user=" + user +
                 ", fatherName='" + fatherName + '\'' +
                 ", grandFatherName='" + grandFatherName + '\'' +
                 ", currentLocation=" + currentLocation +
@@ -191,9 +151,7 @@ public class KankorForm {
                 ", originDistrict='" + originDistrict + '\'' +
                 ", originVillage='" + originVillage + '\'' +
                 ", graduateYear=" + graduateYear +
-                ", schoolName='" + schoolName + '\'' +
                 ", tazkiraId='" + tazkiraId + '\'' +
-                ", gender=" + gender +
                 ", language=" + language +
                 '}';
     }

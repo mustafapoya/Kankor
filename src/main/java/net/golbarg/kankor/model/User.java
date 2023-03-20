@@ -4,7 +4,6 @@ public class User {
     private int id;
     private String name;
     private String lastName;
-    private String fatherName;
     private String userName;
     private String password;
     private Location location;
@@ -17,12 +16,15 @@ public class User {
 
     }
 
-    public User(int id, String name, String lastName, String fatherName, String userName, String password,
+    public User(int id) {
+        this.id = id;
+    }
+
+    public User(int id, String name, String lastName, String userName, String password,
                 Location location, String schoolName, String phoneNumber, Gender gender, String photo) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
-        this.fatherName = fatherName;
         this.userName = userName;
         this.password = password;
         this.location = location;
@@ -54,14 +56,6 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getFatherName() {
-        return fatherName;
-    }
-
-    public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
     }
 
     public String getUserName() {
@@ -126,7 +120,6 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", fatherName='" + fatherName + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", location=" + location +

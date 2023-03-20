@@ -1,6 +1,6 @@
 package net.golbarg.kankor.db;
 
-import net.golbarg.kankor.model.Faculty;
+import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.University;
 
 import java.sql.Connection;
@@ -9,14 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class TableFaculty implements CRUDHandler<Faculty>{
-    public static final String TABLE_NAME = "FACULTIES";
-    public static final String [] COLUMNS = {"ID", "NAME", "DEPARTMENT", "CODE", "MINIMUM_GRADE", "UNI_ID", "ADMISSION"};
-    public static final String COLUMNS_STR = "ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, ADMISSION";
+public class TableUniversityFaculty implements CRUDHandler<UniversityFaculty>{
+    public static final String TABLE_NAME = "UNIVERSITY_FACULTIES";
+    public static final String [] COLUMNS = {"ID", "UNIVERSITY_ID", "NAME", "DEPARTMENT", "CODE", "MINIMUM_GRADE", "ADMISSION"};
+    public static final String COLUMNS_STR = "ID, UNIVERSITY_ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, ADMISSION";
 
     @Override
-    public boolean create(Faculty object) {
-        String query = String.format("insert into %s (NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, ADMISSION) values (?, ?, ?, ?, ?, ?)", TABLE_NAME);
+    public boolean create(UniversityFaculty object) {
+        String query = String.format("insert into %s (UNIVERSITY_ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, ADMISSION) values (?, ?, ?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -33,10 +33,13 @@ public class TableFaculty implements CRUDHandler<Faculty>{
     }
 
     @Override
-    public Faculty findById(int id) {
-        String query = String.format("SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID where FACULTIES.id = ?;", TABLE_NAME);
+    public UniversityFaculty findById(int id) {
+        String query = String.format("SELECT UNIVERSITY_FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, " +
+                                     "UNIVERSITY_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION FROM %s " +
+                                     "join UNIVERSITIES ON UNIVERSITIES.ID = UNIVERSITY_FACULTIES.UNIVERSITY_ID " +
+                                     "where UNIVERSITY_FACULTIES.id = ?;", TABLE_NAME);
 
-        Faculty object = null;
+        UniversityFaculty object = null;
 
         try {
 
@@ -57,12 +60,12 @@ public class TableFaculty implements CRUDHandler<Faculty>{
         return object;
     }
 
-    public ArrayList<Faculty> findByName(String facultyName) {
-        String query = String.format("SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION " +
-                                     "FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID " +
-                                     "where FACULTIES.NAME like ?;", TABLE_NAME);
+    public ArrayList<UniversityFaculty> findByName(String facultyName) {
+        String query = String.format("SELECT UNIVERSITY_FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNIVERSITY_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION " +
+                                     "FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = UNIVERSITY_FACULTIES.UNIVERSITY_ID " +
+                                     "where UNIVERSITY_FACULTIES.NAME like ?;", TABLE_NAME);
 
-        ArrayList<Faculty> resultList = new ArrayList<>();
+        ArrayList<UniversityFaculty> resultList = new ArrayList<>();
 
         try {
 
@@ -73,7 +76,7 @@ public class TableFaculty implements CRUDHandler<Faculty>{
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                Faculty object = mapColumn(result);
+                UniversityFaculty object = mapColumn(result);
                 resultList.add(object);
             }
 
@@ -84,12 +87,13 @@ public class TableFaculty implements CRUDHandler<Faculty>{
         return resultList;
     }
 
-    public ArrayList<Faculty> getFacultiesOf(int universityId) {
-        String query = String.format("SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION " +
-                "FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID " +
-                "where FACULTIES.UNI_ID = ?;", TABLE_NAME);
+    public ArrayList<UniversityFaculty> getFacultiesOf(int universityId) {
+        String query = String.format("SELECT UNIVERSITY_FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNIVERSITY_ID, " +
+                                     "UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION " +
+                                     "FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = UNIVERSITY_FACULTIES.UNIVERSITY_ID " +
+                                     "where UNIVERSITY_FACULTIES.UNIVERSITY_ID = ?;", TABLE_NAME);
 
-        ArrayList<Faculty> resultList = new ArrayList<>();
+        ArrayList<UniversityFaculty> resultList = new ArrayList<>();
 
         try {
 
@@ -100,7 +104,7 @@ public class TableFaculty implements CRUDHandler<Faculty>{
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                Faculty object = mapColumn(result);
+                UniversityFaculty object = mapColumn(result);
                 resultList.add(object);
             }
 
@@ -113,15 +117,17 @@ public class TableFaculty implements CRUDHandler<Faculty>{
 
 
     @Override
-    public ArrayList<Faculty> getAll() {
-        String query = String.format("SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID;", TABLE_NAME);
+    public ArrayList<UniversityFaculty> getAll() {
+        String query = String.format("SELECT UNIVERSITY_FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, " +
+                                     "UNIVERSITY_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION FROM %s " +
+                                     "join UNIVERSITIES ON UNIVERSITIES.ID = UNIVERSITY_FACULTIES.UNIVERSITY_ID;", TABLE_NAME);
 
-        ArrayList<Faculty> resultList = new ArrayList<>();
+        ArrayList<UniversityFaculty> resultList = new ArrayList<>();
 
         try {
             ResultSet result = DBController.executeQuery(query);
             while (result.next()) {
-                Faculty object = mapColumn(result);
+                UniversityFaculty object = mapColumn(result);
                 resultList.add(object);
             }
         } catch (Exception exception) {
@@ -147,12 +153,12 @@ public class TableFaculty implements CRUDHandler<Faculty>{
         return resultList;
     }
 
-    public ArrayList<Faculty> getFacultiesByCode(String [] codes) {
-        String query = String.format(" SELECT FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNI_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION " +
-                                     " FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = FACULTIES.UNI_ID " +
-                                     " WHERE FACULTIES.CODE IN (?, ?, ?, ?, ?) ORDER BY FACULTIES.MINIMUM_GRADE DESC; ", TABLE_NAME);
+    public ArrayList<UniversityFaculty> getFacultiesByCode(String [] codes) {
+        String query = String.format(" SELECT UNIVERSITY_FACULTIES.ID, NAME, DEPARTMENT, CODE, MINIMUM_GRADE, UNIVERSITY_ID, UNIVERSITIES.TITLE AS UNI_TITLE, ADMISSION " +
+                                     " FROM %s join UNIVERSITIES ON UNIVERSITIES.ID = UNIVERSITY_FACULTIES.UNIVERSITY_ID " +
+                                     " WHERE UNIVERSITY_FACULTIES.CODE IN (?, ?, ?, ?, ?) ORDER BY UNIVERSITY_FACULTIES.MINIMUM_GRADE DESC; ", TABLE_NAME);
 
-        ArrayList<Faculty> resultList = new ArrayList<>();
+        ArrayList<UniversityFaculty> resultList = new ArrayList<>();
 
         try {
 
@@ -177,8 +183,8 @@ public class TableFaculty implements CRUDHandler<Faculty>{
     }
 
     @Override
-    public boolean update(Faculty object) {
-        String query = String.format("update %s set NAME = ?, DEPARTMENT = ?, CODE = ?, MINIMUM_GRADE = ?, UNI_ID = ?, ADMISSION = ? where id = ?", TABLE_NAME);
+    public boolean update(UniversityFaculty object) {
+        String query = String.format("update %s set UNIVERSITY_ID = ?, NAME = ?, DEPARTMENT = ?, CODE = ?, MINIMUM_GRADE = ?, ADMISSION = ? where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -196,7 +202,7 @@ public class TableFaculty implements CRUDHandler<Faculty>{
     }
 
     @Override
-    public boolean delete(Faculty object) {
+    public boolean delete(UniversityFaculty object) {
         String query = String.format("DELETE from %s where id = ?", TABLE_NAME);
 
         try {
@@ -253,25 +259,25 @@ public class TableFaculty implements CRUDHandler<Faculty>{
     }
 
     @Override
-    public Faculty mapColumn(ResultSet result) throws SQLException {
-        return new Faculty(
+    public UniversityFaculty mapColumn(ResultSet result) throws SQLException {
+        return new UniversityFaculty(
                 result.getInt("ID"),
+                new University(result.getInt("UNIVERSITY_ID"),result.getString("UNI_TITLE")),
                 result.getString("NAME"),
                 result.getString("DEPARTMENT"),
                 result.getString("CODE"),
                 result.getInt("MINIMUM_GRADE"),
-                new University(result.getInt("UNI_ID"),result.getString("UNI_TITLE")),
                 result.getInt("ADMISSION")
         );
     }
 
     @Override
-    public PreparedStatement putValues(PreparedStatement statement, Faculty object) throws SQLException {
+    public PreparedStatement putValues(PreparedStatement statement, UniversityFaculty object) throws SQLException {
         statement.setString(1, object.getName());
-        statement.setString(2, object.getDepartment());
-        statement.setString(3, object.getCode());
-        statement.setInt(4, object.getMinimumGrade());
-        statement.setInt(5, object.getUniversity().getId());
+        statement.setInt(2, object.getUniversity().getId());
+        statement.setString(3, object.getDepartment());
+        statement.setString(4, object.getCode());
+        statement.setInt(5, object.getMinimumGrade());
         statement.setInt(6, object.getAdmission());
         return statement;
     }

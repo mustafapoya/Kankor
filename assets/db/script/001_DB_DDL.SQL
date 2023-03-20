@@ -91,20 +91,6 @@ create table EXAMS (
 );
 
 /* Tutorials Table Related Query */
-drop table if exists `faculties`;
-
-create table `faculties` (
-    `id`            INTEGER  auto_increment,
-    `name`          VARCHAR(128) not null,
-    `department`    VARCHAR(128) not null,
-    `code`          CHAR(16)     not null,
-    `minimum_grade` INTEGER      not null,
-    `uni_id`        INTEGER      not null,
-    `admission`     INTEGER      not null,
-    primary key (`id`)
-);
-
-/* Tutorials Table Related Query */
 drop table if exists `news`;
 
 create table `news` (
@@ -391,6 +377,21 @@ values  (1, 'کابل'),
         (12, 'شيخ زايد خوست'),
         (13, 'کنر'),
         (14, 'پکتیا');
+
+/* Tutorials Table Related Query */
+drop table if exists `UNIVERSITY_FACULTIES`;
+
+create table `UNIVERSITY_FACULTIES` (
+     `ID`            INTEGER  auto_increment,
+     `UNIVERSITY_ID` INTEGER      not null,
+     `NAME`          VARCHAR(128) not null,
+     `DEPARTMENT`    VARCHAR(128) not null,
+     `CODE`          VARCHAR(16)  not null,
+     `MINIMUM_GRADE` INTEGER      not null,
+     `ADMISSION`     INTEGER      not null,
+     primary key (`ID`),
+     foreign key (UNIVERSITY_ID) references UNIVERSITIES(ID)
+);
 
 /* Updates Table Related Query */
 drop table if exists `UPDATES`;

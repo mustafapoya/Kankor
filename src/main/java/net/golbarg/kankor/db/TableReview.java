@@ -1,6 +1,5 @@
 package net.golbarg.kankor.db;
 
-import net.golbarg.kankor.model.Faculty;
 import net.golbarg.kankor.model.Review;
 
 import java.sql.Connection;

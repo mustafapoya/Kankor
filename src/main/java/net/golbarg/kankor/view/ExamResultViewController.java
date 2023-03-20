@@ -5,21 +5,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import net.golbarg.kankor.controller.SystemController;
-import net.golbarg.kankor.db.TableExam;
-import net.golbarg.kankor.model.Exam;
 import net.golbarg.kankor.model.ExamResult;
-import net.golbarg.kankor.model.Faculty;
+import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.User;
 
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ExamResultViewController implements Initializable {
@@ -84,7 +79,7 @@ public class ExamResultViewController implements Initializable {
 
     public void setUniversity(UniversityFormViewController universityView, ExamViewController examView) {
         ObservableList<FieldSelectionViewController> list = universityView.getFields();
-        ObservableList<Faculty> universityList = examView.getExamController().getUniversity(list);
+        ObservableList<UniversityFaculty> universityList = examView.getExamController().getUniversity(list);
 
         for (int i = 0; i < universityList.size(); i++) {
             System.out.println("selected -> " + universityList.get(i).toString());
@@ -93,9 +88,9 @@ public class ExamResultViewController implements Initializable {
         System.out.println("set university: " + examView.getExamController().getKankorScore());
 
         if (universityList.size() > 0) {
-            Faculty faculty = examView.getExamController().getPassedField(universityList, 100);
-            if (faculty != null) {
-                setKankorResult(faculty.getUniversity() + ", " + faculty.getName());
+            UniversityFaculty universityFaculty = examView.getExamController().getPassedField(universityList, 100);
+            if (universityFaculty != null) {
+                setKankorResult(universityFaculty.getUniversity() + ", " + universityFaculty.getName());
             } else {
                 setKankorResult("بی نتیجه !");
             }

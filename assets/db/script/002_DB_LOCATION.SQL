@@ -1,4 +1,6 @@
-INSERT INTO `locations` (`id`, `type`, `zone`, `parent_id`, `name`, `name_da`) VALUES
+TRUNCATE TABLE PUBLIC.LOCATIONS;
+
+INSERT INTO PUBLIC.LOCATIONS (`ID`, `TYPE`, `ZONE`, `PARENT_ID`, `NAME`, `NAME_DA`) VALUES
        (1, 1, 'na', NULL, '', ''),
        (2, 1, 'neast', NULL, 'badakhshan', 'بدخشان'),
        (3, 1, 'neast', NULL, 'baghlan', 'بغلان'),

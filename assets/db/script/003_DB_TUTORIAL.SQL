@@ -1,3 +1,11 @@
+TRUNCATE TABLE PUBLIC.TUTORIALS;
+
+INSERT INTO TUTORIALS (ID, TITLE) VALUES (1, 'مشاوره');
+INSERT INTO TUTORIALS (ID, TITLE) VALUES (2, 'آشنایی با رشته ها');
+INSERT INTO TUTORIALS (ID, TITLE) VALUES (3, 'راهنمایی استفاده از برنامه');
+
+TRUNCATE TABLE PUBLIC.TUTORIAL_DETAILS;
+
 insert into PUBLIC.TUTORIAL_DETAILS (ID, TUTORIAL_ID, TITLE, SHORT_DESC, FULL_DESC, SHORT_DESC_ICON, ICON_NAME)
 values  (1, 1, 'برنامه ریزی برای مطالعه', 'هر شخص در زندگی باید اهدافی داشته باشد و برای رسیدن به آن اهداف باید از برنامه ی از پیش تعین شده و منظم استفاده نماید. برنامه ریزی ها یکسان نبوده و با در نظر گرفتن وضعیت و شرایط زندگی، مالی، اجتماعیی و... ایجاد میگردد، اما به صورت کل برای استفاده بهتر از زمان و دروس، به نکات زیر توجه نمایند...', '
 <html>

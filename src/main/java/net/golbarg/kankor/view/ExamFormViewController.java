@@ -8,12 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import net.golbarg.kankor.controller.ExamController;
 import net.golbarg.kankor.controller.SystemController;
-import net.golbarg.kankor.model.Exam;
 import net.golbarg.kankor.model.ExamResult;
-import net.golbarg.kankor.model.Faculty;
+import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.User;
 
 import java.io.IOException;
@@ -130,8 +128,8 @@ public class ExamFormViewController implements Initializable {
 
             ObservableList<FieldSelectionViewController> fields = universityViewController.getFields();
 
-            ObservableList<Faculty> university = examViewController.getExamController().getUniversity(universityViewController.getFields());
-            Faculty passedField = examViewController.getExamController().getPassedField(university, examViewController.getExamController().getKankorScore());
+            ObservableList<UniversityFaculty> university = examViewController.getExamController().getUniversity(universityViewController.getFields());
+            UniversityFaculty passedField = examViewController.getExamController().getPassedField(university, examViewController.getExamController().getKankorScore());
 
             ExamController examController = examViewController.getExamController();
             String result = passedField == null ? "بی نتیجه" : passedField.getName();

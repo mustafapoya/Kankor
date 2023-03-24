@@ -1,3 +1,5 @@
+TRUNCATE TABLE PUBLIC.QUESTION_SUBJECTS;
+
 insert into QUESTION_SUBJECTS (ID, SUBJECT_TYPE, SUBJECT_KEY, SUBJECT_TITLE_PE)
 values
     (1,  'natural', 'biology', 'بیولوژی'),
@@ -13,6 +15,7 @@ values
     (11, 'natural', 'physic', 'فزیک'),
     (12, 'math', 'triangles', 'مثلثات');
 
+TRUNCATE TABLE PUBLIC.QUESTIONS;
 
 insert into PUBLIC.QUESTIONS (ID, QUESTION, CHOICE1, CHOICE2, CHOICE3, CHOICE4, CORRECT_CHOICE, RELATED_CLASS, SUBJECT_ID, QUESTION_TYPE, QUESTION_UPDATE)
 values  (1, 'حضرت محمد \"ص\"  در کدام  سال چشم به جهان هستی گشود؟', '498 م', '571 م', '360 م', '510 م', 2, '-1', 7, null, 0),

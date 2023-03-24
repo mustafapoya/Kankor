@@ -1,21 +1,22 @@
 package net.golbarg.kankor.model;
 
-public class Faculty {
+public class UniversityFaculty {
     private int id;
+    private University university;
     private String name;
     private String department;
     private String code;
     private int minimumGrade;
-    private University university;
     private int admission;
 
-    public Faculty(int id, String name, String department, String code, int minimumGrade, University university, int admission) {
+    public UniversityFaculty(int id, University university, String name, String department,
+                             String code, int minimumGrade, int admission) {
         this.id = id;
+        this.university = university;
         this.name = name;
         this.department = department;
         this.code = code;
         this.minimumGrade = minimumGrade;
-        this.university = university;
         this.admission = admission;
     }
 
@@ -25,6 +26,14 @@ public class Faculty {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
     }
 
     public String getName() {
@@ -59,14 +68,6 @@ public class Faculty {
         this.minimumGrade = minimumGrade;
     }
 
-    public University getUniversity() {
-        return university;
-    }
-
-    public void setUniversity(University university) {
-        this.university = university;
-    }
-
     public int getAdmission() {
         return admission;
     }
@@ -77,13 +78,13 @@ public class Faculty {
 
     @Override
     public String toString() {
-        return "Faculty{" +
+        return "UniversityFaculty{" +
                 "id=" + id +
+                ", university=" + university +
                 ", name='" + name + '\'' +
                 ", department='" + department + '\'' +
                 ", code='" + code + '\'' +
                 ", minimumGrade=" + minimumGrade +
-                ", university=" + university +
                 ", admission=" + admission +
                 '}';
     }

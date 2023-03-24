@@ -1,7 +1,5 @@
 package net.golbarg.kankor.db;
 
-import net.golbarg.kankor.model.Config;
-import net.golbarg.kankor.model.Email;
 import net.golbarg.kankor.model.Exam;
 
 import java.sql.*;

@@ -12,7 +12,7 @@ import javafx.scene.layout.BorderPane;
 import net.golbarg.kankor.controller.ExamController;
 import net.golbarg.kankor.controller.SystemController;
 import net.golbarg.kankor.model.ExamResult;
-import net.golbarg.kankor.model.Faculty;
+import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.model.User;
 
@@ -135,8 +135,8 @@ public class ExamSpecificViewController implements Initializable {
 
             ObservableList<FieldSelectionViewController> fields = FXCollections.observableArrayList();
 
-            ObservableList<Faculty> university = FXCollections.observableArrayList();
-            Faculty passedField = examViewController.getExamController().getPassedField(university, examViewController.getExamController().getKankorScore());
+            ObservableList<UniversityFaculty> university = FXCollections.observableArrayList();
+            UniversityFaculty passedField = examViewController.getExamController().getPassedField(university, examViewController.getExamController().getKankorScore());
 
             ExamController examController = examViewController.getExamController();
             String result = passedField == null ? "بی نتیجه" : passedField.getName();

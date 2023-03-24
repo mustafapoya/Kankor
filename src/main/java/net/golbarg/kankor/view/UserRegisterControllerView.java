@@ -46,8 +46,6 @@ public class UserRegisterControllerView implements Initializable {
     @FXML
     private TextField txtLastName;
     @FXML
-    private TextField txtFatherName;
-    @FXML
     private TextField txtPhoneNumber;
     @FXML
     private ComboBox comboGender;
@@ -102,7 +100,6 @@ public class UserRegisterControllerView implements Initializable {
             String passwordConfirm = txtPasswordConfirm.getText();
             String name = txtName.getText();
             String lastName = txtLastName.getText();
-            String fatherName = txtFatherName.getText();
             String phoneNumber = txtPhoneNumber.getText();
             Gender selectedGender = genderList.get(comboGender.getSelectionModel().getSelectedIndex());
             Location province = provinceList.get(comboProvince.getSelectionModel().getSelectedIndex());
@@ -127,12 +124,11 @@ public class UserRegisterControllerView implements Initializable {
 
             validateInput(txtName, errors, 1, "نام باید درج گردد");
             validateInput(txtLastName, errors, 1, "تخلص باید درج گردد");
-            validateInput(txtFatherName, errors, 1, "نام پدر باید درج گردد");
             validateInput(txtPhoneNumber, errors, 1, "شماره تلفن باید درج گردد");
             validateInput(txtSchoolName, errors, 1, "مکتب باید درج گردد");
 
             if(errors.size() < 1) {
-                User user = new User(0, name, lastName, fatherName, username, password, province, schoolName, phoneNumber, selectedGender, userImage);
+                User user = new User(0, name, lastName, username, password, province, schoolName, phoneNumber, selectedGender, userImage);
                 new TableUser().create(user);
 
                 txtStatusMessage.getStyleClass().removeIf(style -> style.equals("txt-error-message"));

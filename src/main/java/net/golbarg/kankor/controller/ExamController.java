@@ -2,12 +2,11 @@ package net.golbarg.kankor.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import net.golbarg.kankor.db.TableFaculty;
+import net.golbarg.kankor.db.TableUniversityFaculty;
 import net.golbarg.kankor.db.TableQuestionSubject;
-import net.golbarg.kankor.model.Faculty;
+import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.model.QuestionSubject;
-import net.golbarg.kankor.model.Subject;
 import net.golbarg.kankor.view.AnswerSheetViewController;
 import net.golbarg.kankor.view.FieldSelectionViewController;
 
@@ -78,23 +77,23 @@ public class ExamController {
         }
     }
 
-    public ObservableList<Faculty> getUniversity(ObservableList<FieldSelectionViewController> fields) {
+    public ObservableList<UniversityFaculty> getUniversity(ObservableList<FieldSelectionViewController> fields) {
         String [] codes = new String[5];
 
         for (int i = 0; i < 5; i++) {
             codes[i] = fields.get(i).getSelectedFieldValue();
         }
 
-        TableFaculty tableFaculty = new TableFaculty();
+        TableUniversityFaculty tableUniversityFaculty = new TableUniversityFaculty();
 
-        ObservableList<Faculty> universityList = FXCollections.observableArrayList();
+        ObservableList<UniversityFaculty> universityList = FXCollections.observableArrayList();
 
-        universityList.addAll(tableFaculty.getFacultiesByCode(codes));
+        universityList.addAll(tableUniversityFaculty.getFacultiesByCode(codes));
 
         return universityList;
     }
 
-    public Faculty getPassedField(ObservableList<Faculty> list, double score) {
+    public UniversityFaculty getPassedField(ObservableList<UniversityFaculty> list, double score) {
         for (int i = 0; i < list.size(); i++) {
             if (score > list.get(i).getAdmission()) {
                 return list.get(i);

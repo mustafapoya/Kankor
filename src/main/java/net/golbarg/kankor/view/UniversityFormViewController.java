@@ -15,15 +15,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import net.golbarg.kankor.custom.CellFactorySample;
-import net.golbarg.kankor.db.TableFaculty;
+import net.golbarg.kankor.db.TableUniversityFaculty;
 import net.golbarg.kankor.db.TableUniversity;
-import net.golbarg.kankor.model.Faculty;
+import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.University;
 
-import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -69,28 +67,28 @@ public class UniversityFormViewController implements Initializable {
 
     // Table
     @FXML
-    private TableView<Faculty> tableViewUniversity;
+    private TableView<UniversityFaculty> tableViewUniversity;
     @FXML
-    private TableColumn<Faculty, String> columnUniversity;
+    private TableColumn<UniversityFaculty, String> columnUniversity;
     @FXML
-    private TableColumn<Faculty, String> columnFaculty;
+    private TableColumn<UniversityFaculty, String> columnFaculty;
     @FXML
-    private TableColumn<Faculty, String> columnDepartment;
+    private TableColumn<UniversityFaculty, String> columnDepartment;
     @FXML
-    private TableColumn<Faculty, String> columnCodeNumber;
+    private TableColumn<UniversityFaculty, String> columnCodeNumber;
     @FXML
-    private TableColumn<Faculty, String> columnAdmission;
+    private TableColumn<UniversityFaculty, String> columnAdmission;
 
     private ObservableList<FieldSelectionViewController> fieldSelectionList = FXCollections.observableArrayList();
-    private ObservableList<Faculty> facultyList = FXCollections.observableArrayList();
+    private ObservableList<UniversityFaculty> universityFacultyList = FXCollections.observableArrayList();
     ContextMenu entriesPopup;
     TableUniversity tableUniversity;
-    TableFaculty tableFaculty;
+    TableUniversityFaculty tableUniversityFaculty;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableUniversity = new TableUniversity();
-        tableFaculty = new TableFaculty();
+        tableUniversityFaculty = new TableUniversityFaculty();
 
         //
         comboUniversity.getItems().addAll(tableUniversity.getAll());
@@ -110,10 +108,10 @@ public class UniversityFormViewController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends University> observableValue, University oldValue, University newValue) {
                 if(newValue != null) {
-                    facultyList.clear();
-                    facultyList.addAll(tableFaculty.getFacultiesOf(newValue.getId()));
+                    universityFacultyList.clear();
+                    universityFacultyList.addAll(tableUniversityFaculty.getFacultiesOf(newValue.getId()));
                     tableViewUniversity.getItems().clear();
-                    tableViewUniversity.getItems().addAll(facultyList);
+                    tableViewUniversity.getItems().addAll(universityFacultyList);
                 }
             }
         });
@@ -158,11 +156,11 @@ public class UniversityFormViewController implements Initializable {
 
     private void searchFaculty(String facultyName) {
         if(facultyName.length() > 1) {
-            facultyList.clear();
-            facultyList.addAll(tableFaculty.findByName(facultyName));
+            universityFacultyList.clear();
+            universityFacultyList.addAll(tableUniversityFaculty.findByName(facultyName));
 
             tableViewUniversity.getItems().clear();
-            tableViewUniversity.getItems().addAll(facultyList);
+            tableViewUniversity.getItems().addAll(universityFacultyList);
         } else {
             System.err.println("Invalid Input");
             System.err.println("Please enter a valid Text Value in Search Field");
@@ -171,38 +169,38 @@ public class UniversityFormViewController implements Initializable {
     }
 
     private void initTableColumns() {
-        columnUniversity.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Faculty, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Faculty, String> param) {
+        columnUniversity.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<UniversityFaculty, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<UniversityFaculty, String> param) {
                 // p.getValue() returns the Person instance for a particular TableView row
                 return new ReadOnlyObjectWrapper<>(param.getValue().getUniversity().getTitle());
             }
         });
 
-        columnFaculty.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Faculty, String>, ObservableValue<String>>() {
+        columnFaculty.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<UniversityFaculty, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Faculty, String> param) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<UniversityFaculty, String> param) {
                 // p.getValue() returns the Person instance for a particular TableView row
                 return new ReadOnlyObjectWrapper<>(param.getValue().getName());
             }
         });
 
-        columnDepartment.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Faculty, String>, ObservableValue<String>>() {
+        columnDepartment.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<UniversityFaculty, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Faculty, String> param) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<UniversityFaculty, String> param) {
                 return new ReadOnlyObjectWrapper<>(param.getValue().getDepartment());
             }
         });
 
-        columnCodeNumber.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Faculty, String>, ObservableValue<String>>() {
+        columnCodeNumber.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<UniversityFaculty, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Faculty, String> param) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<UniversityFaculty, String> param) {
                 return new ReadOnlyObjectWrapper<>(param.getValue().getCode());
             }
         });
 
-        columnAdmission.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Faculty, String>, ObservableValue<String>>() {
+        columnAdmission.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<UniversityFaculty, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Faculty, String> param) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<UniversityFaculty, String> param) {
                 return new ReadOnlyObjectWrapper<>(String.valueOf(param.getValue().getAdmission()));
             }
         });

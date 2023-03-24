@@ -1,18 +1,19 @@
 package net.golbarg.kankor.db;
 
-import net.golbarg.kankor.model.NewsArticle;
+import net.golbarg.kankor.model.User;
+import net.golbarg.kankor.model.UserEmail;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class TableNewsArticle implements CRUDHandler<NewsArticle> {
-    public static final String TABLE_NAME = "NEWS_ARTICLE";
-    public static final String [] COLUMNS = {"ID", "TITLE", "CONTENT", "URL_LINK", "DATE", "DESCRIPTION", "CATEGORY"};
-    public static final String COLUMNS_STR = "ID, TITLE, CONTENT, URL_LINK, DATE, DESCRIPTION, CATEGORY";
+public class TableUserEmail implements CRUDHandler<UserEmail> {
+    public static final String TABLE_NAME = "USER_EMAILS";
+    public static final String [] COLUMNS = {"ID", "USER_ID", "EMAIL", "PHONE", "TITLE", "CONTENT"};
+    public static final String COLUMNS_STR = "ID, USER_ID, EMAIL, PHONE, TITLE, CONTENT";
 
     @Override
-    public boolean create(NewsArticle object) {
-        String query = String.format("insert into %s (TITLE, CONTENT, URL_LINK, DATE, DESCRIPTION, CATEGORY) values (?, ?, ?, ?, ?, ?)", TABLE_NAME);
+    public boolean create(UserEmail object) {
+        String query = String.format("insert into %s (USER_ID, EMAIL, PHONE, TITLE, CONTENT) values (?, ?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -29,10 +30,10 @@ public class TableNewsArticle implements CRUDHandler<NewsArticle> {
     }
 
     @Override
-    public NewsArticle findById(int id) {
+    public UserEmail findById(int id) {
         String query = String.format("SELECT %s FROM %s where id = ?;", COLUMNS_STR, TABLE_NAME);
 
-        NewsArticle object = null;
+        UserEmail object = null;
 
         try {
 
@@ -54,15 +55,15 @@ public class TableNewsArticle implements CRUDHandler<NewsArticle> {
     }
 
     @Override
-    public ArrayList<NewsArticle> getAll() {
+    public ArrayList<UserEmail> getAll() {
         String query = String.format("SELECT %s FROM %s;", COLUMNS_STR, TABLE_NAME);
 
-        ArrayList<NewsArticle> resultList = new ArrayList<>();
+        ArrayList<UserEmail> resultList = new ArrayList<>();
 
         try {
             ResultSet result = DBController.executeQuery(query);
             while (result.next()) {
-                NewsArticle object = mapColumn(result);
+                UserEmail object = mapColumn(result);
                 resultList.add(object);
             }
         } catch (Exception exception) {
@@ -72,14 +73,14 @@ public class TableNewsArticle implements CRUDHandler<NewsArticle> {
     }
 
     @Override
-    public boolean update(NewsArticle object) {
-        String query = String.format("update %s set TITLE = ?, CONTENT = ?, URL_LINK = ?, DATE = ?, DESCRIPTION = ?, CATEGORY = ? where id = ?", TABLE_NAME);
+    public boolean update(UserEmail object) {
+        String query = String.format("update %s set USER_ID = ?, EMAIL = ?, PHONE = ?, TITLE = ?, CONTENT = ? where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement = putValues(statement, object);
-            statement.setInt(7, object.getId());
+            statement.setInt(6, object.getId());
             statement.executeUpdate();
 
             return true;
@@ -91,7 +92,7 @@ public class TableNewsArticle implements CRUDHandler<NewsArticle> {
     }
 
     @Override
-    public boolean delete(NewsArticle object) {
+    public boolean delete(UserEmail object) {
         String query = String.format("DELETE from %s where id = ?", TABLE_NAME);
 
         try {
@@ -148,29 +149,24 @@ public class TableNewsArticle implements CRUDHandler<NewsArticle> {
     }
 
     @Override
-    public NewsArticle mapColumn(ResultSet result) throws SQLException {
-
-        return new NewsArticle(
+    public UserEmail mapColumn(ResultSet result) throws SQLException {
+        return new UserEmail(
                 result.getInt("ID"),
+                new User(result.getInt("USER_ID")),
+                result.getString("EMAIL"),
+                result.getString("PHONE"),
                 result.getString("TITLE"),
-                result.getString("CONTENT"),
-                result.getString("URL_LINK"),
-                result.getDate("DATE"),
-                result.getString("DESCRIPTION"),
-                result.getInt("CATEGORY")
+                result.getString("CONTENT")
         );
     }
 
     @Override
-    public PreparedStatement putValues(PreparedStatement statement, NewsArticle object) throws SQLException {
-        statement.setString(1, object.getTitle());
-        statement.setString(2, object.getContent());
-        statement.setString(3, object.getUrlLink());
-        statement.setDate(4, Date.valueOf(object.getDate().toString()));
-        statement.setString(5, object.getDescription());
-        statement.setInt(6, object.getCategory());
-
+    public PreparedStatement putValues(PreparedStatement statement, UserEmail object) throws SQLException {
+        statement.setInt(1, object.getUser().getId());
+        statement.setString(2, object.getEmail());
+        statement.setString(3, object.getPhone());
+        statement.setString(4, object.getTitle());
+        statement.setString(5, object.getContent());
         return statement;
     }
-
 }

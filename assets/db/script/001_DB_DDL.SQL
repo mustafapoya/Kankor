@@ -1,21 +1,21 @@
 /* Users Table Related Query */
-drop table if exists `users`;
+drop table if exists `USERS`;
 
-create table `users` (
-    `id`   INTEGER not null auto_increment,
-    `name` varchar(256) not null,
-    `last_name` varchar(256),
-    `user_name` varchar(128),
-    `password` varchar(128),
-    `location_id` INTEGER,
-    `school_name` varchar(256),
-    `phone_number` varchar(16),
-    `gender` ENUM('M', 'F', 'U'),
-    `photo` varchar(256),
-    primary key (`id`)
+create table `USERS` (
+    `ID`   INTEGER not null auto_increment,
+    `NAME` varchar(256) not null,
+    `LAST_NAME` varchar(256),
+    `USER_NAME` varchar(128),
+    `PASSWORD` varchar(128),
+    `LOCATION_ID` INTEGER,
+    `SCHOOL_NAME` varchar(256),
+    `PHONE_NUMBER` varchar(16),
+    `GENDER` ENUM('M', 'F', 'U'),
+    `PHOTO` varchar(256),
+    primary key (`ID`)
 );
 
-create unique index UNIQUE_NAME on users (user_name);
+create unique index UNIQUE_NAME on USERS (user_name);
 
 INSERT INTO PUBLIC.USERS (NAME, LAST_NAME, USER_NAME, PASSWORD, LOCATION_ID, SCHOOL_NAME, PHONE_NUMBER, GENDER, PHOTO)
     VALUES ('Mustafa', 'Poya', 'Mustafa', '123456', 1, 'Qazanchi Baba', '0782552663', 'M', null);
@@ -30,8 +30,8 @@ create table USER_EMAILS (
     `PHONE`   VARCHAR(16),
     `TITLE`   VARCHAR(256),
     `CONTENT` CLOB,
-    primary key (`ID`),
-    foreign key (USER_ID) references USERS(ID)
+    primary key (`ID`)
+--     ,foreign key (USER_ID) references USERS(ID) ON delete no action
 );
 
 /* User Kankor Form Table Related Query*/
@@ -51,8 +51,8 @@ create table `USER_KANKOR_FORMS`(
    `GRADUATE_YEAR` INTEGER,
    `TAZKIRA_ID` varchar(256),
    `LANGUAGE` varchar(256),
-   primary key (`ID`),
-   foreign key (USER_ID) references USERS(ID)
+   primary key (`ID`)
+--     ,foreign key (USER_ID) references USERS(ID) ON delete no action
 );
 
 /* Exams Table Related Query */
@@ -70,8 +70,8 @@ create table EXAMS (
    ALSANA_GRADE     DECIMAL(5, 2) not null,
    EXAM_GRADE       DECIMAL(5, 2) not null,
    EXAM_PASSEDFIELD VARCHAR(256)  not null,
-   primary key (`ID`),
-   foreign key (USER_ID) references USERS(ID)
+   primary key (`ID`)
+--    ,foreign key (USER_ID) references USERS(ID) ON DELETE NO ACTION
 );
 
 /* EXAM RESULTS Table Related Query */
@@ -87,8 +87,8 @@ create table EXAM_RESULTS (
   `PASSED_FIELD`  VARCHAR(128),
   `EXAM_DATE`     VARCHAR(128),
   `EXAM_DURATION` VARCHAR(128),
-  primary key (`ID`),
-  foreign key (EXAM_ID) references EXAMS(ID)
+  primary key (`ID`)
+--   ,foreign key (EXAM_ID) references EXAMS(ID) ON DELETE NO ACTION
 );
 
 /* Configs Table Related Query */
@@ -143,8 +143,8 @@ create table `TUTORIAL_DETAILS` (
     `FULL_DESC`       CLOB,
     `SHORT_DESC_ICON` VARCHAR(256),
     `ICON_NAME`       VARCHAR(256),
-    primary key (`ID`),
-    foreign key (TUTORIAL_ID) references TUTORIALS(ID)
+    primary key (`ID`)
+--  ,foreign key (TUTORIAL_ID) references TUTORIALS(ID)
 );
 
 drop table if exists `KANKOR_RESULTS`;
@@ -200,8 +200,8 @@ create table TUTORIAL_DETAILS (
     `FULL_DESC`     CLOB,
     `SHORT_DESC_ICON` VARCHAR(256),
     `ICON_NAME`     VARCHAR(256),
-    primary key (`ID`),
-    foreign key (TUTORIAL_ID) references TUTORIAL_DETAILS(ID)
+    primary key (`ID`)
+--  ,foreign key (TUTORIAL_ID) references TUTORIAL_DETAILS(ID)
 );
 
 /* Questions Table Related Query */
@@ -233,9 +233,8 @@ create table QUESTIONS
     QUESTION_UPDATE INTEGER,
     BOOKMARK        BOOLEAN,
     primary key (`ID`),
-    foreign key (SUBJECT_ID) references QUESTION_SUBJECTS(ID)
+--     foreign key (SUBJECT_ID) references QUESTION_SUBJECTS(ID)
 );
-
 
 /* Tutorials Table Related Query */
 drop table if exists `RESOURCE_CATEGORIES`;
@@ -243,7 +242,6 @@ drop table if exists `RESOURCE_CATEGORIES`;
 create table `RESOURCE_CATEGORIES` (
     `ID`    INTEGER AUTO_INCREMENT,
     `TITLE` VARCHAR,
-
     primary key (`ID`)
 );
 
@@ -258,7 +256,7 @@ create table `RESOURCES` (
     DESCRIPTION CLOB,
     SIZE        DECIMAL(4, 2),
     primary key (`ID`),
-    foreign key (CATEGORY_ID) references RESOURCE_CATEGORIES(ID)
+--     foreign key (CATEGORY_ID) references RESOURCE_CATEGORIES(ID)
 );
 
 /* Reviews Table Related Query */
@@ -298,8 +296,8 @@ create table `UNIVERSITY_FACULTIES` (
      `CODE`          VARCHAR(16)  not null,
      `MINIMUM_GRADE` INTEGER      not null,
      `ADMISSION`     INTEGER      not null,
-     primary key (`ID`),
-     foreign key (UNIVERSITY_ID) references UNIVERSITIES(ID)
+     primary key (`ID`)
+--   ,foreign key (UNIVERSITY_ID) references UNIVERSITIES(ID)
 );
 
 /* Updates Table Related Query */

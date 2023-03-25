@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import net.golbarg.kankor.db.TableExam;
+import net.golbarg.kankor.model.ExamResult;
 import net.golbarg.kankor.model.KankorResult;
 import net.golbarg.kankor.model.UniversityFaculty;
 
@@ -30,28 +32,28 @@ public class ExamResultsViewController implements Initializable {
     private ProgressBar progressBar;
 
     @FXML
-    private TableView<UniversityFaculty> tableViewExamResults;
+    private TableView<ExamResult> tableViewExamResults;
     @FXML
-    private TableColumn<UniversityFaculty, String> columnNumber;
+    private TableColumn<ExamResult, String> columnNumber;
     @FXML
-    private TableColumn<UniversityFaculty, String> columnFullName;
+    private TableColumn<ExamResult, String> columnFullName;
     @FXML
-    private TableColumn<UniversityFaculty, String> columnSchool;
+    private TableColumn<ExamResult, String> columnSchool;
     @FXML
-    private TableColumn<UniversityFaculty, String> columnProvince;
+    private TableColumn<ExamResult, String> columnProvince;
     @FXML
-    private TableColumn<UniversityFaculty, String> columnScore;
+    private TableColumn<ExamResult, String> columnScore;
     @FXML
-    private TableColumn<UniversityFaculty, String> columnAcceptedField;
+    private TableColumn<ExamResult, String> columnAcceptedField;
     @FXML
-    private TableColumn<UniversityFaculty, String> columnExamDate;
+    private TableColumn<ExamResult, String> columnExamDate;
 
 
+    Table
     final String[] types = new String[] { "همه", "آی دی", "نام", "مکتب", "ولایت", };
     ObservableList<String> typeList = FXCollections.observableArrayList(types);
     ObservableList<String> resultOfList = FXCollections.observableArrayList(new String[]{"کانکور", "مکتب"});
-
-    ObservableList<KankorResult> resultList = FXCollections.observableArrayList();
+    ObservableList<ExamResult> resultList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

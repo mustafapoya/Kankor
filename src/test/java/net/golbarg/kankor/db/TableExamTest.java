@@ -1,6 +1,7 @@
 package net.golbarg.kankor.db;
 
 import net.golbarg.kankor.model.Exam;
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

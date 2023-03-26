@@ -9,11 +9,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
+import net.golbarg.kankor.controller.SystemController;
 import net.golbarg.kankor.db.TableExam;
 import net.golbarg.kankor.model.Exam;
 import net.golbarg.kankor.model.UniversityFaculty;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ExamResultsViewController implements Initializable {
@@ -53,25 +55,31 @@ public class ExamResultsViewController implements Initializable {
     TableExam tableExam;
     final String[] types = new String[] { "همه", "آی دی", "نام", "مکتب", "ولایت", };
     ObservableList<String> typeList = FXCollections.observableArrayList(types);
-    ObservableList<String> resultOfList = FXCollections.observableArrayList(new String[]{"کانکور", "مکتب"});
-    ObservableList<Exam> resultList = FXCollections.observableArrayList();
+    ObservableList<String> resultOfList = FXCollections.observableArrayList(new String[]{"مکتب", "کانکور"});
+    ArrayList<Exam> resultList = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableExam = new TableExam();
 
         initTableColumns();
-
         initSearchTypes();
 
-        tableViewExamResults.getItems().addAll(tableExam.getAll());
+        resultList = tableExam.getAll();
+
+        for(Exam e : resultList) {
+            e.setUser(SystemController.currentUser);
+        }
+
+        tableViewExamResults.getItems().addAll(resultList);
     }
 
     private void initTableColumns() {
         columnFullName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Exam, String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Exam, String> param) {
                 // p.getValue() returns the Person instance for a particular TableView row
-                return new ReadOnlyObjectWrapper<>(String.valueOf(param.getValue().getUserId()));
+                return new ReadOnlyObjectWrapper<>(String.valueOf(
+                        param.getValue().getUser().getName() + " " + param.getValue().getUser().getLastName()));
             }
         });
 
@@ -79,14 +87,14 @@ public class ExamResultsViewController implements Initializable {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Exam, String> param) {
                 // p.getValue() returns the Person instance for a particular TableView row
-                return new ReadOnlyObjectWrapper<>("school name");
+                return new ReadOnlyObjectWrapper<>(param.getValue().getUser().getSchoolName());
             }
         });
 
         columnProvince.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Exam, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Exam, String> param) {
-                return new ReadOnlyObjectWrapper<>("province");
+                return new ReadOnlyObjectWrapper<>(param.getValue().getUser().getLocation().getPersianName());
             }
         });
 
@@ -118,6 +126,7 @@ public class ExamResultsViewController implements Initializable {
 
         comboResultsOf.setItems(resultOfList);
         comboResultsOf.getSelectionModel().selectFirst();
+        comboResultsOf.setDisable(true);
     }
 
 }

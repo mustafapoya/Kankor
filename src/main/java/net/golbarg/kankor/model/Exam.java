@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class Exam {
     private int id;
     private int userId;
+    private User user;
     private LocalDate examDate;
     private long examDuration;
     private double mathScore;
@@ -39,6 +40,14 @@ public class Exam {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public LocalDate getExamDate() {

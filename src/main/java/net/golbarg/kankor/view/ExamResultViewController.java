@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import net.golbarg.kankor.controller.SystemController;
-import net.golbarg.kankor.model.ExamResult;
+import net.golbarg.kankor.model.Exam;
 import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.User;
 
@@ -50,18 +50,18 @@ public class ExamResultViewController implements Initializable {
 
     }
 
-    public void initData(ExamResult examResult) {
+    public void initData(Exam exam) {
         User user = SystemController.currentUser;
         //
         lblFullName.setText(user.getName() + ", " + user.getLastName());
         lblKankorId.setText("Kankor ID: " + user.getId());
 
-        //
-        lblTime.setText(examResult.getDuration());
-        lblExamScore.setText(examResult.getScore() + "");
-        lblExamResult.setText(examResult.getResult());
-        lblCorrectAnswers.setText(examResult.getCorrectAnswer() + "");
-        lblWrongAnswers.setText(examResult.getWrongAnswer() + "");
+        // TODO: implement Exam Details
+//        lblTime.setText(String.valueOf());
+//        lblExamScore.setText(examResult.getScore() + "");
+//        lblExamResult.setText(examResult.getResult());
+//        lblCorrectAnswers.setText(examResult.getCorrectAnswer() + "");
+//        lblWrongAnswers.setText(examResult.getWrongAnswer() + "");
     }
 
     // TODO: date parameter, user should be checked its error prone

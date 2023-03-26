@@ -79,7 +79,7 @@ public class GraphExamViewController implements Initializable {
         series.setName("پروسه امتحان");
 
         for(int i = 0; i < exams.size(); i++) {
-            series.getData().add(new XYChart.Data<>(exams.get(i).getExamDate().toString(), exams.get(i).getExamGrade()));
+            series.getData().add(new XYChart.Data<>(exams.get(i).getExamDate().toString(), exams.get(i).getTotalScore()));
         }
         lineChartExam.getData().add(series);
     }
@@ -100,10 +100,10 @@ public class GraphExamViewController implements Initializable {
             public void changed(ObservableValue<? extends Exam> observable, Exam oldValue, Exam newValue) {
                 XYChart.Series<String, Number> series = new XYChart.Series<>();
                 series.setName(" امتحان " + newValue.getExamDate().toString());
-                series.getData().add(new XYChart.Data<String, Number>("ریاضی", newValue.getMathGrade()));
-                series.getData().add(new XYChart.Data<String, Number>("علوم طبیعی", newValue.getNaturalGrade()));
-                series.getData().add(new XYChart.Data<String, Number>("علوم اجتماعی", newValue.getSocialGrade()));
-                series.getData().add(new XYChart.Data<String, Number>("السنه", newValue.getAlsanaGrade()));
+                series.getData().add(new XYChart.Data<String, Number>("ریاضی", newValue.getMathScore()));
+                series.getData().add(new XYChart.Data<String, Number>("علوم طبیعی", newValue.getNaturalScore()));
+                series.getData().add(new XYChart.Data<String, Number>("علوم اجتماعی", newValue.getSocialScore()));
+                series.getData().add(new XYChart.Data<String, Number>("السنه", newValue.getAlsanaScore()));
                 barChartSubject.getData().clear();
                 barChartSubject.getData().add(series);
 //                animateBar();

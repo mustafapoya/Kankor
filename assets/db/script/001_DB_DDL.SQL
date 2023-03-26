@@ -61,34 +61,15 @@ drop table if exists `EXAMS`;
 create table EXAMS (
    ID               INTEGER AUTO_INCREMENT,
    USER_ID          INTEGER       not null,
-   KONKOR_ID        VARCHAR(128)  not null,
    EXAM_DATE        VARCHAR(256)  not null,
    EXAM_DURATION    VARCHAR(128)  not null,
-   MATH_GRADE       DECIMAL(5, 2) not null,
-   NATURAL_GRADE    DECIMAL(5, 2) not null,
-   SOCIAL_GRADE     DECIMAL(5, 2) not null,
-   ALSANA_GRADE     DECIMAL(5, 2) not null,
-   EXAM_GRADE       DECIMAL(5, 2) not null,
-   EXAM_PASSEDFIELD VARCHAR(256)  not null,
+   MATH_SCORE       DECIMAL(5, 2) not null,
+   NATURAL_SCORE    DECIMAL(5, 2) not null,
+   SOCIAL_SCORE     DECIMAL(5, 2) not null,
+   ALSANA_SCORE     DECIMAL(5, 2) not null,
+   PASSED_FIELD     VARCHAR(256)  not null,
    primary key (`ID`)
 --    ,foreign key (USER_ID) references USERS(ID) ON DELETE NO ACTION
-);
-
-/* EXAM RESULTS Table Related Query */
-drop table if exists `EXAM_RESULTS`;
-
-create table EXAM_RESULTS (
-  `ID`            INTEGER AUTO_INCREMENT,
-  `EXAM_ID`       VARCHAR(64),
-  `NAME`          VARCHAR(128),
-  `SCHOOL`        VARCHAR(128),
-  `PROVINCE`      VARCHAR(128),
-  `SCORE`         DOUBLE,
-  `PASSED_FIELD`  VARCHAR(128),
-  `EXAM_DATE`     VARCHAR(128),
-  `EXAM_DURATION` VARCHAR(128),
-  primary key (`ID`)
---   ,foreign key (EXAM_ID) references EXAMS(ID) ON DELETE NO ACTION
 );
 
 /* Configs Table Related Query */
@@ -151,6 +132,7 @@ drop table if exists `KANKOR_RESULTS`;
 
 create table KANKOR_RESULTS (
     `ID`                INTEGER not null,
+    `KANKOR_YEAR`       INTEGER,
     `KANKOR_ID`         VARCHAR(256),
     `NAME`              VARCHAR,
     `FATHER_NAME`       VARCHAR,

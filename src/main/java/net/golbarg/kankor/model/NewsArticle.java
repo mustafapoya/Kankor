@@ -1,17 +1,18 @@
 package net.golbarg.kankor.model;
 
-import java.util.Date;
+
+import java.time.LocalDate;
 
 public class NewsArticle {
     private int id;
     private String title;
     private String content;
     private String urlLink;
-    private Date date;
+    private LocalDate date;
     private String description;
     private int category;
 
-    public NewsArticle(int id, String title, String content, String urlLink, Date date, String description, int category) {
+    public NewsArticle(int id, String title, String content, String urlLink, LocalDate date, String description, int category) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -53,11 +54,11 @@ public class NewsArticle {
         this.urlLink = urlLink;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

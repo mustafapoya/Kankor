@@ -156,8 +156,8 @@ public class TableConfig implements CRUDHandler<Config> {
                 result.getInt("ID"),
                 result.getString("CONF_KEY"),
                 result.getString("CONF_VALUE"),
-                result.getDate("CREATED_AT"),
-                result.getDate("UPDATED_AT")
+                result.getTimestamp("CREATED_AT").toLocalDateTime(),
+                result.getTimestamp("UPDATED_AT").toLocalDateTime()
         );
     }
 
@@ -165,8 +165,8 @@ public class TableConfig implements CRUDHandler<Config> {
     public PreparedStatement putValues(PreparedStatement statement, Config object) throws SQLException {
         statement.setString(1, object.getKey());
         statement.setString(2, object.getValue());
-        statement.setDate(3, Date.valueOf(object.getCreatedAt().toString()));
-        statement.setDate(4, Date.valueOf(object.getUpdatedAt().toString()));
+        statement.setTimestamp(3, Timestamp.valueOf(object.getCreatedAt()));
+        statement.setTimestamp(4, Timestamp.valueOf(object.getUpdatedAt()));
         return statement;
     }
 }

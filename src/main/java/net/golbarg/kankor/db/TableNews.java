@@ -1,6 +1,5 @@
 package net.golbarg.kankor.db;
 
-import net.golbarg.kankor.model.Location;
 import net.golbarg.kankor.model.News;
 
 import java.sql.*;
@@ -153,7 +152,7 @@ public class TableNews implements CRUDHandler<News> {
                 result.getString("DESCRIPTION"),
                 result.getString("URL_LINK"),
                 result.getString("CONTENT"),
-                result.getDate("NEWS_DATE").toLocalDate()
+                result.getTimestamp("NEWS_DATE").toLocalDateTime()
         );
     }
 
@@ -164,7 +163,7 @@ public class TableNews implements CRUDHandler<News> {
         statement.setString(3, object.getDescription());
         statement.setString(4, object.getUrlLink());
         statement.setString(5, object.getContent());
-        statement.setDate(6, Date.valueOf(object.getNewsDate().toString()));
+        statement.setTimestamp(6, Timestamp.valueOf(object.getNewsDate()));
         return statement;
     }
 }

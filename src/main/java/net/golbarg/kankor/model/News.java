@@ -1,7 +1,7 @@
 package net.golbarg.kankor.model;
 
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class News {
     private int id;
@@ -10,10 +10,10 @@ public class News {
     private String description;
     private String urlLink;
     private String content;
-    private LocalDate newsDate;
+    private LocalDateTime newsDate;
 
     public News(int id, String category, String title, String description, String urlLink,
-                String content, LocalDate newsDate) {
+                String content, LocalDateTime newsDate) {
         this.id = id;
         this.category = category;
         this.title = title;
@@ -71,11 +71,11 @@ public class News {
         this.content = content;
     }
 
-    public LocalDate getNewsDate() {
+    public LocalDateTime getNewsDate() {
         return newsDate;
     }
 
-    public void setNewsDate(LocalDate newsDate) {
+    public void setNewsDate(LocalDateTime newsDate) {
         this.newsDate = newsDate;
     }
 

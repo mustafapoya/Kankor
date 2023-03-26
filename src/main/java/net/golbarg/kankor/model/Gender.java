@@ -1,8 +1,6 @@
 package net.golbarg.kankor.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Gender {
     public static final Gender MALE    = new Gender("M", "مرد");

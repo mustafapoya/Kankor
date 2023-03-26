@@ -11,11 +11,11 @@ import java.util.ArrayList;
 
 public class TableKankorResult implements CRUDHandler<KankorResult> {
     public static final String TABLE_NAME = "KANKOR_RESULTS";
-    public static final String COLUMNS_STR = "ID, KANKOR_ID, NAME, FATHER_NAME, GRAND_FATHER_NAME, SCHOOL, PROVINCE, SCORE, RESULT";
+    public static final String COLUMNS_STR = "ID, KANKOR_YEAR, KANKOR_ID, NAME, FATHER_NAME, GRAND_FATHER_NAME, SCHOOL, PROVINCE, SCORE, RESULT";
 
     @Override
     public boolean create(KankorResult object) {
-        String query = String.format("insert into %s (KANKOR_ID, NAME, FATHER_NAME, GRAND_FATHER_NAME, SCHOOL, PROVINCE, SCORE, RESULT) values (?, ?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
+        String query = String.format("insert into %s (KANKOR_YEAR, KANKOR_ID, NAME, FATHER_NAME, GRAND_FATHER_NAME, SCHOOL, PROVINCE, SCORE, RESULT) values (?, ?, ?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -73,13 +73,13 @@ public class TableKankorResult implements CRUDHandler<KankorResult> {
 
     @Override
     public boolean update(KankorResult object) {
-        String query = String.format("update %s set KANKOR_ID = ?, NAME = ?, FATHER_NAME = ?, GRAND_FATHER_NAME = ?, SCHOOL = ?, PROVINCE = ?, SCORE = ?, RESULT = ? where id = ?", TABLE_NAME);
+        String query = String.format("update %s set KANKOR_YEAR = ?, KANKOR_ID = ?, NAME = ?, FATHER_NAME = ?, GRAND_FATHER_NAME = ?, SCHOOL = ?, PROVINCE = ?, SCORE = ?, RESULT = ? where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement = putValues(statement, object);
-            statement.setInt(9, object.getId());
+            statement.setInt(10, object.getId());
             statement.executeUpdate();
 
             return true;
@@ -151,6 +151,7 @@ public class TableKankorResult implements CRUDHandler<KankorResult> {
     public KankorResult mapColumn(ResultSet result) throws SQLException {
         return new KankorResult(
                 result.getInt("ID"),
+                result.getInt("KANKOR_YEAR"),
                 result.getString("KANKOR_ID"),
                 result.getString("NAME"),
                 result.getString("FATHER_NAME"),
@@ -166,13 +167,14 @@ public class TableKankorResult implements CRUDHandler<KankorResult> {
     @Override
     public PreparedStatement putValues(PreparedStatement statement, KankorResult object) throws SQLException {
         statement.setString(1, object.getKankorId());
-        statement.setString(2, object.getName());
-        statement.setString(3, object.getFatherName());
-        statement.setString(4, object.getGrandFatherName());
-        statement.setString(5, object.getSchoolName());
-        statement.setString(6, object.getProvince());
-        statement.setDouble(7, object.getScore());
-        statement.setString(8, object.getResult());
+        statement.setInt(2,    object.getKankorYear());
+        statement.setString(3, object.getName());
+        statement.setString(4, object.getFatherName());
+        statement.setString(5, object.getGrandFatherName());
+        statement.setString(6, object.getSchoolName());
+        statement.setString(7, object.getProvince());
+        statement.setDouble(8, object.getScore());
+        statement.setString(9, object.getResult());
         return statement;
     }
 }

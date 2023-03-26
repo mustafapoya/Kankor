@@ -2,6 +2,7 @@ package net.golbarg.kankor.model;
 
 public class KankorResult {
     private int id;
+    private int kankorYear;
     private String kankorId;
     private String name;
     private String fatherName;
@@ -11,9 +12,10 @@ public class KankorResult {
     private double score;
     private String result;
 
-    public KankorResult(int id, String kankorId, String name, String fatherName, String grandFatherName,
+    public KankorResult(int id, int kankorYear, String kankorId, String name, String fatherName, String grandFatherName,
                         String schoolName, String province, double score, String result) {
         this.id = id;
+        this.kankorYear = kankorYear;
         this.kankorId = kankorId;
         this.name = name;
         this.fatherName = fatherName;
@@ -30,6 +32,14 @@ public class KankorResult {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getKankorYear() {
+        return kankorYear;
+    }
+
+    public void setKankorYear(int kankorYear) {
+        this.kankorYear = kankorYear;
     }
 
     public String getKankorId() {
@@ -100,6 +110,7 @@ public class KankorResult {
     public String toString() {
         return "KankorResult{" +
                 "id=" + id +
+                ", kankorYear=" + kankorYear +
                 ", kankorId='" + kankorId + '\'' +
                 ", name='" + name + '\'' +
                 ", fatherName='" + fatherName + '\'' +

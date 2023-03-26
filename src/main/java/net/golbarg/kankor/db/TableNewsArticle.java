@@ -155,7 +155,7 @@ public class TableNewsArticle implements CRUDHandler<NewsArticle> {
                 result.getString("TITLE"),
                 result.getString("CONTENT"),
                 result.getString("URL_LINK"),
-                result.getDate("DATE"),
+                result.getDate("DATE").toLocalDate(),
                 result.getString("DESCRIPTION"),
                 result.getInt("CATEGORY")
         );
@@ -166,7 +166,7 @@ public class TableNewsArticle implements CRUDHandler<NewsArticle> {
         statement.setString(1, object.getTitle());
         statement.setString(2, object.getContent());
         statement.setString(3, object.getUrlLink());
-        statement.setDate(4, Date.valueOf(object.getDate().toString()));
+        statement.setDate(4, Date.valueOf(object.getDate()));
         statement.setString(5, object.getDescription());
         statement.setInt(6, object.getCategory());
 

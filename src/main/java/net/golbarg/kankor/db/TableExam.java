@@ -3,18 +3,19 @@ package net.golbarg.kankor.db;
 import net.golbarg.kankor.model.Exam;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TableExam implements CRUDHandler<Exam> {
     public static final String TABLE_NAME = "EXAMS";
-    public static final String [] COLUMNS = {"ID", "USER_ID", "KANKOR_ID", "EXAM_DATE", "EXAM_DURATION", "MATH_GRADE",
-                                             "NATURAL_GRADE", "SOCIAL_GRADE", "ALSANA_GRADE", "EXAM_GRADE", "EXAM_PASSEDFIELD"};
-    public static final String COLUMNS_STR = "ID, USER_ID, KONKOR_ID, EXAM_DATE, EXAM_DURATION, MATH_GRADE, NATURAL_GRADE, SOCIAL_GRADE, ALSANA_GRADE, EXAM_GRADE, EXAM_PASSEDFIELD";
-
+    public static final String [] COLUMNS =
+            {"ID", "USER_ID", "EXAM_DATE", "EXAM_DURATION", "MATH_SCORE", "NATURAL_SCORE", "SOCIAL_SCORE", "ALSANA_SCORE", "PASSED_FIELD"};
+    public static final String COLUMNS_STR =
+            "ID, USER_ID, EXAM_DATE, EXAM_DURATION, MATH_SCORE, NATURAL_SCORE, SOCIAL_SCORE, ALSANA_SCORE, PASSED_FIELD";
 
     @Override
     public boolean create(Exam object) {
-        String query = String.format("insert into %s (USER_ID, KONKOR_ID, EXAM_DATE, EXAM_DURATION, MATH_GRADE, NATURAL_GRADE, SOCIAL_GRADE, ALSANA_GRADE, EXAM_GRADE, EXAM_PASSEDFIELD) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
+        String query = String.format("insert into %s (USER_ID, EXAM_DATE, EXAM_DURATION, MATH_SCORE, NATURAL_SCORE, SOCIAL_SCORE, ALSANA_SCORE, PASSED_FIELD) values (?, ?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -75,15 +76,15 @@ public class TableExam implements CRUDHandler<Exam> {
 
     @Override
     public boolean update(Exam object) {
-        String query = String.format("update %s set USER_ID = ?, KONKOR_ID = ?, EXAM_DATE = ?, EXAM_DURATION = ?, MATH_GRADE = ?, " +
-                                     "NATURAL_GRADE = ?, SOCIAL_GRADE = ?, ALSANA_GRADE = ?, EXAM_GRADE = ?, EXAM_PASSEDFIELD = ? " +
+        String query = String.format("update %s set USER_ID = ?, EXAM_DATE = ?, EXAM_DURATION = ?, MATH_SCORE = ?, " +
+                                     "NATURAL_SCORE = ?, SOCIAL_SCORE = ?, ALSANA_SCORE = ?, PASSED_FIELD = ? " +
                                      "where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement = putValues(statement, object);
-            statement.setInt(11, object.getId());
+            statement.setInt(9, object.getId());
             statement.executeUpdate();
 
             return true;
@@ -156,30 +157,26 @@ public class TableExam implements CRUDHandler<Exam> {
         return new Exam(
                 result.getInt("ID"),
                 result.getInt("USER_ID"),
-                result.getString("KONKOR_ID"),
-                result.getDate("EXAM_DATE"),
+                result.getDate("EXAM_DATE").toLocalDate(),
                 result.getLong("EXAM_DURATION"),
-                result.getDouble("MATH_GRADE"),
-                result.getDouble("NATURAL_GRADE"),
-                result.getDouble("SOCIAL_GRADE"),
-                result.getDouble("ALSANA_GRADE"),
-                result.getDouble("EXAM_GRADE"),
-                result.getString("EXAM_PASSEDFIELD")
+                result.getDouble("MATH_SCORE"),
+                result.getDouble("NATURAL_SCORE"),
+                result.getDouble("SOCIAL_SCORE"),
+                result.getDouble("ALSANA_SCORE"),
+                result.getString("PASSED_FIELD")
         );
     }
 
     @Override
     public PreparedStatement putValues(PreparedStatement statement, Exam object) throws SQLException {
         statement.setInt(1, object.getUserId());
-        statement.setString(2, object.getKankorId());
-        statement.setDate(3, Date.valueOf(object.getExamDate().toString()));
-        statement.setLong(4, object.getExamDuration());
-        statement.setDouble(5, object.getMathGrade());
-        statement.setDouble(6, object.getNaturalGrade());
-        statement.setDouble(7, object.getSocialGrade());
-        statement.setDouble(8, object.getAlsanaGrade());
-        statement.setDouble(9, object.getExamGrade());
-        statement.setString(10, object.getExamPassedField());
+        statement.setDate(2, Date.valueOf(object.getExamDate()));
+        statement.setLong(3, object.getExamDuration());
+        statement.setDouble(4, object.getMathScore());
+        statement.setDouble(5, object.getNaturalScore());
+        statement.setDouble(6, object.getSocialScore());
+        statement.setDouble(7, object.getAlsanaScore());
+        statement.setString(8, object.getPassedField());
 
         return statement;
     }

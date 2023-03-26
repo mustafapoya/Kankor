@@ -1,33 +1,29 @@
 package net.golbarg.kankor.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Exam {
     private int id;
     private int userId;
-    private String kankorId;
-    private Date examDate;
+    private User user;
+    private LocalDate examDate;
     private long examDuration;
-    private double mathGrade;
-    private double naturalGrade;
-    private double socialGrade;
-    private double alsanaGrade;
-    private double examGrade;
-    private String examPassedField;
+    private double mathScore;
+    private double naturalScore;
+    private double socialScore;
+    private double alsanaScore;
+    private String passedField;
 
-    public Exam(int id, int userId, String kankorId, Date examDate, long examDuration, double mathGrade,
-                double naturalGrade, double socialGrade, double alsanaGrade, double examGrade, String examPassedField) {
+    public Exam(int id, int userId, LocalDate examDate, long examDuration, double mathScore, double naturalScore, double socialScore, double alsanaScore, String passedField) {
         this.id = id;
         this.userId = userId;
-        this.kankorId = kankorId;
         this.examDate = examDate;
         this.examDuration = examDuration;
-        this.mathGrade = mathGrade;
-        this.naturalGrade = naturalGrade;
-        this.socialGrade = socialGrade;
-        this.alsanaGrade = alsanaGrade;
-        this.examGrade = examGrade;
-        this.examPassedField = examPassedField;
+        this.mathScore = mathScore;
+        this.naturalScore = naturalScore;
+        this.socialScore = socialScore;
+        this.alsanaScore = alsanaScore;
+        this.passedField = passedField;
     }
 
     public int getId() {
@@ -46,19 +42,19 @@ public class Exam {
         this.userId = userId;
     }
 
-    public String getKankorId() {
-        return kankorId;
+    public User getUser() {
+        return user;
     }
 
-    public void setKankorId(String kankorId) {
-        this.kankorId = kankorId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Date getExamDate() {
+    public LocalDate getExamDate() {
         return examDate;
     }
 
-    public void setExamDate(Date examDate) {
+    public void setExamDate(LocalDate examDate) {
         this.examDate = examDate;
     }
 
@@ -70,52 +66,48 @@ public class Exam {
         this.examDuration = examDuration;
     }
 
-    public double getMathGrade() {
-        return mathGrade;
+    public double getMathScore() {
+        return mathScore;
     }
 
-    public void setMathGrade(double mathGrade) {
-        this.mathGrade = mathGrade;
+    public void setMathScore(double mathScore) {
+        this.mathScore = mathScore;
     }
 
-    public double getNaturalGrade() {
-        return naturalGrade;
+    public double getNaturalScore() {
+        return naturalScore;
     }
 
-    public void setNaturalGrade(double naturalGrade) {
-        this.naturalGrade = naturalGrade;
+    public void setNaturalScore(double naturalScore) {
+        this.naturalScore = naturalScore;
     }
 
-    public double getSocialGrade() {
-        return socialGrade;
+    public double getSocialScore() {
+        return socialScore;
     }
 
-    public void setSocialGrade(double socialGrade) {
-        this.socialGrade = socialGrade;
+    public void setSocialScore(double socialScore) {
+        this.socialScore = socialScore;
     }
 
-    public double getAlsanaGrade() {
-        return alsanaGrade;
+    public double getAlsanaScore() {
+        return alsanaScore;
     }
 
-    public void setAlsanaGrade(double alsanaGrade) {
-        this.alsanaGrade = alsanaGrade;
+    public void setAlsanaScore(double alsanaScore) {
+        this.alsanaScore = alsanaScore;
     }
 
-    public double getExamGrade() {
-        return examGrade;
+    public double getTotalScore() {
+        return getMathScore() + getNaturalScore() + getSocialScore() + getAlsanaScore();
     }
 
-    public void setExamGrade(double examGrade) {
-        this.examGrade = examGrade;
+    public String getPassedField() {
+        return passedField;
     }
 
-    public String getExamPassedField() {
-        return examPassedField;
-    }
-
-    public void setExamPassedField(String examPassedField) {
-        this.examPassedField = examPassedField;
+    public void setPassedField(String examPassedField) {
+        this.passedField = examPassedField;
     }
 
     @Override
@@ -123,15 +115,13 @@ public class Exam {
         return "Exam{" +
                 "id=" + id +
                 ", userId=" + userId +
-                ", kankorId='" + kankorId + '\'' +
                 ", examDate=" + examDate +
                 ", examDuration=" + examDuration +
-                ", mathGrade=" + mathGrade +
-                ", naturalGrade=" + naturalGrade +
-                ", socialGrade=" + socialGrade +
-                ", alsanaGrade=" + alsanaGrade +
-                ", examGrade=" + examGrade +
-                ", examPassedField='" + examPassedField + '\'' +
+                ", mathScore=" + mathScore +
+                ", naturalScore=" + naturalScore +
+                ", socialScore=" + socialScore +
+                ", alsanaScore=" + alsanaScore +
+                ", passedField='" + passedField + '\'' +
                 '}';
     }
 }

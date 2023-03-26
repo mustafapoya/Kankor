@@ -11,7 +11,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import net.golbarg.kankor.controller.ExamController;
 import net.golbarg.kankor.controller.SystemController;
-import net.golbarg.kankor.model.ExamResult;
 import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.model.User;
@@ -141,11 +140,12 @@ public class ExamSpecificViewController implements Initializable {
             ExamController examController = examViewController.getExamController();
             String result = passedField == null ? "بی نتیجه" : passedField.getName();
 
-            ExamResult examResult = new ExamResult(0, examController.getKankorScore(), examController.getTotalCorrect(),
-                    examController.getQuestionGenerator().getTotalQuestion() - examController.getTotalCorrect(),
-                    result, examViewController.getDuration());
+            // TODO: implement exam saving
+//            ExamResult examResult = new ExamResult(0, examController.getKankorScore(), examController.getTotalCorrect(),
+//                    examController.getQuestionGenerator().getTotalQuestion() - examController.getTotalCorrect(),
+//                    result, examViewController.getDuration());
 
-            examResultViewController.initData(examResult);
+            // examResultViewController.initData(examResult);
 
             examResultViewController.getBtnCheckQuestions().setOnAction(event -> {
                 enableTab(3);

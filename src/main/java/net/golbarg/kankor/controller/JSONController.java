@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -46,7 +47,7 @@ public class JSONController {
             String description = new_obj.get("description").toString();
             String urlLink = new_obj.get("url_link").toString();
             String content = new_obj.get("content").toString();
-            LocalDate news_date = LocalDate.parse(new_obj.get("news_date").toString());
+            LocalDateTime news_date = LocalDateTime.parse(new_obj.get("news_date").toString());
 
             result.add(new News(
                     id, category,

@@ -40,9 +40,14 @@ class TableExamTest {
 
         tableExam.create(exam);
 
+        exam = new Exam(0, 1, d, 120, 50 , 50,
+                70, 100, "Computer Science");
+
+        tableExam.create(exam);
+
         exams = tableExam.getAll();
 
-        assertEquals(1, exams.size());
+        assertEquals(2, exams.size());
 
         for(Exam e : exams) {
             System.out.println(e.toString());

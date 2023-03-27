@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import net.golbarg.kankor.view.UserLoginViewController;
+import net.golbarg.kankor.view.user.UserLoginViewController;
 
 import java.io.IOException;
 
@@ -18,8 +18,8 @@ public class MainApp extends Application {
     public void start(Stage stage) throws IOException {
         this.stage = stage;
         this.hostServices = getHostServices();
-//        loadMainView();
-        loadView("view/exam-results-view.fxml");
+        loadMainView();
+//        loadView("view/exam/exam-results-view.fxml");
     }
 
     public static void main(String[] args) {

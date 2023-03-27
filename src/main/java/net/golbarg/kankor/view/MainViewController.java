@@ -68,7 +68,7 @@ public class MainViewController implements Initializable {
 
         btnExam.setOnAction(event -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("exam-dashboard-view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("exam/exam-dashboard-view.fxml"));
                 root.setCenter(fxmlLoader.load());
             } catch (Exception exception) {
                 exception.printStackTrace();
@@ -77,7 +77,7 @@ public class MainViewController implements Initializable {
 
         btnPractice.setOnAction(event -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("exam-specific-view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("exam/exam-specific-view.fxml"));
                 root.setCenter(fxmlLoader.load());
             } catch (Exception exception) {
                 exception.printStackTrace();
@@ -86,7 +86,7 @@ public class MainViewController implements Initializable {
 
         btnReview.setOnAction(event -> {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("question-review-view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("exam/question-review-view.fxml"));
                 root.setCenter(fxmlLoader.load());
             } catch (Exception exception) {
                 exception.printStackTrace();

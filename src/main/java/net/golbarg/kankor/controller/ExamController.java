@@ -7,8 +7,8 @@ import net.golbarg.kankor.db.TableQuestionSubject;
 import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.model.QuestionSubject;
-import net.golbarg.kankor.view.AnswerSheetViewController;
-import net.golbarg.kankor.view.FieldSelectionViewController;
+import net.golbarg.kankor.view.exam.component.AnswerSheetViewController;
+import net.golbarg.kankor.view.exam.component.FieldSelectionViewController;
 
 import java.util.ArrayList;
 

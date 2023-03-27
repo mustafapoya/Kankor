@@ -18,4 +18,10 @@ module net.golbarg.kankor.kankor {
     exports net.golbarg.kankor;
     exports net.golbarg.kankor.view;
     opens net.golbarg.kankor.view to javafx.fxml;
+    exports net.golbarg.kankor.view.user;
+    opens net.golbarg.kankor.view.user to javafx.fxml;
+    exports net.golbarg.kankor.view.exam;
+    opens net.golbarg.kankor.view.exam to javafx.fxml;
+    exports net.golbarg.kankor.view.exam.component;
+    opens net.golbarg.kankor.view.exam.component to javafx.fxml;
 }

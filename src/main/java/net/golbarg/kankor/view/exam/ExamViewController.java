@@ -18,15 +18,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import net.golbarg.kankor.controller.AnalogClock;
-import net.golbarg.kankor.controller.CountDownWorker;
-import net.golbarg.kankor.controller.ExamController;
-import net.golbarg.kankor.controller.StopWatchWorker;
+import net.golbarg.kankor.controller.*;
+import net.golbarg.kankor.model.Exam;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.view.exam.component.AnswerSheetViewController;
 import net.golbarg.kankor.view.exam.component.QuestionItemViewController;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
@@ -68,7 +67,7 @@ public class ExamViewController implements Initializable {
     private ObservableList<Question> questionList = FXCollections.observableArrayList();
     private ObservableList<Label> subjectSections = FXCollections.observableArrayList();
     private ExamController examController;
-    private Exam examProcess;
+    private ExamThread examThread;
     private int questionCount = 160;
 
     @Override
@@ -76,11 +75,12 @@ public class ExamViewController implements Initializable {
         subjectSections.addAll(Arrays.asList(lblMathQuestion, lblNaturalQuestion, lblSocialQuestion, lblAlsanaQuestion));
         examController = new ExamController();
 
-//        startExamProcess();
-//        btnEndExam.setOnAction(event -> {
-//            processQuestionAnswers();
-//            System.out.println(examController);
-//        });
+        startExamProcess();
+
+        btnEndExam.setOnAction(event -> {
+            processQuestionAnswers();
+            getExamResult();
+        });
     }
 
     public void initQuestionsList(ObservableList<Question> questionList) {
@@ -94,8 +94,8 @@ public class ExamViewController implements Initializable {
 
     public void startExamProcess() {
         try {
-            examProcess = new Exam();
-            examProcess.run();
+            examThread = new ExamThread();
+            examThread.run();
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
@@ -107,7 +107,7 @@ public class ExamViewController implements Initializable {
         countDownWorker.stop();
     }
 
-    private class Exam extends Thread {
+    private class ExamThread extends Thread {
         @Override
         public void run() {
 
@@ -264,5 +264,21 @@ public class ExamViewController implements Initializable {
 
     public AnswerSheetViewController getAnswerSheet() {
         return answerSheet;
+    }
+
+    public Exam getExamResult() {
+        int user_id = SystemController.currentUser.getId();
+        LocalDate current_date = LocalDate.now();
+        long exam_duration = stopWatchWorker.getDuration().getSeconds();
+        int math_score = examController.getMathCorrect();
+        int natural_score = examController.getNaturalCorrect();
+        int social_score = examController.getSocialCorrect();
+        int alsana_score = examController.getAlsanaCorrect();
+
+        Exam exam = new Exam(0, user_id, current_date, exam_duration, math_score, natural_score, social_score, alsana_score, null);
+
+        System.out.println(exam);
+
+        return exam;
     }
 }

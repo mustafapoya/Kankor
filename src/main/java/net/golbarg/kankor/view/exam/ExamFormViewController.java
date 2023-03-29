@@ -10,6 +10,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import net.golbarg.kankor.controller.ExamController;
 import net.golbarg.kankor.controller.SystemController;
+import net.golbarg.kankor.controller.UIController;
 import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.User;
 import net.golbarg.kankor.view.exam.component.FieldSelectionViewController;
@@ -47,7 +48,6 @@ public class ExamFormViewController implements Initializable {
     @FXML
     private Button btnViewResult;
     UniversityFormViewController universityViewController;
-    UniversitySelection universitySelection;
     //
     @FXML
     private BorderPane borderPaneExamResult;
@@ -65,7 +65,8 @@ public class ExamFormViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tabs.addAll(Arrays.asList(tabExam, tabUniversity, tabResult, tabReview));
-        enableTab(0);
+        UIController.enableTab(tabPane, tabs, 0);
+
         user = SystemController.currentUser;
 
         // init exam
@@ -78,9 +79,8 @@ public class ExamFormViewController implements Initializable {
 
             btnUniversity.setOnAction(event -> {
                 examViewController.processQuestionAnswers();
-                enableTab(1);
-                universitySelection = new UniversitySelection();
-                universitySelection.run();
+                UIController.enableTab(tabPane, tabs, 1);
+                loadUniversitySelectionView();
             });
 
         } catch (IOException exception) {
@@ -88,38 +88,23 @@ public class ExamFormViewController implements Initializable {
         }
     }
 
-    private void enableTab(int index) {
-        for(int i = 0; i < tabs.size(); i++) {
-            if(index == i) {
-                tabs.get(i).setDisable(false);
-                tabPane.getSelectionModel().select(i);
-            } else {
-                tabs.get(i).setDisable(true);
-            }
+    private void loadUniversitySelectionView(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ExamFormViewController.class.getResource("university-form-view.fxml"));
+            BorderPane universityFormView = fxmlLoader.load();
+            universityViewController = fxmlLoader.getController();
+            borderPaneUniversity.setCenter(universityFormView);
+
+            btnViewResult.setOnAction(event -> {
+                UIController.enableTab(tabPane, tabs, 2);
+                loadExamResultView();
+            });
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
     }
 
-    class UniversitySelection extends Thread {
-        @Override
-        public void run() {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(ExamFormViewController.class.getResource("university-form-view.fxml"));
-                BorderPane universityFormView = fxmlLoader.load();
-                universityViewController = fxmlLoader.getController();
-                borderPaneUniversity.setCenter(universityFormView);
-
-                btnViewResult.setOnAction(event -> {
-                    enableTab(2);
-                    loadExamResult();
-                });
-
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-        }
-    }
-
-    private void loadExamResult() {
+    private void loadExamResultView() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ExamFormViewController.class.getResource("exam-result-view.fxml"));
             BorderPane examResultView = fxmlLoader.load();
@@ -144,20 +129,23 @@ public class ExamFormViewController implements Initializable {
 //          examResultViewController.saveExamResult();
 
             examResultViewController.getBtnCheckQuestions().setOnAction(event -> {
-                enableTab(3);
+                UIController.enableTab(tabPane, tabs, 3);
+                loadExamReviewView();
+            });
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
 
-                try {
-                    FXMLLoader reviewLoader = new FXMLLoader(ExamFormViewController.class.getResource("exam-review-view.fxml"));
-                    BorderPane reviewView = reviewLoader.load();
-                    ExamReviewViewController examReviewViewController = reviewLoader.getController();
-                    examReviewViewController.initData(examViewController.getQuestionList(), examViewController.getAnswerSheet());
-                    borderPaneExamReview.setCenter(reviewView);
-                    btnBackResult.setOnAction(event2-> {
-                        enableTab(2);
-                    });
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+    private void loadExamReviewView() {
+        try {
+            FXMLLoader reviewLoader = new FXMLLoader(ExamFormViewController.class.getResource("exam-review-view.fxml"));
+            BorderPane reviewView = reviewLoader.load();
+            ExamReviewViewController examReviewViewController = reviewLoader.getController();
+            examReviewViewController.initData(examViewController.getQuestionList(), examViewController.getAnswerSheet());
+            borderPaneExamReview.setCenter(reviewView);
+            btnBackResult.setOnAction(event2-> {
+                UIController.enableTab(tabPane, tabs, 2);
             });
         } catch (Exception exception) {
             exception.printStackTrace();

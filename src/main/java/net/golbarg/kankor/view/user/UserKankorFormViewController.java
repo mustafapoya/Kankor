@@ -14,7 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import javafx.scene.control.Alert.*;
-import net.golbarg.kankor.controller.DialogController;
+import net.golbarg.kankor.controller.ui.DialogController;
 import net.golbarg.kankor.controller.ValidationController;
 import net.golbarg.kankor.custom.CellFactorySample;
 import net.golbarg.kankor.db.TableLocation;

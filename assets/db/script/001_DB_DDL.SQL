@@ -214,8 +214,8 @@ create table QUESTIONS
     QUESTION_TYPE   VARCHAR,
     QUESTION_UPDATE INTEGER,
     BOOKMARK        BOOLEAN,
-    primary key (`ID`),
---     foreign key (SUBJECT_ID) references QUESTION_SUBJECTS(ID)
+    primary key (`ID`)
+--  ,foreign key (SUBJECT_ID) references QUESTION_SUBJECTS(ID)
 );
 
 /* Tutorials Table Related Query */

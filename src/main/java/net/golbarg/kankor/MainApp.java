@@ -18,8 +18,8 @@ public class MainApp extends Application {
     public void start(Stage stage) throws IOException {
         this.stage = stage;
         this.hostServices = getHostServices();
-        loadMainView();
-//        loadView("view/exam/exam-results-view.fxml");
+//        loadMainView();
+        loadView("view/exam/exam-form-view.fxml");
     }
 
     public static void main(String[] args) {

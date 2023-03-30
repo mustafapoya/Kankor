@@ -1,4 +1,4 @@
-package net.golbarg.kankor.controller;
+package net.golbarg.kankor.controller.ui;
 
 import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
@@ -8,7 +8,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-import net.golbarg.kankor.MainApp;
+import net.golbarg.kankor.controller.Util;
 
 import java.util.Calendar;
 
@@ -22,16 +22,16 @@ public class AnalogClock extends Group {
         setId("analogueClock");
         getStylesheets().add(AnalogClock.class.getResource(Util.fileFromPcakge("analogue-clock.css")).toExternalForm());
 
-        final Circle face = createClockFace(clockRadius);
-        final Label brand = createBrand(face, brandName);
-        final Line hourhand = createHand("hourHand", clockRadius, 0, percentOf(HOUR_HAND_LENGTH, clockRadius));
+        final Circle face   = createClockFace(clockRadius);
+        final Label brand   = createBrand(face, brandName);
+        final Line hourHand = createHand("hourHand", clockRadius, 0, percentOf(HOUR_HAND_LENGTH, clockRadius));
         final Line minuteHand = createHand("minuteHand", clockRadius, 0, percentOf(MINUTE_HAND_LENGTH, clockRadius));
         final Line secondHand = createHand("secondHand", clockRadius, percentOf(SECOND_HAND_OFFSET, clockRadius), percentOf(SECOND_HAND_LENGTH, clockRadius));
 
         //Animation the hands with the time
-        bindClockHandsToTime(hourhand, minuteHand, secondHand);
+        bindClockHandsToTime(hourHand, minuteHand, secondHand);
 
-        getChildren().addAll(face, brand, createTicks(clockRadius), createSpindle(clockRadius), hourhand, minuteHand, secondHand);
+        getChildren().addAll(face, brand, createTicks(clockRadius), createSpindle(clockRadius), hourHand, minuteHand, secondHand);
     }
 
     private Group createTicks(double clockRadius){

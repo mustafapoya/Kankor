@@ -18,7 +18,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import net.golbarg.kankor.controller.*;
+import net.golbarg.kankor.controller.ExamController;
+import net.golbarg.kankor.controller.SystemController;
+import net.golbarg.kankor.controller.ui.AnalogClock;
+import net.golbarg.kankor.controller.ui.CountDownWorker;
+import net.golbarg.kankor.controller.ui.StopWatchWorker;
 import net.golbarg.kankor.model.Exam;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.view.exam.component.AnswerSheetViewController;
@@ -58,28 +62,33 @@ public class ExamViewController implements Initializable {
     private VBox vbQuestion;
     // Up Timer
     static StopWatchWorker stopWatchWorker;
-    private Thread upTimer;
     // Down Timer
     static CountDownWorker countDownWorker;
-    private Thread downTimer;
 
     private AnswerSheetViewController answerSheet;
     private ObservableList<Question> questionList = FXCollections.observableArrayList();
     private ObservableList<Label> subjectSections = FXCollections.observableArrayList();
     private ExamController examController;
-    private ExamThread examThread;
     private int questionCount = 160;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         subjectSections.addAll(Arrays.asList(lblMathQuestion, lblNaturalQuestion, lblSocialQuestion, lblAlsanaQuestion));
         examController = new ExamController();
+        btnEndExam.setVisible(false);
 
+//        aloneLoad();
+    }
+
+    /**
+     * this method should be called only when you are loading exam view separately and alone
+     */
+    private void aloneLoad() {
         startExamProcess();
-
+        btnEndExam.setVisible(true);
         btnEndExam.setOnAction(event -> {
             processQuestionAnswers();
-            getExamResult();
+            getExamResult("passed Field");
         });
     }
 
@@ -94,7 +103,7 @@ public class ExamViewController implements Initializable {
 
     public void startExamProcess() {
         try {
-            examThread = new ExamThread();
+            Thread examThread = new ExamThread();
             examThread.run();
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -161,18 +170,18 @@ public class ExamViewController implements Initializable {
 
     private void startUpTimer() {
         stopWatchWorker = new StopWatchWorker();
-        upTimer = new Thread(stopWatchWorker);
+        Thread upTimerThread = new Thread(stopWatchWorker);
         lblUpTimer.textProperty().bind(stopWatchWorker.messageProperty());
-        upTimer.setDaemon(true);
-        upTimer.start();
+        upTimerThread.setDaemon(true);
+        upTimerThread.start();
     }
 
     private void startDownTimer() {
         countDownWorker = new CountDownWorker();
-        downTimer = new Thread(countDownWorker);
+        Thread downTimerThread = new Thread(countDownWorker);
         lblDownTimer.textProperty().bind(countDownWorker.messageProperty());
-        downTimer.setDaemon(true);
-        downTimer.start();
+        downTimerThread.setDaemon(true);
+        downTimerThread.start();
     }
 
     private void initializeQuestions() {
@@ -254,10 +263,6 @@ public class ExamViewController implements Initializable {
         return examController;
     }
 
-    public String getDuration() {
-        return lblUpTimer.getText();
-    }
-
     public ObservableList<Question> getQuestionList() {
         return questionList;
     }
@@ -266,7 +271,7 @@ public class ExamViewController implements Initializable {
         return answerSheet;
     }
 
-    public Exam getExamResult() {
+    public Exam getExamResult(String passedField) {
         int user_id = SystemController.currentUser.getId();
         LocalDate current_date = LocalDate.now();
         long exam_duration = stopWatchWorker.getDuration().getSeconds();
@@ -275,10 +280,8 @@ public class ExamViewController implements Initializable {
         int social_score = examController.getSocialCorrect();
         int alsana_score = examController.getAlsanaCorrect();
 
-        Exam exam = new Exam(0, user_id, current_date, exam_duration, math_score, natural_score, social_score, alsana_score, null);
+        return new Exam(0, user_id, current_date, exam_duration, math_score,
+                                    natural_score, social_score, alsana_score, passedField);
 
-        System.out.println(exam);
-
-        return exam;
     }
 }

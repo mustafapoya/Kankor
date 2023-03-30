@@ -1,33 +1,29 @@
 package net.golbarg.kankor.view.exam;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import net.golbarg.kankor.custom.CellFactorySample;
-import net.golbarg.kankor.db.TableUniversityFaculty;
 import net.golbarg.kankor.db.TableUniversity;
-import net.golbarg.kankor.model.UniversityFaculty;
+import net.golbarg.kankor.db.TableUniversityFaculty;
 import net.golbarg.kankor.model.University;
+import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.view.exam.component.FieldSelectionViewController;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class UniversityFormViewController implements Initializable {
+public class UniversityViewController implements Initializable {
     @FXML
     private BorderPane root;
     @FXML
@@ -105,36 +101,29 @@ public class UniversityFormViewController implements Initializable {
         initTableColumns();
 
         //combo
-        comboUniversity.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<University>() {
-            @Override
-            public void changed(ObservableValue<? extends University> observableValue, University oldValue, University newValue) {
-                if(newValue != null) {
-                    universityFacultyList.clear();
-                    universityFacultyList.addAll(tableUniversityFaculty.getFacultiesOf(newValue.getId()));
-                    tableViewUniversity.getItems().clear();
-                    tableViewUniversity.getItems().addAll(universityFacultyList);
-                }
+        comboUniversity.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            if(newValue != null) {
+                universityFacultyList.clear();
+                universityFacultyList.addAll(tableUniversityFaculty.getFacultiesOf(newValue.getId()));
+                tableViewUniversity.getItems().clear();
+                tableViewUniversity.getItems().addAll(universityFacultyList);
             }
         });
+
         comboUniversity.getSelectionModel().selectFirst();
 
         // search
-        btnSearch.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        btnSearch.setOnAction(event -> {
+            searchFaculty(txtSearch.getText());
+
+            System.out.println(this.getClass().getSimpleName() + ", is field selected: " + isAnyFieldSelected());
+        });
+
+        txtSearch.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER)) {
                 searchFaculty(txtSearch.getText());
             }
         });
-
-        txtSearch.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if(event.getCode().equals(KeyCode.ENTER)) {
-                    searchFaculty(txtSearch.getText());
-                }
-            }
-        });
-
         initializeFields();
     }
 
@@ -144,7 +133,7 @@ public class UniversityFormViewController implements Initializable {
 
         try {
             for(int i = 0; i < 5; i++) {
-                FXMLLoader fxmlLoader = new FXMLLoader(UniversityFormViewController.class.getResource("component/field-selection-view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(UniversityViewController.class.getResource("component/field-selection-view.fxml"));
                 HBox element = fxmlLoader.load();
                 FieldSelectionViewController controller = fxmlLoader.getController();
                 choices[i].getChildren().add(element);
@@ -167,6 +156,38 @@ public class UniversityFormViewController implements Initializable {
             System.err.println("Please enter a valid Text Value in Search Field");
             txtSearch.requestFocus();
         }
+    }
+
+    public ArrayList<String> getFieldsValue() {
+        ArrayList<String> codes = new ArrayList<>();
+        for (int i = 0; i < fieldSelectionList.size(); i++) {
+            codes.add(fieldSelectionList.get(i).getSelectedFieldValue());
+        }
+        return codes;
+    }
+
+    public ObservableList<FieldSelectionViewController> getFields() {
+        return fieldSelectionList;
+    }
+
+    public boolean hasDuplicate() {
+        for (int i = 0; i < fieldSelectionList.size(); i++) {
+            for (int j = i + 1; j < fieldSelectionList.size(); j++) {
+                if (j != i && fieldSelectionList.get(i).equals(fieldSelectionList.get(j))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isAnyFieldSelected() {
+        for (int i = 0; i < fieldSelectionList.size(); i++) {
+            if(fieldSelectionList.get(i).isFieldSelected() && fieldSelectionList.get(i).isValidCode()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void initTableColumns() {
@@ -206,29 +227,4 @@ public class UniversityFormViewController implements Initializable {
             }
         });
     }
-
-    public ArrayList<String> getFieldsValue() {
-        ArrayList<String> codes = new ArrayList<>();
-        for (int i = 0; i < fieldSelectionList.size(); i++) {
-            codes.add(fieldSelectionList.get(i).getSelectedFieldValue());
-        }
-        return codes;
-    }
-
-    public ObservableList<FieldSelectionViewController> getFields() {
-        return fieldSelectionList;
-    }
-
-    public boolean hasDuplicate() {
-        for (int i = 0; i < fieldSelectionList.size(); i++) {
-            for (int j = i + 1; j < fieldSelectionList.size(); j++) {
-                if (j != i && fieldSelectionList.get(i).equals(fieldSelectionList.get(j))) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-
 }

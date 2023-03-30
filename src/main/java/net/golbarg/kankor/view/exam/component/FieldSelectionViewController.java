@@ -14,16 +14,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FieldSelectionViewController implements Initializable {
-
     @FXML
     private HBox root;
 
     ObservableList<ColumnSelectionViewController> columnList = FXCollections.observableArrayList();
-    public String facultyCode = "";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         try {
             for(int i = 0; i < 3; i++) {
                 FXMLLoader fxmlLoader = new FXMLLoader(FieldSelectionViewController.class.getResource("column-selection-view.fxml"));
@@ -44,12 +41,8 @@ public class FieldSelectionViewController implements Initializable {
         });
     }
 
-    public void setFacultycode(){
-        facultyCode = getSelectedFieldValue();
-    }
-
     public String getFacultyCode() {
-        return facultyCode;
+        return getSelectedFieldValue();
     }
 
     public String getSelectedFieldValue(){
@@ -79,7 +72,7 @@ public class FieldSelectionViewController implements Initializable {
         return true;
     }
 
-    public boolean isValidCode(){
+    public boolean isValidCode() {
         if(getSelectedFieldValue().contains("-")){
             return false;
         }else{

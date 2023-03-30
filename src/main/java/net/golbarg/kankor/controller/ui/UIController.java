@@ -1,4 +1,4 @@
-package net.golbarg.kankor.controller;
+package net.golbarg.kankor.controller.ui;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;

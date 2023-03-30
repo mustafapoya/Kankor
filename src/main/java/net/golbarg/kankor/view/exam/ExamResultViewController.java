@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import net.golbarg.kankor.controller.SystemController;
+import net.golbarg.kankor.controller.Util;
+import net.golbarg.kankor.db.TableExam;
 import net.golbarg.kankor.model.Exam;
 import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.User;
@@ -58,27 +60,19 @@ public class ExamResultViewController implements Initializable {
         lblKankorId.setText("Kankor ID: " + user.getId());
 
         // TODO: implement Exam Details
-//        lblTime.setText(String.valueOf());
-//        lblExamScore.setText(examResult.getScore() + "");
-//        lblExamResult.setText(examResult.getResult());
-//        lblCorrectAnswers.setText(examResult.getCorrectAnswer() + "");
-//        lblWrongAnswers.setText(examResult.getWrongAnswer() + "");
+        lblTime.setText(Util.convertSecondsToTimeFormat(exam.getExamDuration()));
+        lblExamScore.setText(exam.getTotalScore() + "");
+        lblExamResult.setText(exam.getPassedField());
+        lblCorrectAnswers.setText("Total Correct Answer");
+        lblWrongAnswers.setText("Total Wrong Answer");
     }
 
     // TODO: date parameter, user should be checked its error prone
-    public void saveExamResult() {
-//        LocalDate l = LocalDate.now();
-//        String date = l.getYear() + "-" + l.getMonthValue() + "-" + l.getDayOfMonth();
-//        Exam e = Exam(0, user.getId(), "0000", new Date(date),
-//                        new Date(examResult.getDuration()),
-//                        examViewController.examController.getMath(), examViewController.examController.getNatural(),
-//                        examViewController.examController.getSocial(),
-//                        examViewController.examController.getAlsana(), examViewController.examController.getKankorScore(),
-//                        examResultViewController.getKankorResult());
-//        new TableExam().create(e);
+    public void saveExamResult(Exam exam) {
+        new TableExam().create(exam);
     }
 
-    public void setUniversity(UniversityFormViewController universityView, ExamViewController examView) {
+    public void setUniversity(UniversityViewController universityView, ExamViewController examView) {
         ObservableList<FieldSelectionViewController> list = universityView.getFields();
         ObservableList<UniversityFaculty> universityList = examView.getExamController().getUniversity(list);
 

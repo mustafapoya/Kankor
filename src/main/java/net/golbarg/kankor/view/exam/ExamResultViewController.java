@@ -11,8 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import net.golbarg.kankor.controller.SystemController;
 import net.golbarg.kankor.controller.Util;
-import net.golbarg.kankor.db.TableExam;
-import net.golbarg.kankor.model.Exam;
+import net.golbarg.kankor.db.TableExamResult;
+import net.golbarg.kankor.model.ExamResult;
 import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.User;
 import net.golbarg.kankor.view.exam.component.FieldSelectionViewController;
@@ -53,23 +53,23 @@ public class ExamResultViewController implements Initializable {
 
     }
 
-    public void initData(Exam exam) {
+    public void initData(ExamResult examResult) {
         User user = SystemController.currentUser;
         //
         lblFullName.setText(user.getName() + ", " + user.getLastName());
         lblKankorId.setText("Kankor ID: " + user.getId());
 
         // TODO: implement Exam Details
-        lblTime.setText(Util.convertSecondsToTimeFormat(exam.getExamDuration()));
-        lblExamScore.setText(exam.getTotalScore() + "");
-        lblExamResult.setText(exam.getPassedField());
+        lblTime.setText(Util.convertSecondsToTimeFormat(examResult.getExamDuration()));
+        lblExamScore.setText(examResult.getTotalScore() + "");
+        lblExamResult.setText(examResult.getPassedField());
         lblCorrectAnswers.setText("Total Correct Answer");
         lblWrongAnswers.setText("Total Wrong Answer");
     }
 
     // TODO: date parameter, user should be checked its error prone
-    public void saveExamResult(Exam exam) {
-        new TableExam().create(exam);
+    public void saveExamResult(ExamResult examResult) {
+        new TableExamResult().create(examResult);
     }
 
     public void setUniversity(UniversityViewController universityView, ExamViewController examView) {

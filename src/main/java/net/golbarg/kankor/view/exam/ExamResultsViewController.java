@@ -10,9 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 import net.golbarg.kankor.controller.SystemController;
-import net.golbarg.kankor.db.TableExam;
-import net.golbarg.kankor.model.Exam;
-import net.golbarg.kankor.model.UniversityFaculty;
+import net.golbarg.kankor.db.TableExamResult;
+import net.golbarg.kankor.model.ExamResult;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -35,39 +34,39 @@ public class ExamResultsViewController implements Initializable {
     private ProgressBar progressBar;
 
     @FXML
-    private TableView<Exam> tableViewExamResults;
+    private TableView<ExamResult> tableViewExamResults;
     @FXML
-    private TableColumn<Exam, String> columnNumber;
+    private TableColumn<ExamResult, String> columnNumber;
     @FXML
-    private TableColumn<Exam, String> columnFullName;
+    private TableColumn<ExamResult, String> columnFullName;
     @FXML
-    private TableColumn<Exam, String> columnSchool;
+    private TableColumn<ExamResult, String> columnSchool;
     @FXML
-    private TableColumn<Exam, String> columnProvince;
+    private TableColumn<ExamResult, String> columnProvince;
     @FXML
-    private TableColumn<Exam, String> columnScore;
+    private TableColumn<ExamResult, String> columnScore;
     @FXML
-    private TableColumn<Exam, String> columnAcceptedField;
+    private TableColumn<ExamResult, String> columnAcceptedField;
     @FXML
-    private TableColumn<Exam, String> columnExamDate;
+    private TableColumn<ExamResult, String> columnExamDate;
 
 
-    TableExam tableExam;
+    TableExamResult tableExamResult;
     final String[] types = new String[] { "همه", "آی دی", "نام", "مکتب", "ولایت", };
     ObservableList<String> typeList = FXCollections.observableArrayList(types);
     ObservableList<String> resultOfList = FXCollections.observableArrayList(new String[]{"مکتب", "کانکور"});
-    ArrayList<Exam> resultList = new ArrayList<>();
+    ArrayList<ExamResult> resultList = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        tableExam = new TableExam();
+        tableExamResult = new TableExamResult();
 
         initTableColumns();
         initSearchTypes();
 
-        resultList = tableExam.getAll();
+        resultList = tableExamResult.getAll();
 
-        for(Exam e : resultList) {
+        for(ExamResult e : resultList) {
             e.setUser(SystemController.currentUser);
         }
 
@@ -75,46 +74,46 @@ public class ExamResultsViewController implements Initializable {
     }
 
     private void initTableColumns() {
-        columnFullName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Exam, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Exam, String> param) {
+        columnFullName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ExamResult, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<ExamResult, String> param) {
                 // p.getValue() returns the Person instance for a particular TableView row
                 return new ReadOnlyObjectWrapper<>(String.valueOf(
                         param.getValue().getUser().getName() + " " + param.getValue().getUser().getLastName()));
             }
         });
 
-        columnSchool.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Exam, String>, ObservableValue<String>>() {
+        columnSchool.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ExamResult, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Exam, String> param) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<ExamResult, String> param) {
                 // p.getValue() returns the Person instance for a particular TableView row
                 return new ReadOnlyObjectWrapper<>(param.getValue().getUser().getSchoolName());
             }
         });
 
-        columnProvince.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Exam, String>, ObservableValue<String>>() {
+        columnProvince.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ExamResult, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Exam, String> param) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<ExamResult, String> param) {
                 return new ReadOnlyObjectWrapper<>(param.getValue().getUser().getLocation().getPersianName());
             }
         });
 
-        columnScore.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Exam, String>, ObservableValue<String>>() {
+        columnScore.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ExamResult, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Exam, String> param) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<ExamResult, String> param) {
                 return new ReadOnlyObjectWrapper<>(param.getValue().getTotalScore() + "");
             }
         });
 
-        columnAcceptedField.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Exam, String>, ObservableValue<String>>() {
+        columnAcceptedField.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ExamResult, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Exam, String> param) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<ExamResult, String> param) {
                 return new ReadOnlyObjectWrapper<>(String.valueOf(param.getValue().getPassedField()));
             }
         });
 
-        columnExamDate.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Exam, String>, ObservableValue<String>>() {
+        columnExamDate.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ExamResult, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Exam, String> param) {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<ExamResult, String> param) {
                 return new ReadOnlyObjectWrapper<>(String.valueOf(param.getValue().getExamDate()));
             }
         });

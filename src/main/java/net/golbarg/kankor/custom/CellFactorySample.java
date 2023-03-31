@@ -225,21 +225,21 @@ public class CellFactorySample {
         return cellFactory;
     }
 
-    public static Callback<ListView<Exam>, ListCell<Exam>> getComboBoxExamDate(String icon, int iconSize) {
-        Callback<ListView<Exam>, ListCell<Exam>> cellFactory = new Callback<ListView<Exam>, ListCell<Exam>>() {
+    public static Callback<ListView<ExamResult>, ListCell<ExamResult>> getComboBoxExamDate(String icon, int iconSize) {
+        Callback<ListView<ExamResult>, ListCell<ExamResult>> cellFactory = new Callback<ListView<ExamResult>, ListCell<ExamResult>>() {
             @Override
-            public ListCell call(ListView<Exam> param) {
+            public ListCell call(ListView<ExamResult> param) {
                 final Label lblLead = new Label();
                 FontIcon iconLanguage = new FontIcon((icon == null || icon.isEmpty()) ? "bi-calendar3" : icon);
                 iconLanguage.setIconSize(iconSize < 1 ? 14 : iconSize);
 
-                final ListCell<Exam> cell = new ListCell<Exam>(){
+                final ListCell<ExamResult> cell = new ListCell<ExamResult>(){
                     @Override
-                    protected void updateItem(Exam item, boolean empty) {
+                    protected void updateItem(ExamResult item, boolean empty) {
                         super.updateItem(item, empty);
                         if(item != null) {
-                            lblLead.setText(item.getExamDate().toString());
-                            setText(item.getExamDate().toString());
+                            lblLead.setText(item.getExam().getDate().toString());
+                            setText(item.getExam().getDate().toString());
                             setGraphic(iconLanguage);
                         } else {
                             lblLead.setText("");

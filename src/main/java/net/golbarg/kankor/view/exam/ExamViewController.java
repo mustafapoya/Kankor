@@ -23,7 +23,7 @@ import net.golbarg.kankor.controller.SystemController;
 import net.golbarg.kankor.controller.ui.AnalogClock;
 import net.golbarg.kankor.controller.ui.CountDownWorker;
 import net.golbarg.kankor.controller.ui.StopWatchWorker;
-import net.golbarg.kankor.model.Exam;
+import net.golbarg.kankor.model.ExamResult;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.view.exam.component.AnswerSheetViewController;
 import net.golbarg.kankor.view.exam.component.QuestionItemViewController;
@@ -271,7 +271,7 @@ public class ExamViewController implements Initializable {
         return answerSheet;
     }
 
-    public Exam getExamResult(String passedField) {
+    public ExamResult getExamResult(String passedField) {
         int user_id = SystemController.currentUser.getId();
         LocalDate current_date = LocalDate.now();
         long exam_duration = stopWatchWorker.getDuration().getSeconds();
@@ -280,7 +280,7 @@ public class ExamViewController implements Initializable {
         int social_score = examController.getSocialCorrect();
         int alsana_score = examController.getAlsanaCorrect();
 
-        return new Exam(0, user_id, current_date, exam_duration, math_score,
+        return new ExamResult(0, user_id, current_date, exam_duration, math_score,
                                     natural_score, social_score, alsana_score, passedField);
 
     }

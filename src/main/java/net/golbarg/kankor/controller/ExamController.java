@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import net.golbarg.kankor.db.TableUniversityFaculty;
 import net.golbarg.kankor.db.TableQuestionSubject;
+import net.golbarg.kankor.model.Exam;
 import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.model.QuestionSubject;
@@ -17,17 +18,17 @@ public class ExamController {
     private ObservableList<Question> naturalList = FXCollections.observableArrayList();
     private ObservableList<Question> socialList = FXCollections.observableArrayList();
     private ObservableList<Question> alsanaList = FXCollections.observableArrayList();
+    // TODO: This have to changed to Exam Result
     private int mathCorrect, naturalCorrect, socialCorrect, alsanaCorrect, totalCorrect;
     private QuestionGenerator questionGenerator;
-    private ArrayList<QuestionSubject> subjects = new ArrayList<>();
+    private ArrayList<QuestionSubject> subjects;
 
     public ExamController() {
-        questionGenerator = new QuestionGenerator();
-        subjects = new TableQuestionSubject().getAll();
+        this(SystemController.DEFAULT_EXAM);
     }
 
-    public ExamController(int math, int natural, int social, int alsana) {
-        questionGenerator = new QuestionGenerator(math, natural, social, alsana);
+    public ExamController(Exam exam) {
+        questionGenerator = new QuestionGenerator(exam);
         subjects = new TableQuestionSubject().getAll();
     }
 
@@ -67,12 +68,8 @@ public class ExamController {
 
             if (selectedAnswer == correctAnswer) {
                 totalCorrect++;
-                System.out.println("correct");
                 checkSubjectType(questions.get(i).getSubject().getId());
-                System.out.println("Math Correct -> " + mathCorrect);
-                System.out.println("Social Correct -> " + socialCorrect);
-                System.out.println("Natural Correct -> " + naturalCorrect);
-                System.out.println("Alsana Correct -> " + alsanaCorrect);
+                System.out.println(this.toString());
             }
         }
     }

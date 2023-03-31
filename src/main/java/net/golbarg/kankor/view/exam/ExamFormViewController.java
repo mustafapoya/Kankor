@@ -12,7 +12,7 @@ import javafx.scene.layout.BorderPane;
 import net.golbarg.kankor.controller.SystemController;
 import net.golbarg.kankor.controller.ui.DialogController;
 import net.golbarg.kankor.controller.ui.UIController;
-import net.golbarg.kankor.model.Exam;
+import net.golbarg.kankor.model.ExamResult;
 import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.User;
 import net.golbarg.kankor.view.exam.component.FieldSelectionViewController;
@@ -122,7 +122,7 @@ public class ExamFormViewController implements Initializable {
             String passedField = getPassedField();
 
             // TODO: implement exam here
-            Exam examResult = examViewController.getExamResult(passedField);
+            ExamResult examResult = examViewController.getExamResult(passedField);
             examResultViewController.initData(examResult);
             examResultViewController.saveExamResult(examResult);
 

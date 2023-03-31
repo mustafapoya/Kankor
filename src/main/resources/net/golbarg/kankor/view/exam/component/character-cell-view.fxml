@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 
 
-<HBox nodeOrientation="RIGHT_TO_LEFT" spacing="1.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.exam.component.CharacterCellViewController">
+<HBox nodeOrientation="RIGHT_TO_LEFT" spacing="1.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.examResult.component.CharacterCellViewController">
    <children>
       <TextField alignment="CENTER" prefHeight="29.0" prefWidth="35.0" styleClass="input-cell" HBox.hgrow="NEVER" />
       <TextField alignment="CENTER" prefHeight="29.0" prefWidth="35.0" styleClass="input-cell" HBox.hgrow="NEVER" />

@@ -54,15 +54,29 @@ create table `USER_KANKOR_FORMS`(
    primary key (`ID`)
 --     ,foreign key (USER_ID) references USERS(ID) ON delete no action
 );
-
 /* Exams Table Related Query */
 drop table if exists `EXAMS`;
 
 create table EXAMS (
+    ID               INTEGER AUTO_INCREMENT,
+    USER_ID          INTEGER       not null,
+    EXAM_DATE        DATE  not null,
+    MATH_COUNT       INTEGER not null,
+    NATURAL_COUNT    INTEGER not null,
+    SOCIAL_COUNT     INTEGER not null,
+    ALSANA_COUNT     INTEGER not null,
+
+    primary key (`ID`)
+--    ,foreign key (USER_ID) references USERS(ID) ON DELETE NO ACTION
+);
+
+/* Exam Result Table Related Query */
+drop table if exists `EXAM_RESULTS`;
+
+create table EXAM_RESULTS (
    ID               INTEGER AUTO_INCREMENT,
-   USER_ID          INTEGER       not null,
-   EXAM_DATE        VARCHAR(256)  not null,
-   EXAM_DURATION    VARCHAR(128)  not null,
+   EXAM_ID          INTEGER       not null,
+   EXAM_DURATION    LONG          not null,
    MATH_SCORE       DECIMAL(5, 2) not null,
    NATURAL_SCORE    DECIMAL(5, 2) not null,
    SOCIAL_SCORE     DECIMAL(5, 2) not null,

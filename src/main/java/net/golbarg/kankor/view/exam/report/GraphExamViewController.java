@@ -1,4 +1,4 @@
-package net.golbarg.kankor.view.exam;
+package net.golbarg.kankor.view.exam.report;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -17,12 +17,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 import javafx.util.Duration;
 import net.golbarg.kankor.custom.CellFactorySample;
-import net.golbarg.kankor.db.TableExam;
-import net.golbarg.kankor.model.Exam;
+import net.golbarg.kankor.db.TableExamResult;
+import net.golbarg.kankor.model.ExamResult;
 
-import java.math.RoundingMode;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 public class GraphExamViewController implements Initializable {
@@ -42,22 +40,22 @@ public class GraphExamViewController implements Initializable {
 
     // Subject Graph
     @FXML
-    private ComboBox<Exam> comboExam;
+    private ComboBox<ExamResult> comboExam;
     @FXML
     private BarChart<String, Number> barChartSubject;
     @FXML
     private CategoryAxis xAxisSubject;
     @FXML
     private NumberAxis yAxisSubject;
-    private ObservableList<Exam> exams = FXCollections.observableArrayList();
+    private ObservableList<ExamResult> examResults = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        exams.addAll(new TableExam().getAll());
+        examResults.addAll(new TableExamResult().getAll());
 
-        comboExam.getItems().addAll(exams);
+        comboExam.getItems().addAll(examResults);
 
-        Callback<ListView<Exam>, ListCell<Exam>> cellFactoryExam
+        Callback<ListView<ExamResult>, ListCell<ExamResult>> cellFactoryExam
                 = CellFactorySample.getComboBoxExamDate(null, 0);
         comboExam.setButtonCell(cellFactoryExam.call(null));
         comboExam.setCellFactory(cellFactoryExam);
@@ -78,8 +76,8 @@ public class GraphExamViewController implements Initializable {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("پروسه امتحان");
 
-        for(int i = 0; i < exams.size(); i++) {
-            series.getData().add(new XYChart.Data<>(exams.get(i).getExamDate().toString(), exams.get(i).getTotalScore()));
+        for(int i = 0; i < examResults.size(); i++) {
+            series.getData().add(new XYChart.Data<>(examResults.get(i).getExam().getDate().toString(), examResults.get(i).getCorrectAnswerCount().getScore()));
         }
         lineChartExam.getData().add(series);
     }
@@ -95,15 +93,15 @@ public class GraphExamViewController implements Initializable {
         barChartSubject.setBarGap(5);
         barChartSubject.setCategoryGap(10);
 
-        comboExam.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Exam>() {
+        comboExam.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ExamResult>() {
             @Override
-            public void changed(ObservableValue<? extends Exam> observable, Exam oldValue, Exam newValue) {
+            public void changed(ObservableValue<? extends ExamResult> observable, ExamResult oldValue, ExamResult newValue) {
                 XYChart.Series<String, Number> series = new XYChart.Series<>();
-                series.setName(" امتحان " + newValue.getExamDate().toString());
-                series.getData().add(new XYChart.Data<String, Number>("ریاضی", newValue.getMathScore()));
-                series.getData().add(new XYChart.Data<String, Number>("علوم طبیعی", newValue.getNaturalScore()));
-                series.getData().add(new XYChart.Data<String, Number>("علوم اجتماعی", newValue.getSocialScore()));
-                series.getData().add(new XYChart.Data<String, Number>("السنه", newValue.getAlsanaScore()));
+                series.setName(" امتحان " + newValue.getExam().getDate().toString());
+                series.getData().add(new XYChart.Data<String, Number>("ریاضی", newValue.getCorrectAnswerCount().getMath()));
+                series.getData().add(new XYChart.Data<String, Number>("علوم طبیعی", newValue.getCorrectAnswerCount().getNatural()));
+                series.getData().add(new XYChart.Data<String, Number>("علوم اجتماعی", newValue.getCorrectAnswerCount().getSocial()));
+                series.getData().add(new XYChart.Data<String, Number>("السنه", newValue.getCorrectAnswerCount().getAlsana()));
                 barChartSubject.getData().clear();
                 barChartSubject.getData().add(series);
 //                animateBar();

@@ -1,11 +1,9 @@
 package net.golbarg.kankor.db;
 
 import net.golbarg.kankor.model.Config;
-import net.golbarg.kankor.model.Exam;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

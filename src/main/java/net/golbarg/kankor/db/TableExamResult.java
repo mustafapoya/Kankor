@@ -1,39 +1,32 @@
 package net.golbarg.kankor.db;
 
-import net.golbarg.kankor.model.Exam;
+import net.golbarg.kankor.model.ExamCorrectAnswerCount;
+import net.golbarg.kankor.model.ExamResult;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class TableExam implements CRUDHandler<Exam> {
-    public static final String TABLE_NAME = "EXAMS";
+public class TableExamResult implements CRUDHandler<ExamResult> {
+    public static final String TABLE_NAME = "EXAM_RESULTS";
     public static final String [] COLUMNS =
-            {"ID", "USER_ID", "EXAM_DATE", "MATH_COUNT", "NATURAL_COUNT", "SOCIAL_COUNT", "ALSANA_COUNT"};
+            {"ID", "EXAM_ID", "EXAM_DURATION", "MATH_CORRECT", "NATURAL_CORRECT", "SOCIAL_CORRECT", "ALSANA_CORRECT", "PASSED_FIELD"};
     public static final String COLUMNS_STR =
-            "ID, USER_ID, EXAM_DATE, MATH_COUNT, NATURAL_COUNT, SOCIAL_COUNT, ALSANA_COUNT";
+            "ID, EXAM_ID, EXAM_DURATION, MATH_CORRECT, NATURAL_CORRECT, SOCIAL_CORRECT, ALSANA_CORRECT, PASSED_FIELD";
 
-    TableUser tableUser;
-
-    public TableExam() {
-        this.tableUser = new TableUser();
+    TableExam tableExam;
+    public TableExamResult() {
+        tableExam = new TableExam();
     }
 
     @Override
-    public boolean create(Exam object) {
-        String query = String.format("insert into %s (USER_ID, EXAM_DATE, MATH_COUNT, NATURAL_COUNT, SOCIAL_COUNT, ALSANA_COUNT) values (?, ?, ?, ?, ?, ?)", TABLE_NAME);
+    public boolean create(ExamResult object) {
+        String query = String.format("insert into %s (EXAM_ID, EXAM_DURATION, MATH_CORRECT, NATURAL_CORRECT, SOCIAL_CORRECT, ALSANA_CORRECT, PASSED_FIELD) values (?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
-            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement = putValues(statement, object);
             statement.executeUpdate();
-
-            ResultSet rs = statement.getGeneratedKeys();
-
-            if(rs.next()) {
-                System.out.println(rs);
-                object.setId(Integer.parseInt(rs.getString(1)));
-            }
 
             return true;
         } catch(Exception exception) {
@@ -44,10 +37,10 @@ public class TableExam implements CRUDHandler<Exam> {
     }
 
     @Override
-    public Exam findById(int id) {
+    public ExamResult findById(int id) {
         String query = String.format("SELECT %s FROM %s where id = ?;", COLUMNS_STR, TABLE_NAME);
 
-        Exam object = null;
+        ExamResult object = null;
 
         try {
 
@@ -69,15 +62,15 @@ public class TableExam implements CRUDHandler<Exam> {
     }
 
     @Override
-    public ArrayList<Exam> getAll() {
+    public ArrayList<ExamResult> getAll() {
         String query = String.format("SELECT %s FROM %s;", COLUMNS_STR, TABLE_NAME);
 
-        ArrayList<Exam> resultList = new ArrayList<>();
+        ArrayList<ExamResult> resultList = new ArrayList<>();
 
         try {
             ResultSet result = DBController.executeQuery(query);
             while (result.next()) {
-                Exam object = mapColumn(result);
+                ExamResult object = mapColumn(result);
                 resultList.add(object);
             }
         } catch (Exception exception) {
@@ -87,16 +80,16 @@ public class TableExam implements CRUDHandler<Exam> {
     }
 
     @Override
-    public boolean update(Exam object) {
-
-        String query = String.format("update %s set USER_ID = ?, EXAM_DATE = ?, MATH_COUNT = ?, " +
-                "NATURAL_COUNT = ?, SOCIAL_COUNT = ?, ALSANA_COUNT = ? where id = ?", TABLE_NAME);
+    public boolean update(ExamResult object) {
+        String query = String.format("update %s set EXAM_ID = ?, EXAM_DURATION = ?, MATH_CORRECT = ?, " +
+                                     "NATURAL_CORRECT = ?, SOCIAL_CORRECT = ?, ALSANA_CORRECT = ?, PASSED_FIELD = ? " +
+                                     "where id = ?", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement = putValues(statement, object);
-            statement.setInt(7, object.getId());
+            statement.setInt(8, object.getId());
             statement.executeUpdate();
 
             return true;
@@ -108,7 +101,7 @@ public class TableExam implements CRUDHandler<Exam> {
     }
 
     @Override
-    public boolean delete(Exam object) {
+    public boolean delete(ExamResult object) {
         String query = String.format("DELETE from %s where id = ?", TABLE_NAME);
 
         try {
@@ -165,26 +158,33 @@ public class TableExam implements CRUDHandler<Exam> {
     }
 
     @Override
-    public Exam mapColumn(ResultSet result) throws SQLException {
-        return new Exam(
+    public ExamResult mapColumn(ResultSet result) throws SQLException {
+        ExamCorrectAnswerCount correctAnswerCount =
+                new ExamCorrectAnswerCount(
+                        result.getInt("MATH_CORRECT"),
+                        result.getInt("NATURAL_CORRECT"),
+                        result.getInt("SOCIAL_CORRECT"),
+                        result.getInt("ALSANA_CORRECT")
+                );
+        return new ExamResult(
                 result.getInt("ID"),
-                tableUser.findById(result.getInt("USER_ID")),
-                result.getDate("EXAM_DATE").toLocalDate(),
-                result.getInt("MATH_COUNT"),
-                result.getInt("NATURAL_COUNT"),
-                result.getInt("SOCIAL_COUNT"),
-                result.getInt("ALSANA_COUNT")
+                tableExam.findById(result.getInt("EXAM_ID")),
+                result.getLong("EXAM_DURATION"),
+                correctAnswerCount,
+                result.getString("PASSED_FIELD")
         );
     }
 
     @Override
-    public PreparedStatement putValues(PreparedStatement statement, Exam object) throws SQLException {
-        statement.setInt(1, object.getUser().getId());
-        statement.setDate(2, Date.valueOf(object.getDate()));
-        statement.setInt(3, object.getMathCount());
-        statement.setInt(4, object.getNaturalCount());
-        statement.setInt(5, object.getSocialCount());
-        statement.setInt(6, object.getAlsanaCount());
+    public PreparedStatement putValues(PreparedStatement statement, ExamResult object) throws SQLException {
+        statement.setInt(1, object.getExam().getId());
+        statement.setLong(2, object.getExamDuration());
+        statement.setDouble(3, object.getCorrectAnswerCount().getMath());
+        statement.setDouble(4, object.getCorrectAnswerCount().getNatural());
+        statement.setDouble(5, object.getCorrectAnswerCount().getSocial());
+        statement.setDouble(6, object.getCorrectAnswerCount().getAlsana());
+        statement.setString(7, object.getPassedField());
+
         return statement;
     }
 }

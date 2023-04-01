@@ -12,7 +12,9 @@ import javafx.scene.layout.BorderPane;
 import net.golbarg.kankor.controller.SystemController;
 import net.golbarg.kankor.controller.Util;
 import net.golbarg.kankor.db.TableExam;
+import net.golbarg.kankor.db.TableExamResult;
 import net.golbarg.kankor.model.Exam;
+import net.golbarg.kankor.model.ExamResult;
 import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.User;
 import net.golbarg.kankor.view.exam.component.FieldSelectionViewController;
@@ -53,45 +55,24 @@ public class ExamResultViewController implements Initializable {
 
     }
 
-    public void initData(Exam exam) {
+    public void initData(Exam exam, ExamResult examResult) {
         User user = SystemController.currentUser;
         //
         lblFullName.setText(user.getName() + ", " + user.getLastName());
         lblKankorId.setText("Kankor ID: " + user.getId());
 
         // TODO: implement Exam Details
-        lblTime.setText(Util.convertSecondsToTimeFormat(exam.getExamDuration()));
-        lblExamScore.setText(exam.getTotalScore() + "");
-        lblExamResult.setText(exam.getPassedField());
-        lblCorrectAnswers.setText("Total Correct Answer");
-        lblWrongAnswers.setText("Total Wrong Answer");
+        lblTime.setText(Util.convertSecondsToTimeFormat(examResult.getExamDuration()));
+        lblExamScore.setText(examResult.getCorrectAnswerCount().getScore() + "");
+        lblExamResult.setText(examResult.getPassedField());
+        lblCorrectAnswers.setText(String.valueOf(examResult.getCorrectAnswerCount().getTotalCorrect()));
+        lblWrongAnswers.setText(String.valueOf(exam.getTotalQuestion() - examResult.getCorrectAnswerCount().getTotalCorrect()));
     }
 
-    // TODO: date parameter, user should be checked its error prone
-    public void saveExamResult(Exam exam) {
+    public void saveExamResult(Exam exam, ExamResult examResult) {
         new TableExam().create(exam);
-    }
-
-    public void setUniversity(UniversityViewController universityView, ExamViewController examView) {
-        ObservableList<FieldSelectionViewController> list = universityView.getFields();
-        ObservableList<UniversityFaculty> universityList = examView.getExamController().getUniversity(list);
-
-        for (int i = 0; i < universityList.size(); i++) {
-            System.out.println("selected -> " + universityList.get(i).toString());
-        }
-
-        System.out.println("set university: " + examView.getExamController().getKankorScore());
-
-        if (universityList.size() > 0) {
-            UniversityFaculty universityFaculty = examView.getExamController().getPassedField(universityList, 100);
-            if (universityFaculty != null) {
-                setKankorResult(universityFaculty.getUniversity() + ", " + universityFaculty.getName());
-            } else {
-                setKankorResult("بی نتیجه !");
-            }
-        } else {
-            setKankorResult("شما هیچ رشته ای را انتخاب نکرده اید!");
-        }
+        examResult.setExam(exam);
+        new TableExamResult().create(examResult);
     }
 
     public void shareOnWeb() {
@@ -116,22 +97,6 @@ public class ExamResultViewController implements Initializable {
 
     public Button getBtnCheckQuestions() {
         return btnCheckQuestions;
-    }
-
-    public Button getBtnShareResult() {
-        return btnShareResult;
-    }
-
-    public void setDuration(String duration) {
-        lblTime.setText(duration);
-    }
-
-    public void setKankorResult(String value) {
-        lblExamResult.setText(value);
-    }
-
-    public String getKankorResult() {
-        return lblExamResult.getText();
     }
     public Button getBtnShare() {
         return btnShareResult;

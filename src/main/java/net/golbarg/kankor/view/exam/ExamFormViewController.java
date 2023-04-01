@@ -13,6 +13,7 @@ import net.golbarg.kankor.controller.SystemController;
 import net.golbarg.kankor.controller.ui.DialogController;
 import net.golbarg.kankor.controller.ui.UIController;
 import net.golbarg.kankor.model.Exam;
+import net.golbarg.kankor.model.ExamResult;
 import net.golbarg.kankor.model.UniversityFaculty;
 import net.golbarg.kankor.model.User;
 import net.golbarg.kankor.view.exam.component.FieldSelectionViewController;
@@ -59,9 +60,11 @@ public class ExamFormViewController implements Initializable {
     private BorderPane borderPaneExamReview;
     @FXML
     private Button btnBackResult;
-
     //
     User user;
+    Exam exam;
+    ExamResult examResult;
+
     private ArrayList<Tab> tabs = new ArrayList<>();
 
     @Override
@@ -70,6 +73,7 @@ public class ExamFormViewController implements Initializable {
         UIController.enableTab(tabPane, tabs, 0);
 
         user = SystemController.currentUser;
+        exam = SystemController.DEFAULT_EXAM;
 
         // init exam
         try {
@@ -80,8 +84,7 @@ public class ExamFormViewController implements Initializable {
             examViewController.startExamProcess();
 
             btnUniversity.setOnAction(event -> {
-                examViewController.stopExamProcess();
-                examViewController.processQuestionAnswers();
+                examViewController.endExamProcess();
                 UIController.enableTab(tabPane, tabs, 1);
                 loadUniversitySelectionView();
             });
@@ -121,10 +124,9 @@ public class ExamFormViewController implements Initializable {
 
             String passedField = getPassedField();
 
-            // TODO: implement exam here
-            Exam examResult = examViewController.getExamResult(passedField);
-            examResultViewController.initData(examResult);
-            examResultViewController.saveExamResult(examResult);
+            examResult = examViewController.getExamResult(passedField);
+            examResultViewController.initData(exam, examResult);
+            examResultViewController.saveExamResult(exam, examResult);
 
             examResultViewController.getBtnCheckQuestions().setOnAction(event -> {
                 UIController.enableTab(tabPane, tabs, 3);
@@ -138,8 +140,8 @@ public class ExamFormViewController implements Initializable {
     public String getPassedField() {
         ObservableList<FieldSelectionViewController> fields = universityViewController.getFields();
         ObservableList<UniversityFaculty> university = examViewController.getExamController().getUniversity(fields);
-        UniversityFaculty passedField = examViewController.getExamController().getPassedField(university, examViewController.getExamController().getKankorScore());
-
+        UniversityFaculty passedField = examViewController.getExamController().getPassedField(university,
+                examViewController.getExamController().getAnswerCount().getScore());
         return passedField == null ? "بی نتیجه" : passedField.getName();
     }
 

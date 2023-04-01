@@ -23,13 +23,12 @@ import net.golbarg.kankor.controller.SystemController;
 import net.golbarg.kankor.controller.ui.AnalogClock;
 import net.golbarg.kankor.controller.ui.CountDownWorker;
 import net.golbarg.kankor.controller.ui.StopWatchWorker;
-import net.golbarg.kankor.model.Exam;
+import net.golbarg.kankor.model.ExamResult;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.view.exam.component.AnswerSheetViewController;
 import net.golbarg.kankor.view.exam.component.QuestionItemViewController;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
@@ -70,7 +69,6 @@ public class ExamViewController implements Initializable {
     private ObservableList<Label> subjectSections = FXCollections.observableArrayList();
     private ExamController examController;
     private int questionCount = 160;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         subjectSections.addAll(Arrays.asList(lblMathQuestion, lblNaturalQuestion, lblSocialQuestion, lblAlsanaQuestion));
@@ -78,6 +76,12 @@ public class ExamViewController implements Initializable {
         btnEndExam.setVisible(false);
 
 //        aloneLoad();
+    }
+
+    public void initData(ObservableList<Question> questionList) {
+        if(questionList != null && questionList.size() > 0) {
+            initQuestionsList(questionList);
+        }
     }
 
     /**
@@ -92,12 +96,12 @@ public class ExamViewController implements Initializable {
         });
     }
 
-    public void initQuestionsList(ObservableList<Question> questionList) {
+    private void initQuestionsList(ObservableList<Question> questionList) {
         this.questionList = questionList;
         this.questionCount = this.questionList.size();
     }
 
-    public void processQuestionAnswers() {
+    private void processQuestionAnswers() {
         examController.checkAnswers(answerSheet, questionList);
     }
 
@@ -111,9 +115,10 @@ public class ExamViewController implements Initializable {
         }
     }
 
-    public void stopExamProcess() {
+    public void endExamProcess() {
         stopWatchWorker.stop();
         countDownWorker.stop();
+        processQuestionAnswers();
     }
 
     private class ExamThread extends Thread {
@@ -187,10 +192,10 @@ public class ExamViewController implements Initializable {
     private void initializeQuestions() {
         questionList.clear();
         examController.generateQuestion();
-        questionList.addAll(examController.getMathList());
-        questionList.addAll(examController.getNaturalList());
-        questionList.addAll(examController.getSocialList());
-        questionList.addAll(examController.getAlsanaList());
+        questionList.addAll(examController.getExam().getMathList());
+        questionList.addAll(examController.getExam().getNaturalList());
+        questionList.addAll(examController.getExam().getSocialList());
+        questionList.addAll(examController.getExam().getAlsanaList());
     }
 
     private void setQuestion() {
@@ -209,9 +214,9 @@ public class ExamViewController implements Initializable {
     }
 
     private void bindQuestionScrollPane() {
-        int math = examController.getMathList().size();
-        int natural = examController.getNaturalList().size() + math;
-        int social = examController.getSocialList().size() + natural;
+        int math = examController.getExam().getMathList().size();
+        int natural = examController.getExam().getNaturalList().size() + math;
+        int social = examController.getExam().getSocialList().size() + natural;
 
         lblMathQuestion.setOnMouseClicked(event -> spQuestion.setVvalue(0));
         lblNaturalQuestion.setOnMouseClicked(event -> spQuestion.setVvalue(math+1));
@@ -271,17 +276,8 @@ public class ExamViewController implements Initializable {
         return answerSheet;
     }
 
-    public Exam getExamResult(String passedField) {
-        int user_id = SystemController.currentUser.getId();
-        LocalDate current_date = LocalDate.now();
+    public ExamResult getExamResult(String passedField) {
         long exam_duration = stopWatchWorker.getDuration().getSeconds();
-        int math_score = examController.getMathCorrect();
-        int natural_score = examController.getNaturalCorrect();
-        int social_score = examController.getSocialCorrect();
-        int alsana_score = examController.getAlsanaCorrect();
-
-        return new Exam(0, user_id, current_date, exam_duration, math_score,
-                                    natural_score, social_score, alsana_score, passedField);
-
+        return new ExamResult(0, SystemController.DEFAULT_EXAM, exam_duration, examController.getAnswerCount(), passedField);
     }
 }

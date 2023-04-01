@@ -14,7 +14,6 @@ public class QuestionTextController extends TextFlow {
     public static final String QuestionSplitter = "#&#";
     public static File questionImageFolder = new File("assets/question/");
     public static final String questionImagePath = "file:///" + questionImageFolder.getAbsolutePath() + "/";
-
     private Text questionNumber;
     private String questionText;
     private int number = 0;

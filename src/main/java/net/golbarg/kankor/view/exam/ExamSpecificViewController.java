@@ -111,11 +111,11 @@ public class ExamSpecificViewController implements Initializable {
                 BorderPane examView = fxmlLoader.load();
                 examViewController = fxmlLoader.getController();
                 borderPaneExam.setCenter(examView);
-                examViewController.initQuestionsList(questions);
+                examViewController.initData(questions);
                 examViewController.startExamProcess();
 
                 btnEndExam.setOnAction(event -> {
-                    examViewController.processQuestionAnswers();
+                    examViewController.endExamProcess();
                     enableTab(2);
                     loadExamResult();
                 });
@@ -136,7 +136,7 @@ public class ExamSpecificViewController implements Initializable {
             ObservableList<FieldSelectionViewController> fields = FXCollections.observableArrayList();
 
             ObservableList<UniversityFaculty> university = FXCollections.observableArrayList();
-            UniversityFaculty passedField = examViewController.getExamController().getPassedField(university, examViewController.getExamController().getKankorScore());
+            UniversityFaculty passedField = examViewController.getExamController().getPassedField(university, examViewController.getExamController().getAnswerCount().getScore());
 
             ExamController examController = examViewController.getExamController();
             String result = passedField == null ? "بی نتیجه" : passedField.getName();

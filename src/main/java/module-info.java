@@ -24,4 +24,6 @@ module net.golbarg.kankor.kankor {
     opens net.golbarg.kankor.view.exam to javafx.fxml;
     exports net.golbarg.kankor.view.exam.component;
     opens net.golbarg.kankor.view.exam.component to javafx.fxml;
+    exports net.golbarg.kankor.view.exam.report;
+    opens net.golbarg.kankor.view.exam.report to javafx.fxml;
 }

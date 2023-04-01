@@ -4,75 +4,68 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import net.golbarg.kankor.db.TableUniversityFaculty;
 import net.golbarg.kankor.db.TableQuestionSubject;
-import net.golbarg.kankor.model.UniversityFaculty;
-import net.golbarg.kankor.model.Question;
-import net.golbarg.kankor.model.QuestionSubject;
+import net.golbarg.kankor.model.*;
 import net.golbarg.kankor.view.exam.component.AnswerSheetViewController;
 import net.golbarg.kankor.view.exam.component.FieldSelectionViewController;
 
 import java.util.ArrayList;
 
 public class ExamController {
-    private ObservableList<Question> mathList = FXCollections.observableArrayList();
-    private ObservableList<Question> naturalList = FXCollections.observableArrayList();
-    private ObservableList<Question> socialList = FXCollections.observableArrayList();
-    private ObservableList<Question> alsanaList = FXCollections.observableArrayList();
-    private int mathCorrect, naturalCorrect, socialCorrect, alsanaCorrect, totalCorrect;
     private QuestionGenerator questionGenerator;
-    private ArrayList<QuestionSubject> subjects = new ArrayList<>();
+    private ArrayList<QuestionSubject> subjects;
+    private Exam exam;
+    private ExamCorrectAnswerCount answerCount;
 
     public ExamController() {
-        questionGenerator = new QuestionGenerator();
-        subjects = new TableQuestionSubject().getAll();
+        this(SystemController.DEFAULT_EXAM);
     }
 
-    public ExamController(int math, int natural, int social, int alsana) {
-        questionGenerator = new QuestionGenerator(math, natural, social, alsana);
+    public ExamController(Exam exam) {
+        this.exam = exam;
+        questionGenerator = new QuestionGenerator(exam);
         subjects = new TableQuestionSubject().getAll();
+        answerCount = new ExamCorrectAnswerCount();
     }
 
     public void generateQuestion() {
-        mathList = questionGenerator.getMathQuestions();
-        naturalList = questionGenerator.getNaturalQuestion();
-        socialList = questionGenerator.getSocialQuestion();
-        alsanaList = questionGenerator.getAlsanaQuestion();
-    }
-
-    public ObservableList<Question> getMathList() {
-        return mathList;
-    }
-
-    public ObservableList<Question> getNaturalList() {
-        return naturalList;
-    }
-
-    public ObservableList<Question> getSocialList() {
-        return socialList;
-    }
-
-    public ObservableList<Question> getAlsanaList() {
-        return alsanaList;
+        exam.setMathList(questionGenerator.getMathQuestions());
+        exam.setNaturalList(questionGenerator.getNaturalQuestion());
+        exam.setSocialList(questionGenerator.getSocialQuestion());
+        exam.setAlsanaList(questionGenerator.getAlsanaQuestion());
     }
 
     public void checkAnswers(AnswerSheetViewController answers, ObservableList<Question> questions) {
-        mathCorrect = 0;
-        socialCorrect = 0;
-        naturalCorrect = 0;
-        alsanaCorrect = 0;
-        totalCorrect = 0;
-
         for (int i = 0; i < questions.size(); i++) {
             int selectedAnswer = answers.getRowList().get(i).getSelectedAnswer();
             int correctAnswer = questions.get(i).getCorrectChoice();
 
             if (selectedAnswer == correctAnswer) {
-                totalCorrect++;
-                System.out.println("correct");
-                checkSubjectType(questions.get(i).getSubject().getId());
-                System.out.println("Math Correct -> " + mathCorrect);
-                System.out.println("Social Correct -> " + socialCorrect);
-                System.out.println("Natural Correct -> " + naturalCorrect);
-                System.out.println("Alsana Correct -> " + alsanaCorrect);
+                int subjectId = questions.get(i).getSubject().getId();
+                checkSubject(subjectId, answerCount);
+            }
+        }
+    }
+
+    private void checkSubject(int subjectId, ExamCorrectAnswerCount answerCount) {
+        QuestionSubject subject = subjects.stream().filter(o -> o.getId() == subjectId).findAny().orElse(null);
+        if(subject != null) {
+            String value = subject.getType();
+
+            switch (value) {
+                case "math":
+                    answerCount.incrementMath();
+                    break;
+                case "natural":
+                    answerCount.incrementNatural();
+                    break;
+                case "social":
+                    answerCount.incrementSocial();
+                    break;
+                case "alsana":
+                    answerCount.incrementAlsana();
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -102,66 +95,14 @@ public class ExamController {
         return null;
     }
 
-    public int getMathCorrect() {
-        return mathCorrect;
+    public Exam getExam() {
+        return exam;
     }
 
-    public int getAlsanaCorrect() {
-        return alsanaCorrect;
+    public ExamCorrectAnswerCount getAnswerCount() {
+        return answerCount;
     }
-
-    public int getNaturalCorrect() {
-        return naturalCorrect;
-    }
-
-    public int getSocialCorrect() {
-        return socialCorrect;
-    }
-
-    public int getTotalCorrect() {
-        return totalCorrect;
-    }
-
-    private void checkSubjectType(int subjectId) {
-        QuestionSubject subject = subjects.stream().filter(o -> o.getId() == subjectId).findAny().orElse(null);
-        if(subject != null) {
-            String value = subject.getType();
-
-            switch (value) {
-                case "math":
-                    mathCorrect++;
-                    break;
-                case "natural":
-                    naturalCorrect++;
-                    break;
-                case "social":
-                    socialCorrect++;
-                    break;
-                case "alsana":
-                    alsanaCorrect++;
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    public double getKankorScore() {
-        return totalCorrect * 2;
-    }
-
     public QuestionGenerator getQuestionGenerator() {
         return questionGenerator;
-    }
-
-    @Override
-    public String toString() {
-        return "ExamController{" +
-                "mathCorrect=" + mathCorrect +
-                ", naturalCorrect=" + naturalCorrect +
-                ", socialCorrect=" + socialCorrect +
-                ", alsanaCorrect=" + alsanaCorrect +
-                ", totalCorrect=" + totalCorrect +
-                '}';
     }
 }

@@ -39,10 +39,10 @@ public class ExamReviewViewController implements Initializable {
             ExamController examController = new ExamController();
             examController.generateQuestion();
             ObservableList<Question> questionListTemp = FXCollections.observableArrayList();
-            questionListTemp.addAll(examController.getMathList());
-            questionListTemp.addAll(examController.getNaturalList());
-            questionListTemp.addAll(examController.getSocialList());
-            questionListTemp.addAll(examController.getAlsanaList());
+            questionListTemp.addAll(examController.getExam().getMathList());
+            questionListTemp.addAll(examController.getExam().getNaturalList());
+            questionListTemp.addAll(examController.getExam().getSocialList());
+            questionListTemp.addAll(examController.getExam().getAlsanaList());
 
             FXMLLoader fxmlLoader = new FXMLLoader(ExamReviewViewController.class.getResource("component/answer-sheet-view.fxml"));
             VBox answerSheetView = fxmlLoader.load();

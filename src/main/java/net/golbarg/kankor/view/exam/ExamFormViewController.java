@@ -84,8 +84,7 @@ public class ExamFormViewController implements Initializable {
             examViewController.startExamProcess();
 
             btnUniversity.setOnAction(event -> {
-                examViewController.stopExamProcess();
-                examViewController.processQuestionAnswers();
+                examViewController.endExamProcess();
                 UIController.enableTab(tabPane, tabs, 1);
                 loadUniversitySelectionView();
             });
@@ -125,10 +124,9 @@ public class ExamFormViewController implements Initializable {
 
             String passedField = getPassedField();
 
-            // TODO: implement exam here
-            ExamResult examResult = examViewController.getExamResult(passedField);
-            examResultViewController.initData(examResult);
-            examResultViewController.saveExamResult(examResult);
+            examResult = examViewController.getExamResult(passedField);
+            examResultViewController.initData(exam, examResult);
+            examResultViewController.saveExamResult(exam, examResult);
 
             examResultViewController.getBtnCheckQuestions().setOnAction(event -> {
                 UIController.enableTab(tabPane, tabs, 3);

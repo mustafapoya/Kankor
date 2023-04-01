@@ -1,4 +1,4 @@
-package net.golbarg.kankor.view.exam;
+package net.golbarg.kankor.view.exam.report;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;

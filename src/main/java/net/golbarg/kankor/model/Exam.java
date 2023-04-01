@@ -88,6 +88,9 @@ public class Exam {
         this.alsanaCount = alsanaCount;
     }
 
+    public int getTotalQuestion() {
+        return getMathCount() + getNaturalCount() + getSocialCount() + getAlsanaCount();
+    }
     public ObservableList<Question> getMathList() {
         return mathList;
     }

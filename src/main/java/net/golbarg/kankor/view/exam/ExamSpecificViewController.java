@@ -111,11 +111,11 @@ public class ExamSpecificViewController implements Initializable {
                 BorderPane examView = fxmlLoader.load();
                 examViewController = fxmlLoader.getController();
                 borderPaneExam.setCenter(examView);
-                examViewController.initQuestionsList(questions);
+                examViewController.initData(questions);
                 examViewController.startExamProcess();
 
                 btnEndExam.setOnAction(event -> {
-                    examViewController.processQuestionAnswers();
+                    examViewController.endExamProcess();
                     enableTab(2);
                     loadExamResult();
                 });

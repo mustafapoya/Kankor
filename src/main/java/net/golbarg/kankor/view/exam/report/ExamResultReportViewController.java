@@ -1,4 +1,4 @@
-package net.golbarg.kankor.view.exam;
+package net.golbarg.kankor.view.exam.report;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
-import net.golbarg.kankor.controller.SystemController;
 import net.golbarg.kankor.db.TableExamResult;
 import net.golbarg.kankor.model.ExamResult;
 
@@ -17,7 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class ExamResultsViewController implements Initializable {
+public class ExamResultReportViewController implements Initializable {
     @FXML
     private BorderPane root;
     @FXML

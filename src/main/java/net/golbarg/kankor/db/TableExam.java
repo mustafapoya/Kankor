@@ -24,9 +24,16 @@ public class TableExam implements CRUDHandler<Exam> {
 
         try {
             Connection connection = DBController.getLocalConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement = putValues(statement, object);
             statement.executeUpdate();
+
+            ResultSet rs = statement.getGeneratedKeys();
+
+            if(rs.next()) {
+                System.out.println(rs);
+                object.setId(Integer.parseInt(rs.getString(1)));
+            }
 
             return true;
         } catch(Exception exception) {

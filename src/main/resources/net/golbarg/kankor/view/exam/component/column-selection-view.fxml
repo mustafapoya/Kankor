@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="root" alignment="TOP_CENTER" spacing="2.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.examResult.component.ColumnSelectionViewController">
+<VBox fx:id="root" alignment="TOP_CENTER" spacing="2.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.exam.component.ColumnSelectionViewController">
    <children>
       <TextField fx:id="txtValue" alignment="CENTER" editable="false" prefHeight="30.0" prefWidth="30.0" text="0">
          <VBox.margin>

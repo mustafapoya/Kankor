@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.examResult.ExamResultViewController">
+<BorderPane fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.exam.ExamResultViewController">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>

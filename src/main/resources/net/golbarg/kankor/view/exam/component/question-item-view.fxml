@@ -11,7 +11,7 @@
 <?import javafx.scene.text.TextFlow?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefWidth="700.0" spacing="5.0" styleClass="question-item-view" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.examResult.component.QuestionItemViewController">
+<VBox fx:id="root" nodeOrientation="RIGHT_TO_LEFT" prefWidth="700.0" spacing="5.0" styleClass="question-item-view" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.exam.component.QuestionItemViewController">
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>

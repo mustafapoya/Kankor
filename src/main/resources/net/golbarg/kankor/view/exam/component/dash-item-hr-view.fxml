@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<HBox fx:id="root" maxWidth="1.7976931348623157E308" minHeight="85.0" minWidth="250.0" nodeOrientation="RIGHT_TO_LEFT" styleClass="dash-item-hr-container" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.examResult.component.DashItemHrViewController">
+<HBox fx:id="root" maxWidth="1.7976931348623157E308" minHeight="85.0" minWidth="250.0" nodeOrientation="RIGHT_TO_LEFT" styleClass="dash-item-hr-container" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.exam.component.DashItemHrViewController">
    <children>
       <GridPane hgap="1.0" maxWidth="1.7976931348623157E308" vgap="1.0" HBox.hgrow="ALWAYS">
         <columnConstraints>

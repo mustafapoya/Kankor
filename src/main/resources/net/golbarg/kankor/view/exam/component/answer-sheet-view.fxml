@@ -3,6 +3,6 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<VBox fx:id="root" minHeight="60.0" minWidth="200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.examResult.component.AnswerSheetViewController">
+<VBox fx:id="root" minHeight="60.0" minWidth="200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.golbarg.kankor.view.exam.component.AnswerSheetViewController">
 
 </VBox>

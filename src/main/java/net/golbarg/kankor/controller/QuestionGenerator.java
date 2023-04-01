@@ -8,15 +8,13 @@ import net.golbarg.kankor.model.Question;
 
 public class QuestionGenerator {
     private Exam exam;
-
     public static final int[] MATHEMATICS = { 9, 12, 6 };
     public static final int[] NATURALS = { 2, 11, 1 };
     public static final int[] SOCIALS = { 8, 7, 5 };
     public static final int[] ALSANA = { 3, 10, 4 };
 
     public QuestionGenerator() {
-//        setNumberOfQuestions(46, 40, 38, 36);
-        exam = SystemController.DEFAULT_EXAM;
+        this(SystemController.DEFAULT_EXAM);
     }
 
     public QuestionGenerator(Exam exam) {

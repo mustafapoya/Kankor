@@ -61,7 +61,7 @@ public class ExamResultViewController implements Initializable {
 
         // TODO: implement Exam Details
         lblTime.setText(Util.convertSecondsToTimeFormat(examResult.getExamDuration()));
-        lblExamScore.setText(examResult.getTotalScore() + "");
+        lblExamScore.setText(examResult.getCorrectAnswerCount().getScore() + "");
         lblExamResult.setText(examResult.getPassedField());
         lblCorrectAnswers.setText("Total Correct Answer");
         lblWrongAnswers.setText("Total Wrong Answer");
@@ -80,7 +80,7 @@ public class ExamResultViewController implements Initializable {
             System.out.println("selected -> " + universityList.get(i).toString());
         }
 
-        System.out.println("set university: " + examView.getExamController().getKankorScore());
+        System.out.println("set university: " + examView.getExamController().getAnswerCount().getScore());
 
         if (universityList.size() > 0) {
             UniversityFaculty universityFaculty = examView.getExamController().getPassedField(universityList, 100);

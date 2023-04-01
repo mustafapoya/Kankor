@@ -18,15 +18,6 @@ import java.util.Scanner;
 
 public class JSONController {
 
-    public static void main(String[] args) {
-
-        try {
-            System.out.println(getNews());;
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-    }
-
     public static ArrayList<News> getNews() throws Exception {
 
         String data = getDataFromURL(SystemController.SERVER_ADDRESS + "api/kankor_news");

@@ -66,10 +66,6 @@ public class ExamResultsViewController implements Initializable {
 
         resultList = tableExamResult.getAll();
 
-        for(ExamResult e : resultList) {
-            e.setUser(SystemController.currentUser);
-        }
-
         tableViewExamResults.getItems().addAll(resultList);
     }
 
@@ -78,7 +74,7 @@ public class ExamResultsViewController implements Initializable {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<ExamResult, String> param) {
                 // p.getValue() returns the Person instance for a particular TableView row
                 return new ReadOnlyObjectWrapper<>(String.valueOf(
-                        param.getValue().getUser().getName() + " " + param.getValue().getUser().getLastName()));
+                        param.getValue().getExam().getUser().getName() + " " + param.getValue().getExam().getUser().getLastName()));
             }
         });
 
@@ -86,21 +82,21 @@ public class ExamResultsViewController implements Initializable {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<ExamResult, String> param) {
                 // p.getValue() returns the Person instance for a particular TableView row
-                return new ReadOnlyObjectWrapper<>(param.getValue().getUser().getSchoolName());
+                return new ReadOnlyObjectWrapper<>(param.getValue().getExam().getUser().getSchoolName());
             }
         });
 
         columnProvince.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ExamResult, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<ExamResult, String> param) {
-                return new ReadOnlyObjectWrapper<>(param.getValue().getUser().getLocation().getPersianName());
+                return new ReadOnlyObjectWrapper<>(param.getValue().getExam().getUser().getLocation().getPersianName());
             }
         });
 
         columnScore.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ExamResult, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<ExamResult, String> param) {
-                return new ReadOnlyObjectWrapper<>(param.getValue().getTotalScore() + "");
+                return new ReadOnlyObjectWrapper<>(param.getValue().getCorrectAnswerCount().getScore() + "");
             }
         });
 
@@ -114,7 +110,7 @@ public class ExamResultsViewController implements Initializable {
         columnExamDate.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ExamResult, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<ExamResult, String> param) {
-                return new ReadOnlyObjectWrapper<>(String.valueOf(param.getValue().getExamDate()));
+                return new ReadOnlyObjectWrapper<>(String.valueOf(param.getValue().getExam().getDate()));
             }
         });
     }

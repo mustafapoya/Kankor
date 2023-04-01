@@ -75,12 +75,12 @@ drop table if exists `EXAM_RESULTS`;
 
 create table EXAM_RESULTS (
    ID               INTEGER AUTO_INCREMENT,
-   EXAM_ID          INTEGER       not null,
-   EXAM_DURATION    LONG          not null,
-   MATH_SCORE       DECIMAL(5, 2) not null,
-   NATURAL_SCORE    DECIMAL(5, 2) not null,
-   SOCIAL_SCORE     DECIMAL(5, 2) not null,
-   ALSANA_SCORE     DECIMAL(5, 2) not null,
+   EXAM_ID          INTEGER not null,
+   EXAM_DURATION    LONG    not null,
+   MATH_CORRECT     INTEGER not null,
+   NATURAL_CORRECT  INTEGER not null,
+   SOCIAL_CORRECT   INTEGER not null,
+   ALSANA_CORRECT   INTEGER not null,
    PASSED_FIELD     VARCHAR(256)  not null,
    primary key (`ID`)
 --    ,foreign key (USER_ID) references USERS(ID) ON DELETE NO ACTION

@@ -6,21 +6,14 @@ public class ExamResult {
     private int id;
     private Exam exam;
     private long examDuration;
-    private double mathScore;
-    private double naturalScore;
-    private double socialScore;
-    private double alsanaScore;
+    private ExamCorrectAnswerCount correctAnswerCount;
     private String passedField;
 
-    public ExamResult(int id, Exam exam, long examDuration, double mathScore, double naturalScore,
-                      double socialScore, double alsanaScore, String passedField) {
+    public ExamResult(int id, Exam exam, long examDuration, ExamCorrectAnswerCount correctAnswerCount, String passedField) {
         this.id = id;
         this.exam = exam;
         this.examDuration = examDuration;
-        this.mathScore = mathScore;
-        this.naturalScore = naturalScore;
-        this.socialScore = socialScore;
-        this.alsanaScore = alsanaScore;
+        this.correctAnswerCount = correctAnswerCount;
         this.passedField = passedField;
     }
 
@@ -48,40 +41,12 @@ public class ExamResult {
         this.examDuration = examDuration;
     }
 
-    public double getMathScore() {
-        return mathScore;
+    public ExamCorrectAnswerCount getCorrectAnswerCount() {
+        return correctAnswerCount;
     }
 
-    public void setMathScore(double mathScore) {
-        this.mathScore = mathScore;
-    }
-
-    public double getNaturalScore() {
-        return naturalScore;
-    }
-
-    public void setNaturalScore(double naturalScore) {
-        this.naturalScore = naturalScore;
-    }
-
-    public double getSocialScore() {
-        return socialScore;
-    }
-
-    public void setSocialScore(double socialScore) {
-        this.socialScore = socialScore;
-    }
-
-    public double getAlsanaScore() {
-        return alsanaScore;
-    }
-
-    public void setAlsanaScore(double alsanaScore) {
-        this.alsanaScore = alsanaScore;
-    }
-
-    public double getTotalScore() {
-        return getMathScore() + getNaturalScore() + getSocialScore() + getAlsanaScore();
+    public void setCorrectAnswerCount(ExamCorrectAnswerCount correctAnswerCount) {
+        this.correctAnswerCount = correctAnswerCount;
     }
 
     public String getPassedField() {
@@ -98,10 +63,7 @@ public class ExamResult {
                 "id=" + id +
                 ", exam=" + exam +
                 ", examDuration=" + examDuration +
-                ", mathScore=" + mathScore +
-                ", naturalScore=" + naturalScore +
-                ", socialScore=" + socialScore +
-                ", alsanaScore=" + alsanaScore +
+                ", correctAnswerCount=" + correctAnswerCount +
                 ", passedField='" + passedField + '\'' +
                 '}';
     }

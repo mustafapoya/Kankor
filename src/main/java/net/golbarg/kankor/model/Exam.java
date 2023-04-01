@@ -1,5 +1,8 @@
 package net.golbarg.kankor.model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.time.LocalDate;
 
 public class Exam {
@@ -11,6 +14,12 @@ public class Exam {
     private int socialCount;
     private int alsanaCount;
 
+    private ObservableList<Question> mathList = FXCollections.observableArrayList();
+    private ObservableList<Question> naturalList = FXCollections.observableArrayList();
+    private ObservableList<Question> socialList = FXCollections.observableArrayList();
+    private ObservableList<Question> alsanaList = FXCollections.observableArrayList();
+
+
     public Exam(int id, User user, LocalDate date, int mathCount, int naturalCount,
                 int socialCount, int alsanaCount) {
         this.id = id;
@@ -20,6 +29,7 @@ public class Exam {
         this.naturalCount = naturalCount;
         this.socialCount = socialCount;
         this.alsanaCount = alsanaCount;
+
     }
 
     public int getId() {
@@ -76,6 +86,38 @@ public class Exam {
 
     public void setAlsanaCount(int alsanaCount) {
         this.alsanaCount = alsanaCount;
+    }
+
+    public ObservableList<Question> getMathList() {
+        return mathList;
+    }
+
+    public void setMathList(ObservableList<Question> mathList) {
+        this.mathList = mathList;
+    }
+
+    public ObservableList<Question> getNaturalList() {
+        return naturalList;
+    }
+
+    public void setNaturalList(ObservableList<Question> naturalList) {
+        this.naturalList = naturalList;
+    }
+
+    public ObservableList<Question> getSocialList() {
+        return socialList;
+    }
+
+    public void setSocialList(ObservableList<Question> socialList) {
+        this.socialList = socialList;
+    }
+
+    public ObservableList<Question> getAlsanaList() {
+        return alsanaList;
+    }
+
+    public void setAlsanaList(ObservableList<Question> alsanaList) {
+        this.alsanaList = alsanaList;
     }
 
     @Override

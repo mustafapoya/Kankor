@@ -23,6 +23,7 @@ import net.golbarg.kankor.controller.SystemController;
 import net.golbarg.kankor.controller.ui.AnalogClock;
 import net.golbarg.kankor.controller.ui.CountDownWorker;
 import net.golbarg.kankor.controller.ui.StopWatchWorker;
+import net.golbarg.kankor.model.ExamCorrectAnswerCount;
 import net.golbarg.kankor.model.ExamResult;
 import net.golbarg.kankor.model.Question;
 import net.golbarg.kankor.view.exam.component.AnswerSheetViewController;
@@ -70,7 +71,6 @@ public class ExamViewController implements Initializable {
     private ObservableList<Label> subjectSections = FXCollections.observableArrayList();
     private ExamController examController;
     private int questionCount = 160;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         subjectSections.addAll(Arrays.asList(lblMathQuestion, lblNaturalQuestion, lblSocialQuestion, lblAlsanaQuestion));
@@ -275,13 +275,8 @@ public class ExamViewController implements Initializable {
         int user_id = SystemController.currentUser.getId();
         LocalDate current_date = LocalDate.now();
         long exam_duration = stopWatchWorker.getDuration().getSeconds();
-        int math_score = examController.getMathCorrect();
-        int natural_score = examController.getNaturalCorrect();
-        int social_score = examController.getSocialCorrect();
-        int alsana_score = examController.getAlsanaCorrect();
 
-        return new ExamResult(0, user_id, current_date, exam_duration, math_score,
-                                    natural_score, social_score, alsana_score, passedField);
+        return new ExamResult(0, SystemController.DEFAULT_EXAM, exam_duration, examController.getAnswerCount(), passedField);
 
     }
 }

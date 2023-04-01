@@ -1,5 +1,6 @@
 package net.golbarg.kankor.db;
 
+import net.golbarg.kankor.model.ExamCorrectAnswerCount;
 import net.golbarg.kankor.model.ExamResult;
 
 import java.sql.*;
@@ -8,9 +9,9 @@ import java.util.ArrayList;
 public class TableExamResult implements CRUDHandler<ExamResult> {
     public static final String TABLE_NAME = "EXAM_RESULTS";
     public static final String [] COLUMNS =
-            {"ID", "EXAM_ID", "EXAM_DURATION", "MATH_SCORE", "NATURAL_SCORE", "SOCIAL_SCORE", "ALSANA_SCORE", "PASSED_FIELD"};
+            {"ID", "EXAM_ID", "EXAM_DURATION", "MATH_CORRECT", "NATURAL_CORRECT", "SOCIAL_CORRECT", "ALSANA_CORRECT", "PASSED_FIELD"};
     public static final String COLUMNS_STR =
-            "ID, EXAM_ID, EXAM_DURATION, MATH_SCORE, NATURAL_SCORE, SOCIAL_SCORE, ALSANA_SCORE, PASSED_FIELD";
+            "ID, EXAM_ID, EXAM_DURATION, MATH_CORRECT, NATURAL_CORRECT, SOCIAL_CORRECT, ALSANA_CORRECT, PASSED_FIELD";
 
     TableExam tableExam;
     public TableExamResult() {
@@ -19,7 +20,7 @@ public class TableExamResult implements CRUDHandler<ExamResult> {
 
     @Override
     public boolean create(ExamResult object) {
-        String query = String.format("insert into %s (EXAM_ID, EXAM_DURATION, MATH_SCORE, NATURAL_SCORE, SOCIAL_SCORE, ALSANA_SCORE, PASSED_FIELD) values (?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
+        String query = String.format("insert into %s (EXAM_ID, EXAM_DURATION, MATH_CORRECT, NATURAL_CORRECT, SOCIAL_CORRECT, ALSANA_CORRECT, PASSED_FIELD) values (?, ?, ?, ?, ?, ?, ?)", TABLE_NAME);
 
         try {
             Connection connection = DBController.getLocalConnection();
@@ -80,8 +81,8 @@ public class TableExamResult implements CRUDHandler<ExamResult> {
 
     @Override
     public boolean update(ExamResult object) {
-        String query = String.format("update %s set EXAM_ID = ?, EXAM_DURATION = ?, MATH_SCORE = ?, " +
-                                     "NATURAL_SCORE = ?, SOCIAL_SCORE = ?, ALSANA_SCORE = ?, PASSED_FIELD = ? " +
+        String query = String.format("update %s set EXAM_ID = ?, EXAM_DURATION = ?, MATH_CORRECT = ?, " +
+                                     "NATURAL_CORRECT = ?, SOCIAL_CORRECT = ?, ALSANA_CORRECT = ?, PASSED_FIELD = ? " +
                                      "where id = ?", TABLE_NAME);
 
         try {
@@ -158,14 +159,18 @@ public class TableExamResult implements CRUDHandler<ExamResult> {
 
     @Override
     public ExamResult mapColumn(ResultSet result) throws SQLException {
+        ExamCorrectAnswerCount correctAnswerCount =
+                new ExamCorrectAnswerCount(
+                        result.getInt("MATH_CORRECT"),
+                        result.getInt("NATURAL_CORRECT"),
+                        result.getInt("SOCIAL_CORRECT"),
+                        result.getInt("ALSANA_CORRECT")
+                );
         return new ExamResult(
                 result.getInt("ID"),
                 tableExam.findById(result.getInt("EXAM_ID")),
                 result.getLong("EXAM_DURATION"),
-                result.getDouble("MATH_SCORE"),
-                result.getDouble("NATURAL_SCORE"),
-                result.getDouble("SOCIAL_SCORE"),
-                result.getDouble("ALSANA_SCORE"),
+                correctAnswerCount,
                 result.getString("PASSED_FIELD")
         );
     }
@@ -174,10 +179,10 @@ public class TableExamResult implements CRUDHandler<ExamResult> {
     public PreparedStatement putValues(PreparedStatement statement, ExamResult object) throws SQLException {
         statement.setInt(1, object.getExam().getId());
         statement.setLong(2, object.getExamDuration());
-        statement.setDouble(3, object.getMathScore());
-        statement.setDouble(4, object.getNaturalScore());
-        statement.setDouble(5, object.getSocialScore());
-        statement.setDouble(6, object.getAlsanaScore());
+        statement.setDouble(3, object.getCorrectAnswerCount().getMath());
+        statement.setDouble(4, object.getCorrectAnswerCount().getNatural());
+        statement.setDouble(5, object.getCorrectAnswerCount().getSocial());
+        statement.setDouble(6, object.getCorrectAnswerCount().getAlsana());
         statement.setString(7, object.getPassedField());
 
         return statement;

@@ -136,7 +136,7 @@ public class ExamSpecificViewController implements Initializable {
             ObservableList<FieldSelectionViewController> fields = FXCollections.observableArrayList();
 
             ObservableList<UniversityFaculty> university = FXCollections.observableArrayList();
-            UniversityFaculty passedField = examViewController.getExamController().getPassedField(university, examViewController.getExamController().getKankorScore());
+            UniversityFaculty passedField = examViewController.getExamController().getPassedField(university, examViewController.getExamController().getAnswerCount().getScore());
 
             ExamController examController = examViewController.getExamController();
             String result = passedField == null ? "بی نتیجه" : passedField.getName();

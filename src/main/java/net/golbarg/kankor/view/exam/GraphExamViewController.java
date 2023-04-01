@@ -77,7 +77,7 @@ public class GraphExamViewController implements Initializable {
         series.setName("پروسه امتحان");
 
         for(int i = 0; i < examResults.size(); i++) {
-            series.getData().add(new XYChart.Data<>(examResults.get(i).getExamDate().toString(), examResults.get(i).getTotalScore()));
+            series.getData().add(new XYChart.Data<>(examResults.get(i).getExam().getDate().toString(), examResults.get(i).getCorrectAnswerCount().getScore()));
         }
         lineChartExam.getData().add(series);
     }
@@ -97,11 +97,11 @@ public class GraphExamViewController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends ExamResult> observable, ExamResult oldValue, ExamResult newValue) {
                 XYChart.Series<String, Number> series = new XYChart.Series<>();
-                series.setName(" امتحان " + newValue.getExamDate().toString());
-                series.getData().add(new XYChart.Data<String, Number>("ریاضی", newValue.getMathScore()));
-                series.getData().add(new XYChart.Data<String, Number>("علوم طبیعی", newValue.getNaturalScore()));
-                series.getData().add(new XYChart.Data<String, Number>("علوم اجتماعی", newValue.getSocialScore()));
-                series.getData().add(new XYChart.Data<String, Number>("السنه", newValue.getAlsanaScore()));
+                series.setName(" امتحان " + newValue.getExam().getDate().toString());
+                series.getData().add(new XYChart.Data<String, Number>("ریاضی", newValue.getCorrectAnswerCount().getMath()));
+                series.getData().add(new XYChart.Data<String, Number>("علوم طبیعی", newValue.getCorrectAnswerCount().getNatural()));
+                series.getData().add(new XYChart.Data<String, Number>("علوم اجتماعی", newValue.getCorrectAnswerCount().getSocial()));
+                series.getData().add(new XYChart.Data<String, Number>("السنه", newValue.getCorrectAnswerCount().getAlsana()));
                 barChartSubject.getData().clear();
                 barChartSubject.getData().add(series);
 //                animateBar();
